@@ -1,0 +1,171 @@
+================================================================================
+  PROJECT PLAN: DEVUNIVERSE PORTFOLIO (MARVEL-STYLE)
+  Full Stack Developer & Mobile Focus
+  Revision: 1.0 | Date: April 2026
+================================================================================
+
+PROJECT DESCRIPTION:
+A high-end, cinematic web portfolio inspired by Iron Man/Stark Industries UI.
+Features a 3D Hero scene, scroll-driven animations, classified dossier sections,
+and a JARVIS AI Agent that interacts via voice and text.
+
+CORE CONSTRAINTS:
+- No overlapping dependencies (Sequential workflow)
+- Each task is atomic (One thing at a time)
+- Estimated Duration: ~28 Business Days (Approx. 5.5 Weeks)
+
+================================================================================
+PHASE 1: ENVIRONMENT & INFRASTRUCTURE (Days 1-3)
+================================================================================
+
+Task 1.1: Project Initialization  (0.5 Days)
+- Initialize Next.js 14 project (App Router, JS, Tailwind).
+- Setup .gitignore and initial folder structure as per Tech Stack PRD.
+
+Task 1.2: Dependency Installation (0.5 Days)
+- Install Three.js, R3F, Drei, GSAP, Framer Motion, Lenis, and Resend.
+- Verify package.json versions match approved tech stack.
+
+Task 1.3: Design Tokens Implementation (1.0 Day)
+- Standardize tailwind.config.js with --color-void, --color-marvel-red, etc.
+- Configure Typography system: Bebas Neue, Rajdhani, Orbitron, IBM Plex.
+
+Task 1.4: Global CSS & Utility Classes (1.0 Day)
+- Implement app/globals.css with CSS variables for all design tokens.
+- Add utility classes for scanlines, noise, and holographic glow effects.
+
+================================================================================
+PHASE 2: GLOBAL UI & CINEMATIC SHELL (Days 4-7)
+================================================================================
+
+Task 2.1: Marvel-Style Loading Screen (1.0 Day)
+- Build LoadingScreen component with letter-by-letter name assembly animation.
+- Implement progress bar and energy charge shimmer effect.
+
+Task 2.2: Fixed Navigation System (1.0 Day)
+- Create Navbar with transparent-to-glassmorphism scroll transition.
+- Implement mobile hamburger menu with full-screen overlay reveal.
+
+Task 2.3: Custom Arc-Reactor Cursor (1.0 Day)
+- Build CustomCursor component with ring/dot mechanics and smoothing (lerp).
+- Implement interactive scale states for hover/click events.
+
+Task 2.4: Smooth Scroll Engine (1.0 Day)
+- Integrate Lenis smooth scroll and connect to GSAP ticker.
+- Implement Page Scroll Progress indicator at the top of the viewport.
+
+================================================================================
+PHASE 3: THE ORIGIN STORY (HERO SECTION) (Days 8-11)
+================================================================================
+
+Task 3.1: Three.js Canvas Foundation (1.0 Day)
+- Setup HeroScene component with R3F Canvas and basic lighting.
+- Implement responsive viewport detection (CSS fallback for mobile).
+
+Task 3.2: Particle Field Implementation (1.0 Day)
+- Build 3D particle system with 2,500+ points and subtle drift motion.
+- Implement mouse-parallax camera movement for depth.
+
+Task 3.3: Hero Content Overlay (1.0 Day)
+- Implement Bebas Neue text reveals and Stark-style CTA buttons.
+- Add ambient sound toggle button with basic toggle logic.
+
+Task 3.4: Post-Processing & Bloom (1.0 Day)
+- Integrate Bloom, Chromatic Aberration, and Vignette effects.
+- Implement performance monitor to auto-degrade effects on low-end devices.
+
+================================================================================
+PHASE 4: THE HERO DOSSIER (ABOUT & SKILLS) (Days 12-15)
+================================================================================
+
+Task 4.1: Dossier Section Layout (1.0 Day)
+- Create AboutSection with dark paper texture and classified scanline overlay.
+- Implement "CLASSIFIED" stamp animation (scale + rotation).
+
+Task 4.2: Interactive Stats Counter (1.0 Day)
+- Build HUD-style stat blocks with GSAP number-count-up animations.
+- Integrate developer photo with grayscale-to-color holographic hover.
+
+Task 4.3: Superpowers (Skills) Grid (1.0 Day)
+- Implement SkillsSection with category dividers (Frontend, Backend, etc.).
+- Build SkillCard layout with original-color icons (60% desaturated rest state).
+
+Task 4.4: 3D SkillCard Flip Animation (1.0 Day)
+- Implement CSS 3D preserved-perspective flip logic for skill details.
+- Add fly-in scroll-trigger staggers for the entire skills grid.
+
+================================================================================
+PHASE 5: THE MISSIONS (PROJECTS) (Days 16-19)
+================================================================================
+
+Task 5.1: Horizontal Scroll Engine (1.0 Day)
+- Implement GSAP ScrollTrigger pinning for the Projects section.
+- Convert vertical scroll distance to horizontal X translation.
+
+Task 5.2: Mission Card Component (1.0 Day)
+- Build ProjectCard with coding-style badge (COMPLETED / ACTIVE).
+- Implement hover reveal for technical mission briefing snippets.
+
+Task 5.3: Project Data Persistence (1.0 Day)
+- Create projects-data.js with details for 6-8 core missions.
+- Implement category filtering with GSAP Flip layout transitions.
+
+Task 5.4: Mission Briefing Modal (1.0 Day)
+- Build ProjectModal with scale/opacity reveal animations.
+- Implement technical deep-dive layout (Problem/Solution/Impact).
+
+================================================================================
+PHASE 6: BATTLE HISTORY & ALLIES (Days 20-22)
+================================================================================
+
+Task 6.1: Experience Timeline (1.0 Day)
+- Build ExperienceSection with vertical glowing spine animation.
+- Implement stroke-dashoffset drawing as user scrolls down the timeline.
+
+Task 6.2: Battle Logs (Role Details) (1.0 Day)
+- Implement staggered reveal for company roles and bullet-point achievements.
+- Add pulsing "Current Status" indicator for active missions.
+
+Task 6.3: Allies (Testimonials) Carousel (1.0 Day)
+- Build TestimonialsSection with scan-line wipe reveal transitions.
+- Implement carousel logic for rotating through client transmissions.
+
+================================================================================
+PHASE 7: JARVIS AI INTEGRATION (Days 23-26)
+================================================================================
+
+Task 7.1: AI Backend API Proxy (1.0 Day)
+- Create app/api/jarvis route to proxy Gemini 1.5 Flash API.
+- Implement JARVIS System Prompt with full developer knowledge base.
+
+Task 7.2: JARVIS Panel HUD (1.0 Day)
+- Build JARVIS floating trigger (Arc Reactor) with infinite pulse ring.
+- Implement retractable HUD chat panel with corner bracket aesthetics.
+
+Task 7.3: Voice & Audio System (1.0 Day)
+- Integrate Web Speech API for Text-to-Speech (TTS) with JARVIS persona.
+- Implement Speech-to-Text (STT) for microphone voice input requests.
+
+Task 7.4: Audio Waveform Visualizer (1.0 Day)
+- Build Canvas-based AudioVisualizer synced to JARVIS's voice output.
+- Finalize message streaming (typewriter effect) for AI responses.
+
+================================================================================
+PHASE 8: TRANSMISSION & LAUNCH (Days 27-28)
+================================================================================
+
+Task 8.1: Terminal Contact Form (1.0 Day)
+- Build ContactSection with blinking cursor and "TRANSMITTING..." animations.
+- Setup Resend API route for secure mission briefings delivery.
+
+Task 8.2: SEO, OG Tags & Performance Audit (0.5 Days)
+- Implement dynamic meta tags and Open Graph (Marvel-style) share image.
+- Final performance optimization (Code splitting, image WebP conversion).
+
+Task 8.3: Deployment & Domain Setup (0.5 Days)
+- Deploy final build to Vercel and map custom domain.
+- Verify JARVIS API rate limits and secure environment variables.
+
+================================================================================
+TOTAL ESTIMATED TIME: 28 DAYS
+================================================================================

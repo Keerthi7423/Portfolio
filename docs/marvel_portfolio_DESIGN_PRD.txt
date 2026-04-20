@@ -1,0 +1,1312 @@
+================================================================================
+  DESIGN PRD — MARVEL-STYLE 3D PERSONAL PORTFOLIO
+  DevUniverse | Full Stack Developer Portfolio
+  Version: 1.0  |  April 2026  |  Status: Design-Ready
+================================================================================
+
+  "Design is not decoration. It is the cinematic language of competence."
+
+================================================================================
+  TABLE OF CONTENTS
+================================================================================
+
+  1.  Design Philosophy & Concept Direction
+  2.  Mood & Aesthetic Reference
+  3.  Color System
+  4.  Typography System
+  5.  Spacing & Layout Grid
+  6.  Iconography & Illustration Style
+  7.  Motion & Animation Design Language
+  8.  3D Visual Design Principles
+  9.  Component Design Specifications
+        9.1  Loading / Intro Screen
+        9.2  Navigation Bar
+        9.3  Custom Cursor
+        9.4  Hero Section
+        9.5  About / Dossier Section
+        9.6  Tech Stack / Superpowers Section
+        9.7  Projects / Missions Section
+        9.8  Experience / Timeline Section
+        9.9  Testimonials Section
+        9.10 JARVIS AI Agent Panel
+        9.11 Contact Section
+        9.12 Footer
+  10. Texture, Noise & Atmospheric Effects
+  11. Responsive Design Breakpoints
+  12. Accessibility Design Requirements
+  13. Dark Mode (Only Mode)
+  14. Asset Specifications
+  15. Design Tokens Reference Sheet
+
+
+================================================================================
+  1. DESIGN PHILOSOPHY & CONCEPT DIRECTION
+================================================================================
+
+CONCEPT NAME: "STARK INTERFACE"
+
+The design draws from three visual worlds and fuses them:
+
+  [1] MARVEL CINEMATIC UNIVERSE — Iron Man HUD displays, holographic
+      projections, red-gold energy, and the feeling that you're inside
+      a Stark Industries interface. Classified documents. Mission briefings.
+      Power indicators. Every UI element feels engineered, not decorated.
+
+  [2] DEEP SPACE / SCI-FI FILM — Interstellar darkness, nebula depth,
+      particle fields, and the silence of space. The background always
+      feels alive — breathing, moving, vast. The developer exists at the
+      center of their own universe.
+
+  [3] DEVELOPER TERMINAL CULTURE — Monospaced code aesthetics, scanlines,
+      glitch effects, blinking cursors. This signals: the creator of this
+      site IS the developer. The medium IS the message.
+
+DESIGN PRINCIPLES:
+  ┌────────────────────────────────────────────────────────────────┐
+  │  CINEMATIC    Everything should feel like it belongs in a film │
+  │  INTENTIONAL  Every pixel serves a purpose — nothing is filler │
+  │  IMMERSIVE    The visitor is INSIDE the experience, not viewing │
+  │  TECHNICAL    The design radiates engineering sophistication   │
+  │  MEMORABLE    One week later, visitors must still picture it   │
+  └────────────────────────────────────────────────────────────────┘
+
+EMOTIONAL JOURNEY:
+  Visitor arrives → feels AWE (hero scene)
+                 → feels INTRIGUE (dossier, classified files)
+                 → feels CONFIDENCE (powers, projects)
+                 → feels TRUST (testimonials, timeline)
+                 → feels COMPELLED (JARVIS agent + contact)
+
+THE ONE THING THEY REMEMBER:
+  "That site had an AI that talked to me in a holographic panel
+   and answered every question I had."
+
+
+================================================================================
+  2. MOOD & AESTHETIC REFERENCE
+================================================================================
+
+VISUAL REFERENCES (describe, do not copy):
+
+  IRON MAN HUD (2008–2019 films)
+  → Circular arc-reactor rings
+  → Hexagonal data panels with translucent overlays
+  → Red and gold energy lines on dark glass
+  → Text that appears typewritten or scanned
+
+  AVENGERS TOWER INTERFACE
+  → Holographic blue-white projections floating in dark space
+  → Grid-based data visualization
+  → Clean geometric shapes with glowing edges
+
+  MARVEL TITLE CARDS (MCU opening sequences)
+  → High-contrast text explosions
+  → Comic panel flip transitions
+  → Saturated red against absolute black
+
+  INTERSTELLAR / ARRIVAL (films) — atmosphere only
+  → Deep space backgrounds with light particle drift
+  → Anamorphic lens flare effects
+  → Vast negative space with focal center
+
+  TRON: LEGACY — geometry only
+  → Neon grid lines on matte black
+  → Geometric circuit-board textures
+  → Light trails on movement
+
+WHAT TO AVOID:
+  ✗ Purple or rainbow gradients (generic SaaS look)
+  ✗ Glassmorphism without substance (overused 2022 trend)
+  ✗ White backgrounds anywhere in this design
+  ✗ Soft pastel tones
+  ✗ Rounded-corner-everything "friendly app" feel
+  ✗ Generic developer portfolio templates
+  ✗ Bootstrap-style card grids
+
+
+================================================================================
+  3. COLOR SYSTEM
+================================================================================
+
+PHILOSOPHY:
+  The palette is built on absolute darkness with precise energy.
+  Colors are not decorative — they are informational. Red = power/alert.
+  Gold = premium/achievement. Blue = data/intelligence. White = clarity.
+
+────────────────────────────────────────────────────────────────────────────────
+  CORE PALETTE
+────────────────────────────────────────────────────────────────────────────────
+
+  TOKEN NAME              HEX         RGB               USAGE
+  ──────────────────────  ─────────── ─────────────────  ──────────────────────
+  --color-void            #040408     4, 4, 8            Deepest background
+  --color-space           #0a0a12     10, 10, 18         Primary background
+  --color-deep            #0d1020     13, 16, 32         Section backgrounds
+  --color-surface         #111827     17, 24, 39         Card/panel backgrounds
+  --color-surface-raised  #161d2e     22, 29, 46         Elevated card BG
+  --color-border          #1e2540     30, 37, 64         Default borders
+  --color-border-glow     #2a3560     42, 53, 96         Hover borders
+
+  --color-marvel-red      #e23636     226, 54, 54        Primary hero accent
+  --color-marvel-red-dim  #8b1a1a     139, 26, 26        Dimmed red / bg glow
+  --color-stark-gold      #c8a951     200, 169, 81       Premium / achievement
+  --color-stark-gold-dim  #7a6330     122, 99, 48        Dimmed gold / bg glow
+  --color-arc-blue        #4fc3f7     79, 195, 247       JARVIS / data / AI
+  --color-arc-blue-dim    #1565a0     21, 101, 160       Dimmed arc blue
+
+  --color-text-primary    #f0f2ff     240, 242, 255      Main body text
+  --color-text-secondary  #8892b0     136, 146, 176      Subtitles, captions
+  --color-text-tertiary   #4a5568     74, 85, 104        Disabled / ghost text
+  --color-text-code       #64ffda     100, 255, 218      Code / terminal text
+  --color-text-gold       #c8a951     200, 169, 81       Gold accent text
+
+  --color-success         #22c55e     34, 197, 94        Available / active
+  --color-warning         #f59e0b     245, 158, 11       In-progress
+  --color-danger          #ef4444     239, 68, 68        Error / urgent
+
+────────────────────────────────────────────────────────────────────────────────
+  GRADIENT LIBRARY
+────────────────────────────────────────────────────────────────────────────────
+
+  NAME                  DEFINITION
+  ──────────────────    ───────────────────────────────────────────────────────
+  Gradient-Hero         radial-gradient(ellipse at 50% 40%,
+                          rgba(226,54,54,0.15) 0%,
+                          rgba(10,10,18,0) 70%)
+
+  Gradient-Gold-Sweep   linear-gradient(135deg,
+                          #c8a951 0%, #f0d080 50%, #c8a951 100%)
+                        [used only on premium text / logos]
+
+  Gradient-Arc          linear-gradient(180deg,
+                          #4fc3f7 0%, #0288d1 100%)
+
+  Gradient-Card-Glow    linear-gradient(135deg,
+                          rgba(226,54,54,0.05) 0%,
+                          rgba(200,169,81,0.03) 100%)
+
+  Gradient-Space-BG     radial-gradient(ellipse at 20% 50%,
+                          rgba(200,169,81,0.04) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%,
+                          rgba(226,54,54,0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%,
+                          rgba(79,195,247,0.04) 0%, transparent 50%)
+
+  Gradient-Text-Hero    linear-gradient(135deg,
+                          #ffffff 0%, #c8a951 50%, #e23636 100%)
+                        [only for the hero name]
+
+  Gradient-Scanline     repeating-linear-gradient(
+                          0deg,
+                          transparent,
+                          transparent 2px,
+                          rgba(0,0,0,0.03) 2px,
+                          rgba(0,0,0,0.03) 4px)
+                        [subtle overlay on classified sections]
+
+────────────────────────────────────────────────────────────────────────────────
+  COLOR USAGE RULES
+────────────────────────────────────────────────────────────────────────────────
+
+  DO:
+  → Use --color-marvel-red as the primary call-to-action and focus accent
+  → Use --color-stark-gold SPARINGLY — it's a premium signal, not decoration
+  → Use --color-arc-blue exclusively for the AI/JARVIS interface
+  → Keep backgrounds in the void-to-deep range; never use white or light gray
+  → Use color to create depth — darker backgrounds recede, brighter elements advance
+
+  DON'T:
+  → Never use red and gold together at full saturation (too garish)
+  → Never use arc blue outside JARVIS context (it must feel exclusive to AI)
+  → Never lighten the background for "readability" — adjust text opacity instead
+  → Never use more than 2 accent colors visibly in the same component
+
+
+================================================================================
+  4. TYPOGRAPHY SYSTEM
+================================================================================
+
+PHILOSOPHY:
+  Typography in this design does two jobs: it communicates AND it atmosphere-
+  builds. Display text should feel like a title card. Body text should feel
+  like a classified intelligence file. Code text should feel terminal-authentic.
+
+────────────────────────────────────────────────────────────────────────────────
+  FONT STACK
+────────────────────────────────────────────────────────────────────────────────
+
+  ROLE            FONT FAMILY               SOURCE        WEIGHT(S)
+  ──────────────  ────────────────────────  ────────────  ─────────────────
+  Display/Hero    "Bebas Neue"              Google Fonts  400
+  Heading         "Rajdhani"                Google Fonts  500, 600, 700
+  Sub-heading     "Orbitron"                Google Fonts  400, 500, 700
+  Body            "IBM Plex Sans"           Google Fonts  300, 400, 500
+  Code/Terminal   "IBM Plex Mono"           Google Fonts  400, 500
+  Label/Tag/UI    "Chakra Petch"            Google Fonts  400, 500
+
+  FALLBACKS:
+  → Display:   'Impact', 'Anton', sans-serif
+  → Mono:      'Courier New', 'Consolas', monospace
+
+────────────────────────────────────────────────────────────────────────────────
+  TYPE SCALE
+────────────────────────────────────────────────────────────────────────────────
+
+  TOKEN              SIZE    LINE-HT  LT-SPACING  FONT          USAGE
+  ─────────────────  ──────  ───────  ──────────  ────────────  ──────────────
+  --text-hero        clamp(  1.0      -0.04em     Bebas Neue    Hero name
+                     72px,
+                     10vw,
+                     160px)
+  --text-display     clamp(  1.05     -0.03em     Bebas Neue    Section titles
+                     48px,
+                     6vw,
+                     96px)
+  --text-h1          3rem    1.1      -0.02em     Rajdhani 700  Page H1
+  --text-h2          2rem    1.2      -0.01em     Rajdhani 600  Section H2
+  --text-h3          1.5rem  1.3      0           Rajdhani 500  Card titles
+  --text-h4          1.25rem 1.4      0.02em      Orbitron 500  Labels/HUD
+  --text-body-lg     1.125rem 1.7     0.01em      IBM Plex 400  Lead paragraph
+  --text-body        1rem    1.7      0.01em      IBM Plex 400  Body text
+  --text-body-sm     0.875rem 1.6     0.02em      IBM Plex 400  Captions
+  --text-code        0.9rem  1.6      0.03em      IBM Plex Mono Code, terminal
+  --text-label       0.75rem 1.4      0.12em      Chakra Petch  Tags, badges
+  --text-micro       0.6875rem 1.3    0.15em      Chakra Petch  Meta, stamps
+
+────────────────────────────────────────────────────────────────────────────────
+  TYPOGRAPHY RULES
+────────────────────────────────────────────────────────────────────────────────
+
+  DISPLAY TEXT (Bebas Neue):
+  → Used only for the hero name and major section title reveals
+  → Always uppercase — Bebas Neue is display-only, never body
+  → Gradient text effect on hero name only (Gradient-Text-Hero)
+  → Letter spacing: -0.03em to -0.05em (tighter = more cinematic)
+  → Never smaller than 48px at any breakpoint
+
+  HEADING TEXT (Rajdhani):
+  → Section headings, card titles, and sub-section labels
+  → Mix weights: 700 for major headings, 500 for secondary
+  → Can use with gold underline accent (2px solid --color-stark-gold)
+
+  ORBITRON (HUD Labels):
+  → Reserved for stat numbers, tech labels, status badges
+  → Always uppercase, always letter-spaced
+  → Used in the "CLASSIFIED" stamp, counter numbers, and HUD overlays
+  → This is the "sci-fi interface" font — use it for anything that should
+    feel like it's part of a digital system, not prose
+
+  IBM PLEX MONO (Code/Terminal):
+  → Contact form field text
+  → JARVIS response text
+  → Any "terminal" or "classified document" styled copy
+  → Inline code references
+  → Color: --color-text-code (#64ffda) in terminal contexts
+
+  CHAKRA PETCH (Tags/Labels):
+  → Tech stack pills, status badges, filter buttons
+  → Project category tags
+  → Navigation links (transformed to uppercase)
+  → Micro-labels in cards
+
+
+================================================================================
+  5. SPACING & LAYOUT GRID
+================================================================================
+
+BASE UNIT: 4px (--space-1)
+
+  TOKEN        VALUE   USAGE
+  ───────────  ──────  ────────────────────────────────────────────────
+  --space-1    4px     Micro gaps, icon padding
+  --space-2    8px     Input padding (tight), icon-to-label gaps
+  --space-3    12px    Tag internal padding, small component gaps
+  --space-4    16px    Default component inner padding
+  --space-5    20px    Card padding (compact)
+  --space-6    24px    Card padding (standard), list item gaps
+  --space-8    32px    Section inner padding, component spacing
+  --space-10   40px    Medium section gaps
+  --space-12   48px    Vertical spacing between components
+  --space-16   64px    Section padding (top/bottom)
+  --space-20   80px    Large section gaps
+  --space-24   96px    Hero section padding
+  --space-32   128px   Extra-large section breathing room
+
+LAYOUT GRID:
+  Desktop:   12-column grid, 1280px max-width, 32px gutters, 80px margins
+  Tablet:    8-column grid,  768px max-width,  24px gutters, 40px margins
+  Mobile:    4-column grid,  390px max-width,  16px gutters, 20px margins
+
+SECTION STRUCTURE:
+  Every section follows:
+  ┌────────────────────────────────────────────────────────────────┐
+  │  padding-top: clamp(64px, 8vw, 120px)                         │
+  │  padding-bottom: clamp(64px, 8vw, 120px)                      │
+  │  Section Label (CHAKRA PETCH / UPPERCASE / GOLD / SMALL)      │
+  │  Section Title (BEBAS NEUE / LARGE)                           │
+  │  Section Subtitle (IBM Plex / Body-LG)                        │
+  │  ─────────────────────────────────────────────                │
+  │  Content                                                       │
+  └────────────────────────────────────────────────────────────────┘
+
+BORDER RADIUS:
+  --radius-none    0px      Sharp corners (primary aesthetic choice)
+  --radius-sm      2px      Subtle radius on tags only
+  --radius-md      4px      Buttons, inputs
+  --radius-lg      8px      Cards
+  --radius-xl      12px     Modals, large panels
+  --radius-full    9999px   Pill badges only
+
+DESIGN NOTE: This portfolio leans toward sharp / geometric corners (0–4px).
+Avoid large border-radius values — they read as "friendly app" not "cinematic."
+
+
+================================================================================
+  6. ICONOGRAPHY & ILLUSTRATION STYLE
+================================================================================
+
+ICON STYLE:
+  → Line icons (1.5px–2px stroke weight) preferred
+  → Icon library: Phosphor Icons (Thin or Regular weight)
+  → Size standards: 16px (inline), 20px (buttons), 24px (nav), 32px (feature)
+  → Color: inherit from parent text color; accent with red/gold on hover only
+  → Never use filled/solid icons except for status indicators
+
+TECH STACK ICONS:
+  → Source: devicons.dev (SVG format)
+  → Display: original color on hover, desaturated (10% opacity color) at rest
+  → Size: 40px × 40px in grid, 24px × 24px in pills
+  → Never use PNG; always SVG for crisp rendering
+
+CUSTOM GLYPHS (to design or commission):
+  → Arc Reactor mark (developer logo) — circular energy ring design
+  → JARVIS activation icon — abstract AI face or waveform circle
+  → Classified stamp SVG — "CLASSIFIED" with double red ring border
+  → Mission briefing icon — folder with circuit lines
+  → Section divider line-art — thin horizontal circuit trace
+
+ILLUSTRATION STYLE (if needed):
+  → No stock photos or clip art
+  → If illustrating: geometric low-poly or circuit-trace line-work only
+  → Color: monochrome with single red or gold accent
+  → Never cartoonish or friendly — always technical and precise
+
+
+================================================================================
+  7. MOTION & ANIMATION DESIGN LANGUAGE
+================================================================================
+
+MOTION PHILOSOPHY:
+  Motion in this portfolio is STORYTELLING. Every animation is a scene beat —
+  not a decoration. Motion must feel earned, physical, and cinematic.
+  Nothing bounces. Nothing wiggles. Energy moves in straight lines or arcs.
+
+────────────────────────────────────────────────────────────────────────────────
+  EASING LIBRARY
+────────────────────────────────────────────────────────────────────────────────
+
+  NAME              CURVE                   USAGE
+  ────────────────  ──────────────────────  ───────────────────────────────
+  ease-out-expo     cubic-bezier(           Section reveals, card enters
+                    0.16, 1, 0.3, 1)
+  ease-out-quart    cubic-bezier(           Button hovers, nav transitions
+                    0.25, 1, 0.5, 1)
+  ease-in-quart     cubic-bezier(           Exits, elements leaving screen
+                    0.5, 0, 0.75, 0)
+  ease-in-out-sine  cubic-bezier(           Ambient float animations
+                    0.37, 0, 0.63, 1)
+  linear            linear                  Progress bars, scan lines
+
+  NEVER USE:
+  → elastic / spring / bounce easing (too playful)
+  → ease-in-out-back (overshoot looks weak)
+
+────────────────────────────────────────────────────────────────────────────────
+  DURATION STANDARDS
+────────────────────────────────────────────────────────────────────────────────
+
+  --duration-instant   80ms    Cursor follow, immediate feedback
+  --duration-fast      150ms   Hover color changes, icon transitions
+  --duration-normal    300ms   Button states, small component transitions
+  --duration-medium    500ms   Card reveals, panel opens
+  --duration-slow      800ms   Section title reveals, major transitions
+  --duration-cinematic 1200ms  Hero entrance, loading screen transitions
+  --duration-epic      2000ms+ Three.js camera moves, page-level transitions
+
+────────────────────────────────────────────────────────────────────────────────
+  SCROLL ANIMATION PATTERNS
+────────────────────────────────────────────────────────────────────────────────
+
+  Each section has a UNIQUE entrance signature — no two sections enter
+  the same way. This prevents visual monotony and creates anticipation.
+
+  SECTION             SCROLL TRIGGER ANIMATION
+  ──────────────────  ────────────────────────────────────────────────────────
+  Hero                Already visible — Three.js scene fades in on load;
+                      camera slowly pulls back (zoom out) as page loads
+
+  About/Dossier       Slides in from right at 30px offset + fade
+                      "CLASSIFIED" stamp scales from 300% → 100% with opacity
+                      Stats counter: numbers count up from 0 over 1.5s
+
+  Tech / Superpowers  Cards fly in from off-screen (alternating left/right)
+                      with 0.08s stagger; power level bars animate width
+                      from 0% on enter
+
+  Projects/Missions   Horizontal scroll section: vertical scroll is converted
+                      to horizontal movement via GSAP pin + horizontal move
+                      Each card: scale 0.85→1 + fade on enter viewport
+
+  Experience/Timeline Vertical line draws top-to-bottom using stroke-dashoffset
+                      Each node pulses in on reach; text fades up-and-in
+
+  Testimonials        Cards appear with a "transmission received" animation:
+                      scan-line wipe from top to bottom over 0.4s
+
+  JARVIS Section      Arc reactor ring expands from center 0→100% with glow
+                      Text types itself character by character (typewriter)
+
+  Contact/Terminal    Terminal cursor blinks in; input lines draw left-to-right
+                      "SECURE CHANNEL ESTABLISHED" types out on section enter
+
+────────────────────────────────────────────────────────────────────────────────
+  HOVER STATE DESIGN
+────────────────────────────────────────────────────────────────────────────────
+
+  ELEMENT             HOVER BEHAVIOR
+  ──────────────────  ──────────────────────────────────────────────────────
+  Primary CTA Button  Background: red → brighter red + box-shadow glow 12px
+                      Text: slight letter-spacing increase 0.02em
+                      Transform: translateY(-2px) scale(1.02)
+                      Duration: 200ms ease-out-quart
+
+  Secondary Button    Border color: --color-border → --color-marvel-red
+                      Text: --color-text-secondary → white
+                      Glow: inset box-shadow + drop shadow in red
+
+  Tech Card           Transform: translateY(-8px) rotateX(5deg)
+                      Border: → --color-stark-gold
+                      Background: slight lightening + gradient-card-glow
+                      Duration: 300ms ease-out-quart
+
+  Project Card        Scale: 1 → 1.02, z-index raise
+                      Reveal overlay with project description
+                      Border-left: 3px solid --color-marvel-red
+
+  Nav Link            Underline grows from left to right (scaleX 0→1)
+                      Color transition: secondary → white
+                      Duration: 200ms
+
+  Social Icon         Rotate: 0 → -10deg + scale 1 → 1.15
+                      Color: → platform brand color OR gold
+                      Duration: 200ms ease-out-quart
+
+────────────────────────────────────────────────────────────────────────────────
+  AMBIENT / IDLE ANIMATIONS (always running)
+────────────────────────────────────────────────────────────────────────────────
+
+  → Particle field: constant slow drift in hero Three.js scene
+  → Arc reactor button (JARVIS): infinite pulse ring expanding + fading
+  → Star particles: parallax shift at 20% rate on mouse move
+  → Background gradient orbs: slow drift across viewport (30s loop)
+  → Active nav indicator: subtle breathing glow (opacity 0.6→1 → 0.6 / 3s)
+  → "Available for work" badge: green dot pulses every 2 seconds
+  → Scanlines on classified sections: very slow scroll (opacity 0.02)
+
+────────────────────────────────────────────────────────────────────────────────
+  TRANSITION: PAGE-LEVEL SCROLL EXPERIENCE
+────────────────────────────────────────────────────────────────────────────────
+
+  The portfolio is a SINGLE PAGE with pinned/unpinned sections.
+  Lenis provides smooth inertial scrolling.
+
+  Background color system: background SHIFTS SUBTLY between sections
+  to signal a new "world" without full color changes:
+
+  SECTION             BACKGROUND SHIFT
+  ──────────────────  ──────────────────────────────────
+  Hero                #040408 (void)
+  About               #0a0a12 + faint blue-right glow
+  Tech Powers         #0d1020 + faint gold-left glow
+  Projects            #040408 + red atmosphere top-right
+  Experience          #0a0a12 + neutral
+  Testimonials        #0d1020 + soft arc-blue bottom glow
+  JARVIS/AI           #040408 + strong arc-blue center glow
+  Contact             #0a0a12 + red center glow
+
+  Transition: 600ms cross-dissolve of background gradients using
+  GSAP ScrollTrigger onEnter/onLeave callbacks.
+
+
+================================================================================
+  8. 3D VISUAL DESIGN PRINCIPLES
+================================================================================
+
+THREE.JS / REACT THREE FIBER DESIGN RULES:
+
+HERO SCENE:
+  → Particle system: ~2,000–3,000 points, BufferGeometry
+  → Particle color: mix of #ffffff (50%), #c8a951 (30%), #e23636 (20%)
+  → Particle size: 0.8px–2px with size attenuation (depth perception)
+  → Motion: gentle drift using sine wave on Y axis, slow rotation on Z
+  → Camera: slight automatic drift (0.002 rad/frame on X and Y)
+  → Mouse parallax: camera target moves toward mouse position at 0.05 factor
+  → Fog: THREE.FogExp2(#040408, 0.035) for depth
+  → Post-processing (if performance allows):
+      · Bloom on bright particles (threshold 0.8, strength 0.5)
+      · Subtle chromatic aberration (0.5px max)
+      · Film grain at 0.15 opacity
+
+3D TEXT:
+  → Developer name in 3D space using Drei <Text3D> or <Text>
+  → Material: MeshStandardMaterial with emissive gold (#c8a951 at 0.3)
+  → Slight bevel on extrusion (bevelSize: 0.02, bevelThickness: 0.03)
+  → Animated: on load, letters scale from 0 with stagger 0.06s/letter
+
+PERFORMANCE RULES:
+  → Target 60fps on mid-range laptops (GTX 1060 equivalent)
+  → Use instanced meshes for particles — never individual meshes
+  → Limit draw calls: max 50 in hero scene
+  → Dispose of geometries and materials on unmount
+  → Use useFrame with delta time, not absolute time
+  → On mobile: disable Three.js entirely; use CSS 3D transforms only
+  → Detect performance: if FPS < 40 after 3s, automatically reduce particles
+
+MOBILE FALLBACK (no Three.js):
+  → CSS: transform-style: preserve-3d on hero container
+  → CSS @keyframes floating: subtle translateY -15px → 15px / 6s ease-in-out
+  → Background: CSS gradient approximation of space scene
+  → Particle effect: pure CSS animated dots (30 particles max) using
+    :before/:after pseudoelements and @keyframes
+  → Performance budget on mobile: 0 Three.js, pure CSS animations only
+
+
+================================================================================
+  9. COMPONENT DESIGN SPECIFICATIONS
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.1  LOADING / INTRO SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Canvas: Full viewport, background: #040408
+  Center element: Developer initials or name in Bebas Neue
+  Animation sequence:
+    T+0.0s   Black screen
+    T+0.3s   Red horizontal flash (full width, 2px line, opacity 0→1→0 / 0.3s)
+    T+0.5s   Letters appear one by one from left (translateX -30px → 0, fade in)
+    T+1.2s   Name fully assembled — metallic shimmer sweeps across (gradient)
+    T+1.5s   Subtitle fades in below: role/tagline in Orbitron
+    T+1.8s   Arc reactor pulse rings expand from center (SVG animation)
+    T+2.2s   Progress bar charges from 0 → 100% over 0.8s (red/gold gradient)
+    T+2.8s   Everything: scale(1) → scale(1.1) + fade out
+    T+3.0s   Hero scene zooms in (scale 0.8 → 1.0 + fade in)
+
+  Skip button:
+    Appears at T+1.5s, top-right corner
+    Style: text-only, Chakra Petch, --color-text-tertiary
+    Hover: → --color-text-primary, underline
+    "SKIP INTRO" with right-arrow icon
+
+  Progress bar:
+    Height: 2px, positioned at very bottom of loading screen
+    Color: linear-gradient(90deg, #e23636, #c8a951)
+    Background track: rgba(255,255,255,0.1)
+    Width: animates from 0 → 100% in sync with actual asset loading
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.2  NAVIGATION BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Structure:
+  ┌──────────────────────────────────────────────────────────────────┐
+  │  [LOGO/MARK]  ORIGIN · POWERS · MISSIONS · HISTORY · CONTACT    │
+  │                                                    [TALK TO JARVIS]│
+  └──────────────────────────────────────────────────────────────────┘
+
+  Height: 64px (desktop), 56px (mobile)
+  Position: fixed, top: 0, z-index: 1000
+  Initial state: background: transparent
+  Scrolled state: (after 100px) background: rgba(10,10,18,0.85)
+                  backdrop-filter: blur(12px) saturate(1.5)
+                  border-bottom: 1px solid rgba(30,37,64,0.8)
+  Transition: 300ms ease-out
+
+  Logo:
+    → Arc reactor SVG mark: ~32px × 32px
+    → Adjacent text: Developer initials in Rajdhani 700, --color-text-primary
+    → Hover: mark slowly rotates 360° over 1s
+
+  Nav links:
+    → Font: Chakra Petch 400, uppercase, letter-spacing: 0.1em
+    → Size: 13px
+    → Color: --color-text-secondary at rest
+    → Active section: --color-text-primary + 2px bottom border in --color-marvel-red
+    → Hover: --color-text-primary, border grows left→right (scaleX transition)
+    → Gap between links: 32px (desktop)
+
+  JARVIS CTA button:
+    → Style: outlined, border: 1px solid --color-arc-blue
+    → Text: "TALK TO JARVIS" — Chakra Petch 400, uppercase
+    → Arc-blue text color
+    → Hover: background fills with arc-blue at 0.1 opacity, glow effect
+    → Has a small pulsing dot (arc-blue) to left of text
+
+  Mobile hamburger:
+    → 3 lines → X transition with CSS clip-path animation
+    → Opens full-screen overlay (z-index: 999)
+    → Overlay: background #040408 at 98% opacity
+    → Links: large (h2 size), center-aligned, one per line
+    → Stagger in from bottom: 0.1s apart
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.3  CUSTOM CURSOR (desktop only)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Default cursor:
+    → Outer ring: 24px × 24px circle, border 1px solid rgba(200,169,81,0.6)
+    → Inner dot: 4px × 4px, background: --color-stark-gold, solid
+    → Position: follows mouse with ~80ms smooth lag (lerp factor 0.15)
+    → Mix-blend-mode: difference on dark backgrounds
+
+  Hover state (over clickable elements):
+    → Outer ring: scale 2.5 + opacity 0.4
+    → Inner dot: scale 0 (hides)
+    → Background: rgba(226,54,54,0.15) fill inside ring
+    → Transition: 200ms ease-out-quart
+
+  Click state:
+    → Outer ring: scale 0.8, quick flash, back to default (150ms)
+    → Inner dot: brief red flash
+
+  Text hover state (over headings):
+    → Ring transforms to horizontal bar (border-radius → 0, width grows)
+
+  CSS: cursor: none on html, body globally
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.4  HERO SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Layout: Full viewport height (100dvh), centered content over Three.js canvas
+  Canvas: absolute positioned, full viewport, pointer-events: none
+
+  Content layer (above canvas):
+    Vertical center-left alignment (not dead center — offset to left 1/3)
+    ┌─────────────────────────────────┐
+    │  [SMALL LABEL]                  │
+    │  FULL STACK DEVELOPER           │  ← Chakra Petch, gold, letter-spaced
+    │                                 │
+    │  [DEVELOPER NAME]               │  ← Bebas Neue, massive, gradient text
+    │  FIRSTNAME                      │     (white→gold→red gradient sweep)
+    │  LASTNAME                       │
+    │                                 │
+    │  [TAGLINE / SUBTITLE]           │  ← Rajdhani 400, 1.25rem, secondary
+    │  "From API to pixel —           │
+    │   I own the full stack."        │
+    │                                 │
+    │  [────────────────────]         │  ← 2px line, gold, animate width 0→100%
+    │                                 │
+    │  [VIEW MISSIONS]  [JARVIS ▶]    │  ← Primary CTA + Secondary CTA
+    └─────────────────────────────────┘
+
+  Name animation:
+    → Each letter animates: translateY(60px) → 0 + opacity 0→1
+    → Stagger: 0.04s per letter
+    → Ease: ease-out-expo
+    → Total duration: ~1.5s for full name
+
+  Scroll indicator (bottom center):
+    → "SCROLL TO EXPLORE" in Chakra Petch micro text, very dim
+    → Animated chevron: bounces down gently, 2s loop
+    → Fades out when user scrolls past 10%
+
+  Audio toggle (top-right corner):
+    → Speaker icon, 24px
+    → "AMBIENT: OFF" label in micro text
+    → Toggles background cinematic audio (off by default, GDPR compliant)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.5  ABOUT / DOSSIER SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Background: dark paper texture (subtle noise) + scanline overlay
+
+  "Classified" stamp:
+    → Appears first, from scale(3) + opacity 0 → scale(1) + opacity 1
+    → Red double-ring circle border
+    → "CLASSIFIED" in Orbitron 700, red
+    → 15° rotation
+    → Position: top-right of section, partially overlapping heading
+
+  Two-column layout:
+    Left (60%): Bio + career milestones timeline
+    Right (40%): Photo + stats panel
+
+  Photo treatment:
+    → Developer photo: grayscale(100%) at rest
+    → Hover: grayscale(0%) smooth transition over 600ms
+    → Duotone overlay using CSS mix-blend-mode: color with gold
+    → Border: 2px solid rgba(200,169,81,0.3)
+    → Subtle outer glow: box-shadow 0 0 40px rgba(200,169,81,0.1)
+    → Corner decorations: CSS clip-path or SVG corner marks (Stark-style)
+
+  Stats panel (to right of or below photo):
+    → 2×2 grid of stat blocks
+    → Each stat: large Orbitron number (animated count-up) + Chakra Petch label
+    → Example: "47" + "PROJECTS SHIPPED"
+    → Dividers: 1px solid --color-border
+    → Count-up animation: triggered on scroll enter, duration 1.5s ease-out
+
+  Bio text:
+    → IBM Plex Sans body
+    → Appears with subtle "document scan" reveal: clip-path wipe top→bottom
+
+  Career milestones:
+    → Compact vertical list: Year | Role @ Company | one-line achievement
+    → Font: Chakra Petch for year (gold), Rajdhani for role, IBM Plex for detail
+    → Left: 2px vertical gold line
+    → Each item: fades in with 0.1s stagger on scroll
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.6  TECH STACK / SUPERPOWERS SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Category dividers:
+    → Full-width horizontal rule with category name centered
+    → Style: "▸ FRONTEND POWERS ◂" in Chakra Petch, gold, letter-spaced
+    → Rule: gradient line fading to transparent on both ends
+
+  Card grid: responsive 2–4 columns
+  Card dimensions: ~200px × 220px (desktop), ~150px × 160px (mobile)
+
+  Card front face:
+    → Background: --color-surface
+    → Border: 1px solid --color-border
+    → Center: tech icon (48px SVG), desaturated
+    → Below icon: tech name in Rajdhani 600, 1rem
+    → Bottom: thin proficiency bar (3px height, filled width by level)
+    → Corner: category color indicator (4px × 20px, top-right corner)
+
+  Card back face (CSS 3D flip on hover):
+    → Background: --color-surface-raised with gradient-card-glow
+    → Tech name in Orbitron, gold
+    → "Proficiency: ██████░░ 80%" — block bar in gold
+    → "Years: 3+" in Chakra Petch
+    → One-line notable use in IBM Plex Mono, code-green color
+
+  Card entrance animation:
+    → Cards off-screen (translateX: ±120px based on column position)
+    → Enter viewport: translate to 0 + opacity 0→1
+    → Stagger: 0.08s per card
+    → Category by category on scroll
+
+  Color coding by category:
+    Frontend Powers   → --color-arc-blue indicator
+    Backend Powers    → --color-stark-gold indicator
+    Database Powers   → --color-marvel-red indicator
+    DevOps Powers     → #22c55e (green) indicator
+    Special Abilities → purple (#a78bfa) indicator
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.7  PROJECTS / MISSIONS SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Layout: Horizontal scroll container pinned during vertical scroll
+  GSAP pin: section height ~500vh, horizontal scroll over pinned viewport
+
+  Filter bar (above carousel):
+    → Pill buttons: ALL / FRONTEND / BACKEND / FULLSTACK / AI
+    → Chakra Petch, 12px, uppercase
+    → Active: background --color-marvel-red, white text
+    → Inactive: border --color-border, secondary text
+    → Filter animates cards in/out with GSAP stagger
+
+  Project card dimensions: 380px × 480px (desktop)
+  Card structure:
+    ┌──────────────────────────┐
+    │  [SCREENSHOT / PREVIEW]  │  ← 60% of card height, object-fit: cover
+    │  ░░░ grayscale → color   │     grayscale at rest, color on hover
+    │──────────────────────────│
+    │  STATUS BADGE            │  ← Chakra Petch, pill, green/gold/red
+    │  Mission: PROJECT NAME   │  ← Rajdhani 700, 1.125rem
+    │  One-line brief          │  ← IBM Plex 400, 0.875rem, secondary
+    │  [REACT] [NODE] [AWS]    │  ← Tech pills: icon + name, 10px
+    │──────────────────────────│
+    │  [VIEW LIVE] [BRIEFING]  │  ← Two text buttons, icon-prefixed
+    └──────────────────────────┘
+
+  Card hover state:
+    → Screenshot: grayscale → color (600ms transition)
+    → Card: translateY(-8px), gold border glow
+    → "VIEW MISSION" overlay appears (red, semi-transparent, covers image)
+
+  Mission detail modal (on "Read Briefing" click):
+    → Full-screen overlay: background rgba(4,4,8,0.95)
+    → Entrance: clip-path reveal from center
+    → Header: "MISSION BRIEFING" stamp + project name
+    → Content: Problem → Solution → Impact sections
+    → Screenshot gallery: horizontal scroll
+    → Tech deep-dive list
+    → Close: ESC or X button (top-right)
+    → Exit animation: scale 1→0.95 + opacity → 0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.8  EXPERIENCE / TIMELINE SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Vertical center spine: 2px line, gold, drawn on scroll using stroke-dashoffset
+  Nodes: 12px circles on spine, filled gold on active, border-only on future
+  Entry cards: alternate left/right of spine (zigzag layout on desktop)
+
+  Card style:
+    → Background: --color-surface
+    → Border: 1px solid --color-border
+    → Border-left: 3px solid --color-stark-gold (for current role: red)
+    → Padding: 24px
+    → Content: Logo (48px), Company, Role, Duration, bullet achievements
+
+  Current role treatment:
+    → Card has subtle pulsing background (opacity animation)
+    → "ACTIVE" badge: green dot + "CURRENTLY ENGAGED" in Chakra Petch
+    → Node on timeline: red, pulsing ring animation
+
+  Entrance per card:
+    → Cards start: opacity 0, translateX ±40px (based on side)
+    → Enter when node reached: translate to 0 + fade in
+    → Duration: 600ms ease-out-expo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.9  TESTIMONIALS — ALLIES SPEAK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Layout: 3-column grid on desktop, auto-scroll carousel on mobile
+  Card: transmission message format
+
+  Card structure:
+    ┌──────────────────────────────────┐
+    │  ── TRANSMISSION FROM [NAME] ──  │  ← Chakra Petch, arc-blue, dimmed
+    │                                  │
+    │  " Quote text in IBM Plex        │  ← 1.1rem, --color-text-primary
+    │    italic, max 2-3 lines.        │
+    │    This person is a genius. "    │
+    │                                  │
+    │  [AVATAR]  Name                  │  ← Avatar: 40px circle with glitch
+    │            Role @ Company        │     hover effect
+    │            ★★★★★               │  ← Gold star rating
+    └──────────────────────────────────┘
+
+  Entrance: cards scan-line wipe from top (clip-path: inset(0 0 100% 0 → 0))
+  Avatar hover: CSS glitch effect (translate-x flicker + color shift)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.10  JARVIS AI AGENT PANEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Floating trigger button:
+    → Position: fixed, bottom: 32px, right: 32px, z-index: 999
+    → Shape: circle, 64px × 64px
+    → Background: radial-gradient arc reactor SVG with rotating outer ring
+    → Color: arc-blue core, rotating ring in gold
+    → Idle animation: pulse rings expanding + fading (infinite, 2s)
+    → Hover: scale 1.1, glow intensifies
+    → Open state: rotates 90°, transforms to X (close)
+
+  Panel container:
+    → Opens bottom-right, above trigger button
+    → Dimensions: 420px × 600px (desktop); full screen on mobile
+    → Background: rgba(10,10,18,0.92) + backdrop-filter: blur(24px)
+    → Border: 1px solid rgba(79,195,247,0.3)
+    → Box-shadow: 0 0 60px rgba(79,195,247,0.1) (arc-blue outer glow)
+    → Corner accents: SVG bracket marks at all 4 corners (Stark HUD style)
+    → Entrance animation: scale 0.8 → 1 + opacity 0→1 from bottom-right
+                          origin: bottom right; ease-out-expo; 350ms
+
+  Panel header:
+    ┌────────────────────────────────────────────┐
+    │  [ARC ICON]  J.A.R.V.I.S.        [MUTE][X]│
+    │  AI ASSISTANT — ONLINE            ● ACTIVE │
+    └────────────────────────────────────────────┘
+    → "J.A.R.V.I.S." in Orbitron, arc-blue
+    → "AI ASSISTANT — ONLINE" in Chakra Petch micro, dimmed
+    → Active indicator: green pulsing dot
+    → Mute icon: speaker toggle (mutes TTS audio)
+
+  AI avatar / waveform:
+    → Circular canvas element: 80px × 80px
+    → Idle: slow pulsing arc reactor rings (arc-blue)
+    → Speaking: real-time audio waveform bars (Web Audio API AnalyserNode)
+      bars color: arc-blue → white at peak amplitudes
+    → Thinking (API call in flight): spinning arc ring (dashed border animation)
+
+  Chat messages area:
+    → Scrollable, max-height ~380px
+    → User messages: right-aligned
+      Background: rgba(226,54,54,0.15)
+      Border: 1px solid rgba(226,54,54,0.3)
+      Font: IBM Plex Sans, 0.9rem
+    → JARVIS messages: left-aligned
+      Background: rgba(79,195,247,0.08)
+      Border: 1px solid rgba(79,195,247,0.2)
+      Font: IBM Plex Mono, 0.875rem, --color-text-code
+      Typewriter effect: characters appear at ~30ms/char
+    → Timestamp: Chakra Petch micro, --color-text-tertiary, right-aligned
+
+  Quick-question chips:
+    → Horizontal scroll row above input
+    → Pills: border 1px solid --color-border, Chakra Petch 11px
+    → Hover: border → arc-blue, text → arc-blue
+    → On click: fills input + auto-submits
+
+  Input bar:
+    ┌────────────────────────────────────────────┐
+    │  [MIC]  Type your question...      [SEND ▶]│
+    └────────────────────────────────────────────┘
+    → Background: rgba(255,255,255,0.04)
+    → Border-top: 1px solid --color-border
+    → Font: IBM Plex Mono, 0.875rem
+    → Placeholder: "--color-text-tertiary", italic
+    → Focus border: → arc-blue, glow
+    → Mic button: red when recording, pulse animation
+    → Send: arc-blue, arrow icon
+
+  Audio waveform (full-width, above input):
+    → Only visible when JARVIS is speaking
+    → Canvas: 100% width × 40px
+    → Bars: arc-blue, centered vertically, mirror up/down
+    → Fades in/out with speaking state
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.11  CONTACT SECTION — TERMINAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Overall aesthetic: a terminal/command-line interface in the dark
+
+  Background:
+    → Subtle CRT scan line overlay (very low opacity, static CSS)
+    → Background: #040408 with radial red glow from center top
+
+  Terminal window frame:
+    → Top bar: [●][●][●] traffic lights + "SECURE_CHANNEL.exe" filename
+    → Font throughout: IBM Plex Mono
+    → Border: 1px solid --color-border
+    → Entrance animation: types out "SECURE CHANNEL ESTABLISHED" character
+      by character before form fields appear
+
+  Form fields (terminal-style):
+    Each field:
+      → Label: "$ NAME:" in code-green (Chakra Petch)
+      → Input: text cursor blinking at end, background transparent,
+               border-bottom only (1px solid --color-border)
+      → Focus: border-bottom → gold, cursor → gold
+      → No rounded corners anywhere
+
+    Fields:
+      $ NAME: [_____________________]
+      $ EMAIL: [_____________________]
+      $ SUBJECT: [DROPDOWN]
+      $ MESSAGE:
+      > [multi-line terminal input area]
+      > |
+
+  Submit button:
+    → Full width, background: --color-marvel-red
+    → Text: "TRANSMIT MESSAGE ▶▶" in Orbitron, uppercase, white
+    → Hover: background lightens, arrow icons pulse right
+    → Loading state: "TRANSMITTING..." with spinner made of spinning
+      dashes (pure CSS: / — \ | rotation)
+    → Success state: background → green, "MESSAGE RECEIVED. AWAITING RESPONSE."
+      types out character by character
+
+  Social links:
+    → Below form
+    → Label: "// COMMS CHANNELS"
+    → Icon + platform name side by side
+    → Hover: icon color → platform brand color + subtle float up
+
+  Availability indicator:
+    → "◉ AVAILABLE FOR FREELANCE / CONTRACTS"
+    → Green pulsing dot
+    → Chakra Petch, 13px
+    → Or: "◎ CURRENTLY ENGAGED — LIMITED AVAILABILITY" in gold
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9.12  FOOTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Minimal. Respects the cinematic feel. No bloated footer columns.
+
+  ┌──────────────────────────────────────────────────────────────────┐
+  │  [ARC MARK]  DEVELOPER NAME                     [GH] [LI] [TW]  │
+  │  ─────────────────────────────────────────────────────────────   │
+  │  © 2026 · Built in the multiverse · Made with React & obsession  │
+  └──────────────────────────────────────────────────────────────────┘
+
+  Font: IBM Plex Mono, 0.75rem, --color-text-tertiary
+  "Built in the multiverse" — subtle gold color, hover: glow
+
+
+================================================================================
+  10. TEXTURE, NOISE & ATMOSPHERIC EFFECTS
+================================================================================
+
+NOISE OVERLAY:
+  → SVG noise filter or CSS noise texture (base64 inline)
+  → Opacity: 0.025 — barely perceptible but adds filmic grain
+  → Applied to: full-page body background
+  → DO NOT apply to text or interactive elements
+
+SCAN LINES (classified sections only):
+  → CSS repeating-linear-gradient at 4px intervals
+  → Opacity: 0.02 (extremely subtle)
+  → Applied to: About section, Contact terminal
+
+VIGNETTE:
+  → radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0,0,0,0.4) 100%)
+  → Fixed position overlay on hero section
+  → Creates cinema-screen depth-of-field feel
+
+BACKGROUND GLOW ORBS (atmospheric depth):
+  → 3 absolutely positioned blurred circles per section (pointer-events: none)
+  → Blur: 100px–200px (CSS filter: blur())
+  → Colors vary by section (per section background shift table in §7)
+  → Opacity: 0.04–0.08 (subtle; never overpowering)
+  → Animate: slow drift on infinite loop, 30–60s duration
+
+LENS FLARE EFFECT (hero section only):
+  → Pure CSS: absolutely positioned gradient ellipse
+  → Color: rgba(200,169,81,0.06)
+  → Position: shifts subtly with mouse parallax at 0.02 factor
+  → Not animated (static atmospheric element)
+
+CIRCUIT TEXTURE (surfaces of certain cards):
+  → SVG pattern of thin circuit-board lines
+  → Color: rgba(30,37,64,0.5) — very dim
+  → Used on: dossier section background, mission card backgrounds
+  → Scale: fine, 400px × 400px repeating pattern
+
+
+================================================================================
+  11. RESPONSIVE DESIGN BREAKPOINTS
+================================================================================
+
+  BREAKPOINT   ALIAS       MIN-WIDTH   BEHAVIOR
+  ───────────  ──────────  ──────────  ─────────────────────────────────────
+  xs           Mobile-sm   0px         Single column, CSS-only animations
+  sm           Mobile      390px       Base mobile design
+  md           Tablet      768px       2-column layouts unlock
+  lg           Desktop     1024px      Full layout, Three.js enabled
+  xl           Wide         1280px     Max content width, generous spacing
+  2xl          Ultra        1536px     Increased font scale, wider margins
+
+MOBILE-SPECIFIC RULES:
+  → Three.js: DISABLED, replaced with CSS 3D animations
+  → Hero: CSS gradient background + floating CSS particles (pure CSS, 30 nodes)
+  → Horizontal project scroll: becomes vertical stacked cards
+  → Custom cursor: hidden (cursor: auto restored)
+  → About: single column (photo above bio)
+  → Tech cards: 2 columns, no 3D flip (tap to toggle)
+  → JARVIS panel: full-screen overlay on mobile
+  → All font sizes: scale down proportionally using clamp()
+  → Touch targets: minimum 44px × 44px for all interactive elements
+  → Hamburger nav: full screen overlay with large tap targets
+
+TABLET RULES (768px–1023px):
+  → Three.js: ENABLED with reduced particle count (1000 max)
+  → Most layouts: 2-column
+  → Project carousel: 2 cards visible at once
+  → Horizontal scroll section: DISABLED; vertical stack instead
+
+
+================================================================================
+  12. ACCESSIBILITY DESIGN REQUIREMENTS
+================================================================================
+
+WCAG 2.1 AA COMPLIANCE TARGETS:
+
+  COLOR CONTRAST:
+  → Body text on background: minimum 4.5:1 ratio
+    (#f0f2ff on #0a0a12 = ~17:1 ✓)
+  → Secondary text (#8892b0 on #0a0a12) = ~5.2:1 ✓
+  → Gold text (#c8a951 on #0a0a12) = ~7.4:1 ✓
+  → Red text (#e23636 on #0a0a12) = ~4.6:1 ✓
+  → Code text (#64ffda on #0a0a12) = ~12:1 ✓
+
+  MOTION / ANIMATION:
+  → All animations respect prefers-reduced-motion:
+    @media (prefers-reduced-motion: reduce) {
+      → All GSAP ScrollTrigger animations: snap to final state immediately
+      → Three.js: static render, no particle movement
+      → Custom cursor: disabled, native cursor shown
+      → Hover transitions: 50ms max
+      → Loading screen: skip immediately
+    }
+
+  FOCUS MANAGEMENT:
+  → Custom focus ring: 2px solid --color-stark-gold, 3px offset
+  → Visible on all interactive elements
+  → JARVIS panel: focus trapped inside when open
+  → Modal: focus trapped, ESC closes, returns focus to trigger
+
+  KEYBOARD NAVIGATION:
+  → All navigation operable by keyboard
+  → Skip-to-content link (first focusable element, visually hidden)
+  → Logical tab order matches visual order
+
+  SCREEN READER:
+  → Three.js canvas: aria-hidden="true"
+  → Decorative SVGs: aria-hidden="true"
+  → JARVIS chat: live region (aria-live="polite")
+  → Dynamic content updates announced
+  → All form inputs: associated label elements
+
+  AUDIO:
+  → Ambient music: OFF by default, user-initiated
+  → JARVIS voice: mute control always visible
+  → No auto-play audio of any kind on page load
+
+  FONT SIZE:
+  → Base: 16px, no text below 11px (--text-micro exception for decorative only)
+  → All text sizes use rem/em or clamp(), not fixed px
+  → Text remains readable at 200% browser zoom
+
+
+================================================================================
+  13. DARK MODE (ONLY MODE)
+================================================================================
+
+  This portfolio has ONE mode: DARK. There is no light mode.
+
+  Rationale:
+  → The Marvel cinematic aesthetic is fundamentally built on darkness
+  → Light mode would destroy the atmosphere completely
+  → Developers work at night. Clients respect darkness.
+
+  System preference handling:
+  → prefers-color-scheme: light → IGNORE (dark mode always)
+  → Display a note if desired: "This portfolio is dark-mode only — as it
+    should be." (optional easter egg in footer)
+
+
+================================================================================
+  14. ASSET SPECIFICATIONS
+================================================================================
+
+IMAGES:
+  Format       → WebP with AVIF fallback (never JPEG for UI elements)
+  Developer photo: min 800×800px, preferably 1200×1200px
+               → dark or neutral background preferred
+  Project screenshots: 1200×800px minimum, 16:9 or 3:2 ratio
+  Company logos: SVG preferred; PNG @2x fallback
+
+ICONS:
+  Format       → SVG inline (not icon fonts, not PNG)
+  Size         → Designed at 24×24 grid, scalable
+  Export       → Optimized with SVGO (no unnecessary attributes)
+
+THREE.JS / 3D:
+  → No external 3D model files in v1 (performance risk)
+  → All 3D elements: procedurally generated (Three.js primitives)
+  → If adding a developer avatar: use GLTF, max 2MB compressed
+  → Draco compression required for any GLTF assets
+
+FONTS:
+  → Self-host on Vercel CDN after downloading from Google Fonts
+  → Preload critical fonts: Bebas Neue, Rajdhani 700
+  → font-display: swap for all non-preloaded fonts
+  → Subset fonts to used characters if file size > 40KB
+
+VIDEO (optional, for project demos):
+  Format       → MP4 (H.264) with WebM fallback
+  Max size     → 10MB per video
+  Autoplay     → only in modal, muted, loop on, user-initiated
+
+FAVICON & PWA:
+  → SVG favicon (arc reactor mark)
+  → 180×180 apple-touch-icon
+  → 512×512 og:image (designed as standalone shareable card)
+  → OG Image style: developer name + role + arc reactor on dark background
+
+
+================================================================================
+  15. DESIGN TOKENS REFERENCE SHEET
+================================================================================
+
+  Paste this into your CSS :root {} block as starting point:
+
+  :root {
+    /* COLORS */
+    --color-void:            #040408;
+    --color-space:           #0a0a12;
+    --color-deep:            #0d1020;
+    --color-surface:         #111827;
+    --color-surface-raised:  #161d2e;
+    --color-border:          #1e2540;
+    --color-border-glow:     #2a3560;
+    --color-marvel-red:      #e23636;
+    --color-marvel-red-dim:  #8b1a1a;
+    --color-stark-gold:      #c8a951;
+    --color-stark-gold-dim:  #7a6330;
+    --color-arc-blue:        #4fc3f7;
+    --color-arc-blue-dim:    #1565a0;
+    --color-text-primary:    #f0f2ff;
+    --color-text-secondary:  #8892b0;
+    --color-text-tertiary:   #4a5568;
+    --color-text-code:       #64ffda;
+    --color-text-gold:       #c8a951;
+    --color-success:         #22c55e;
+    --color-warning:         #f59e0b;
+    --color-danger:          #ef4444;
+
+    /* TYPOGRAPHY */
+    --font-display:  'Bebas Neue', 'Impact', sans-serif;
+    --font-heading:  'Rajdhani', sans-serif;
+    --font-hud:      'Orbitron', sans-serif;
+    --font-body:     'IBM Plex Sans', sans-serif;
+    --font-mono:     'IBM Plex Mono', 'Courier New', monospace;
+    --font-label:    'Chakra Petch', sans-serif;
+
+    /* SPACING */
+    --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+    --space-4: 16px;  --space-5: 20px;  --space-6: 24px;
+    --space-8: 32px;  --space-10: 40px; --space-12: 48px;
+    --space-16: 64px; --space-20: 80px; --space-24: 96px;
+    --space-32: 128px;
+
+    /* BORDER RADIUS */
+    --radius-none: 0px;
+    --radius-sm:   2px;
+    --radius-md:   4px;
+    --radius-lg:   8px;
+    --radius-xl:   12px;
+    --radius-full: 9999px;
+
+    /* ANIMATION */
+    --ease-out-expo:     cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart:    cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-in-quart:     cubic-bezier(0.5, 0, 0.75, 0);
+    --ease-in-out-sine:  cubic-bezier(0.37, 0, 0.63, 1);
+    --duration-instant:  80ms;
+    --duration-fast:     150ms;
+    --duration-normal:   300ms;
+    --duration-medium:   500ms;
+    --duration-slow:     800ms;
+    --duration-cinematic: 1200ms;
+
+    /* Z-INDEX SCALE */
+    --z-base:     1;
+    --z-raised:   10;
+    --z-dropdown: 100;
+    --z-modal:    500;
+    --z-jarvis:   900;
+    --z-nav:      1000;
+    --z-cursor:   9999;
+  }
+
+
+================================================================================
+  END OF DESIGN PRD
+  DevUniverse — Marvel-Style 3D Portfolio
+  "Not just a portfolio. A universe."
+  Prepared by Claude | April 2026
+================================================================================

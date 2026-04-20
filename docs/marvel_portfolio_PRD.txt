@@ -1,0 +1,620 @@
+================================================================================
+  PRODUCT REQUIREMENTS DOCUMENT (PRD)
+  MARVEL-STYLE 3D PERSONAL PORTFOLIO — FULL STACK DEVELOPER
+  Version: 1.0  |  Date: April 2026  |  Status: Draft
+================================================================================
+
+--------------------------------------------------------------------------------
+1. PRODUCT OVERVIEW
+--------------------------------------------------------------------------------
+
+Product Name    : DevUniverse — Marvel-Style 3D Portfolio
+Owner           : [Your Name] — Full Stack Developer
+Target Audience : Potential clients, hiring managers, tech recruiters,
+                  collaborators, and startups seeking development talent
+Core Vision     : An immersive, cinematic portfolio experience inspired by the
+                  Marvel Cinematic Universe — where the developer is the HERO,
+                  projects are MISSIONS, skills are POWERS, and an AI Agent is
+                  the personal JARVIS that answers client questions in real-time
+                  with voice audio.
+
+Tagline         : "Not just a portfolio. A universe."
+
+
+--------------------------------------------------------------------------------
+2. PROBLEM STATEMENT
+--------------------------------------------------------------------------------
+
+- Standard portfolios are flat, forgettable, and fail to communicate the
+  developer's personality, depth, and energy.
+- Clients and recruiters skim dozens of portfolios — there is no differentiation.
+- No existing portfolio format provides interactive, conversational access to
+  the developer's capabilities 24/7.
+- There is no emotional journey — no story arc that draws the visitor in.
+
+
+--------------------------------------------------------------------------------
+3. GOALS & SUCCESS METRICS
+--------------------------------------------------------------------------------
+
+GOALS:
+  [G1] Create a visually cinematic, 3D scrolling experience that is unforgettable.
+  [G2] Guide visitors through a story — from Hero intro → Powers → Missions →
+       Testimonials → Contact — using scroll-driven motion.
+  [G3] Deploy an AI Voice Agent (JARVIS-style) that answers questions about
+       the developer 24/7, replacing a static FAQ or contact form.
+  [G4] Demonstrate the developer's own engineering skill through the portfolio
+       itself (meta-proof of capability).
+  [G5] Convert visitors into leads — drive contact form fills, calls, or hires.
+
+SUCCESS METRICS:
+  - Average session duration > 3 minutes
+  - Scroll depth > 80% (visitors reach the Contact section)
+  - AI Agent interaction rate > 40% of visitors
+  - Contact form conversion rate > 8%
+  - Mobile performance score > 85 (Lighthouse)
+  - Desktop performance score > 90 (Lighthouse)
+
+
+--------------------------------------------------------------------------------
+4. TARGET USERS
+--------------------------------------------------------------------------------
+
+PRIMARY USERS:
+  - Startup founders evaluating full stack developers for hire / contract
+  - Tech recruiters at product companies
+  - Product managers looking for a technical co-founder or contractor
+
+SECONDARY USERS:
+  - Fellow developers exploring inspiration or collaboration
+  - Design/tech community sharing on social media (virality driver)
+
+USER GOALS:
+  - Quickly understand what the developer builds and their tech stack
+  - Feel confidence in the developer's capabilities and personality
+  - Ask specific questions without waiting for an email reply
+  - Find a way to reach out or book a call
+
+
+--------------------------------------------------------------------------------
+5. SCOPE — IN & OUT
+--------------------------------------------------------------------------------
+
+IN SCOPE:
+  [✓] 3D hero introduction with particle/space environment
+  [✓] Scroll-triggered cinematic animations (GSAP / Three.js)
+  [✓] Sections: Hero, About, Tech Stack Powers, Projects, Experience,
+      Testimonials, AI Agent, Contact
+  [✓] AI Voice Agent (JARVIS) — answers questions via text + audio response
+  [✓] Mobile-responsive design (though desktop is primary experience)
+  [✓] Dark cinematic theme (Marvel-style: red, gold, black, deep space)
+  [✓] Custom cursor, sound design (subtle ambient Marvel-style audio)
+  [✓] Performance optimization (lazy loading, code splitting)
+  [✓] SEO and OG meta tags
+  [✓] Analytics (Vercel Analytics or Google Analytics)
+
+OUT OF SCOPE (v1):
+  [✗] CMS / Admin panel for self-editing
+  [✗] Blog section
+  [✗] Multi-language support
+  [✗] Client dashboard or project tracker
+  [✗] Payment integration
+
+
+--------------------------------------------------------------------------------
+6. FEATURE SPECIFICATIONS
+--------------------------------------------------------------------------------
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.1  LOADING SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  A Marvel Studios-style intro — the logo/name assembles letter by letter or
+  flips in with comic-book panel frames transitioning into the main site.
+
+Requirements:
+  - Duration: 2.5 – 3.5 seconds max
+  - Display developer's name assembling with metallic shimmer
+  - Marvel-style red flash or arc reactor pulse on completion
+  - Progress bar styled as an energy charge
+  - Skip button after 1.5 seconds
+  - Transition: dramatic zoom-out reveals the 3D hero scene
+  - Preloads critical assets during this phase
+
+Technical Notes:
+  - Use GSAP timeline for letter-by-letter animation
+  - Canvas or CSS clip-path for panel reveal effect
+  - Font: Cinzel Decorative or similar bold serif
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.2  HERO SECTION — "THE ORIGIN STORY"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Full-screen 3D scene. Developer appears as a holographic/3D silhouette or
+  avatar in the center. Particle field (stars/code fragments) surrounds them.
+  Text overlays introduce the hero.
+
+Requirements:
+  - Three.js / React Three Fiber scene with particle system
+  - Floating 3D text: Name, Title ("Full Stack Developer"), and tagline
+  - Subtle camera drift / parallax on mouse move
+  - CTA buttons: "View My Work" (scroll trigger) + "Talk to JARVIS" (opens AI)
+  - Ambient background audio toggle (subtle cinematic score, off by default)
+  - Scroll indicator: animated downward arrow with "Scroll to explore" text
+  - Background: deep space / nebula with red and gold accent lighting
+
+Content:
+  - Headline: "[Your Name]"
+  - Subheadline: "Full Stack Developer · Architect of Digital Universes"
+  - Body copy (short): 1-2 lines max, e.g.,
+    "I build fast, scalable, and cinematic web experiences.
+     From API to pixel — I own the full stack."
+
+Technical Notes:
+  - Three.js particle system with ~2000 particles
+  - Use instanced mesh for performance
+  - GSAP ScrollTrigger to begin transition on scroll
+  - Responsive: on mobile, simplify to CSS 3D transforms (no Three.js)
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.3  ABOUT SECTION — "THE HERO DOSSIER"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Styled like a SHIELD/Stark Industries intelligence file. Contains developer's
+  background, personality, and philosophy. Scroll-triggered reveal with
+  classified-document aesthetics.
+
+Requirements:
+  - "CLASSIFIED — LEVEL 5 ACCESS GRANTED" stamp animation on enter
+  - Scanline / document texture overlay
+  - Developer photo with glitch or holographic hover effect
+  - Stats displayed as HUD-style animated counters:
+      · Years of Experience
+      · Projects Shipped
+      · Technologies Mastered
+      · Cups of Coffee (fun stat)
+  - Two-column layout: Bio text | Photo + Stats
+  - Timeline of career milestones styled as mission briefings
+
+Content Needed From Developer:
+  - Bio paragraph (200-300 words)
+  - Photo (high quality, preferably dark background)
+  - Career milestones (year + description)
+  - Key stats (years exp, project count, etc.)
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.4  TECH STACK SECTION — "SUPERPOWERS"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Each technology is presented as a SUPERPOWER card — with a glowing icon,
+  power level bar, and brief description. Cards float in 3D space and can be
+  flipped or hovered for detail.
+
+Requirements:
+  - 3D card flip on hover (CSS transform-style: preserve-3d)
+  - Front: Tech icon + name
+  - Back: Proficiency level + years used + notable use
+  - Categories with comic-book section dividers:
+      · FRONTEND POWERS (React, Next.js, TypeScript, Tailwind, Three.js)
+      · BACKEND POWERS (Node.js, Python, Express, GraphQL, REST)
+      · DATABASE POWERS (PostgreSQL, MongoDB, Redis, Supabase, Firebase)
+      · DEVOPS POWERS (Docker, AWS, Vercel, CI/CD, Kubernetes)
+      · SPECIAL ABILITIES (AI/LLM integration, WebSockets, Web3, etc.)
+  - Scroll entrance: cards fly in from off-screen like hero ability cards
+  - Glowing outline on hover (color-coded by category)
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.5  PROJECTS SECTION — "THE MISSIONS"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Projects are MISSIONS. Each mission card has a classified briefing style.
+  A horizontal scroll or 3D carousel presents projects cinematically.
+
+Requirements:
+  - 3D carousel or horizontal scroll (Swiper.js or custom GSAP horizontal)
+  - Each card contains:
+      · Mission Code Name (Project Name)
+      · Status Badge: COMPLETED / ACTIVE / CLASSIFIED
+      · 1-line mission brief (what it does)
+      · Tech stack used (icon pills)
+      · Thumbnail / screenshot
+      · Two CTA buttons: "View Live" + "Read Briefing" (GitHub/case study)
+  - On click: full-screen modal/overlay with:
+      · Full project description
+      · Problem → Solution → Impact structure
+      · Screenshot gallery or demo video embed
+      · Tech deep-dive
+  - Filter bar: All / Frontend / Backend / Fullstack / AI Projects
+  - Min. 5 featured projects
+
+Content Needed From Developer:
+  - Project list with name, description, tech stack, URLs, screenshots
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.6  EXPERIENCE SECTION — "BATTLE HISTORY"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Vertical timeline styled like a Marvel battle history or mission log.
+  Each role entry animates in on scroll with cinematic reveal.
+
+Requirements:
+  - Vertical timeline with glowing nodes
+  - Each entry: Company Logo, Role, Duration, Bullet points (3-5 achievements)
+  - Animate: line draws from top to bottom on scroll
+  - Company logos in grayscale, colored on hover
+  - "Active" tag for current role with pulsing indicator
+
+Priority: P1 (Should Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.7  TESTIMONIALS — "ALLIES SPEAK"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  Testimonials from past clients/colleagues, styled as incoming transmissions
+  or holographic messages.
+
+Requirements:
+  - Auto-scrolling or manual carousel
+  - Each card: Quote, Name, Role, Company, Avatar
+  - "Transmission received from [Name]" intro animation
+  - Glitch effect on avatar on hover
+  - LinkedIn link/badge optional
+
+Priority: P1 (Should Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.8  AI AGENT — "JARVIS" (CORE DIFFERENTIATOR)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  A floating AI assistant that visitors can open anytime. It knows everything
+  about the developer — skills, availability, rates, past work, personality.
+  It responds via text AND speaks the answer aloud using text-to-speech.
+
+UI:
+  - Floating arc-reactor button (bottom-right) with pulse animation
+  - Opens a holographic HUD-style chat panel (not a boring modal)
+  - Animated AI avatar (abstract face or arc reactor pulse synced to speech)
+  - Chat history scrollable
+  - Suggested questions displayed as quick-tap chips:
+      · "What technologies do you specialize in?"
+      · "Are you available for freelance?"
+      · "Tell me about your biggest project"
+      · "What are your rates?"
+      · "How do I hire you?"
+
+AUDIO BEHAVIOR:
+  - Every AI response is spoken aloud via Web Speech API or ElevenLabs TTS
+  - Voice: Deep, calm, British accent (JARVIS-inspired) if ElevenLabs is used
+  - Mute/unmute toggle in the chat panel
+  - Audio waveform visualizer plays while JARVIS is speaking
+  - User can type OR click mic icon to speak question (Web Speech Recognition)
+
+AI KNOWLEDGE BASE (Developer must provide):
+  - Full bio and background
+  - Complete tech stack and proficiency levels
+  - List of all projects with descriptions
+  - Availability and types of work accepted
+  - Hourly/project rates (or "contact for rates")
+  - Contact information
+  - FAQs (common client questions and answers)
+  - Personality traits and work philosophy
+
+AI BACKEND:
+  - API: Claude API (claude-sonnet model) via backend proxy
+  - System prompt pre-loads all developer knowledge
+  - Streaming responses for natural feel
+  - Rate limiting: 20 requests per IP per day
+  - Fallback: if API down, show static FAQ
+
+VOICE OPTIONS (choose one):
+  Option A — Free: Web Speech API (browser-native TTS, less natural)
+  Option B — Premium: ElevenLabs API (hyper-realistic JARVIS voice, ~$5/month)
+  Recommended: Option B for maximum impact
+
+Priority: P0 (Must Have — Core Differentiator)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.9  CONTACT SECTION — "INITIATE CONTACT"
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Description:
+  A terminal/mission-control style contact form. Feels like sending a secure
+  transmission to a hero's headquarters.
+
+Requirements:
+  - Fields: Name, Email, Project Type (dropdown), Message
+  - Styled as a terminal with blinking cursor and green/gold text on dark BG
+  - "Transmit" button with energy charge animation on hover
+  - On submit: success animation ("Message received. JARVIS will respond.")
+  - Backend: EmailJS, Resend, or custom Node.js mail handler
+  - Social links: GitHub, LinkedIn, Twitter/X — styled as comm channels
+  - Availability badge: "Available for work" or "Currently Engaged"
+
+Priority: P0 (Must Have)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6.10  NAVIGATION & GLOBAL UI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Requirements:
+  - Fixed top navbar: transparent → frosted glass on scroll
+  - Logo: Developer initials in arc-reactor / Iron Man-inspired mark
+  - Nav links: Origin | Powers | Missions | History | Contact
+  - Active section highlighted with red underline
+  - Hamburger for mobile with full-screen overlay menu
+  - Custom cursor: arc reactor circle + crosshair glow (desktop only)
+  - Scroll progress bar at very top of page (red/gold gradient)
+  - Easter egg: Konami code triggers a special animation
+
+Priority: P0 (Must Have)
+
+
+--------------------------------------------------------------------------------
+7. DESIGN SYSTEM
+--------------------------------------------------------------------------------
+
+COLOR PALETTE:
+  Primary Background  : #0a0a0f  (near-black, deep space)
+  Secondary BG        : #0d1117  (dark blue-black)
+  Marvel Red          : #e23636  (hero accent)
+  Gold / Stark        : #c8a951  (premium accent)
+  Arc Blue            : #4fc3f7  (JARVIS / tech accent)
+  Text Primary        : #f0f0f0  (near white)
+  Text Secondary      : #8b8fa8  (muted)
+  Surface             : #13151e  (card backgrounds)
+  Border              : #1e2235  (subtle dividers)
+
+TYPOGRAPHY:
+  Display / Hero      : "Bebas Neue" or "Cinzel Decorative" — cinematic impact
+  Heading             : "Rajdhani" or "Orbitron" — sci-fi / tech feel
+  Body                : "IBM Plex Mono" or "Space Mono" — developer/terminal feel
+  UI Elements         : "Chakra Petch" — futuristic labels
+
+MOTION PRINCIPLES:
+  - Scroll-driven: All major reveals triggered by ScrollTrigger
+  - Ease: expo.out for enters, power2.in for exits
+  - Duration: 0.6s–1.2s for hero elements; 0.3s–0.5s for UI elements
+  - No bounce or elastic easing (too playful for Marvel tone)
+  - Parallax: subtle on all background elements (0.2–0.4 factor)
+  - Stagger: 0.08s between list item reveals
+
+ICONOGRAPHY:
+  - Custom SVG icons styled as Stark Industries interface glyphs
+  - Tech stack: devicons.dev SVG set (colored versions)
+  - UI icons: Lucide React or Phosphor Icons (thin weight)
+
+
+--------------------------------------------------------------------------------
+8. TECHNICAL ARCHITECTURE
+--------------------------------------------------------------------------------
+
+FRONTEND FRAMEWORK:
+  - Next.js 14+ (App Router) — SSR/SSG for performance + SEO
+  - TypeScript — strict mode
+
+3D & ANIMATION:
+  - Three.js / React Three Fiber — 3D scenes (hero, particle systems)
+  - Drei — Three.js helpers (stars, floating text, environment)
+  - GSAP + ScrollTrigger — scroll-driven animations, timelines
+  - Framer Motion — component-level animations and page transitions
+  - Lenis — smooth scroll inertia
+
+STYLING:
+  - Tailwind CSS — utility-first base
+  - CSS Modules — component-specific complex styles
+  - CSS Custom Properties — theme tokens
+
+AI AGENT BACKEND:
+  - Next.js API Routes (serverless) as proxy to Claude API
+  - System prompt: injected developer knowledge base (JSON or .md file)
+  - Streaming: Server-Sent Events for real-time response streaming
+
+VOICE / TTS:
+  - ElevenLabs API (preferred) or Web Speech API
+  - Web Speech API for STT (user mic input)
+  - Audio visualizer: Web Audio API AnalyserNode → Canvas
+
+CONTACT FORM:
+  - Resend or EmailJS for email delivery
+  - React Hook Form + Zod for validation
+
+HOSTING & DEPLOYMENT:
+  - Vercel — automatic deployments from GitHub, edge functions
+  - Domain: custom domain with HTTPS
+  - Environment variables for all API keys
+
+PERFORMANCE TARGETS:
+  - LCP < 2.5s
+  - FID < 100ms
+  - CLS < 0.1
+  - Lighthouse Desktop ≥ 90
+  - Lighthouse Mobile ≥ 85
+  - Three.js scene: stable 60fps on mid-range hardware
+
+SEO:
+  - Dynamic meta tags per section
+  - Open Graph + Twitter Card for social sharing
+  - JSON-LD schema (Person + WebSite)
+  - Sitemap.xml
+
+
+--------------------------------------------------------------------------------
+9. SCROLL JOURNEY — CINEMATIC FLOW
+--------------------------------------------------------------------------------
+
+[LOAD]
+  Loading screen → Marvel logo reveal → Zoom out to Hero scene
+
+[0%]   HERO       — 3D space scene, name reveals, particle burst
+[15%]  ABOUT      — Classified dossier slides in, counters animate
+[30%]  POWERS     — Tech cards fly in from off-screen
+[50%]  MISSIONS   — Horizontal carousel activates on vertical scroll
+[65%]  HISTORY    — Timeline draws itself downward
+[75%]  ALLIES     — Testimonials rotate in
+[85%]  JARVIS     — Section spotlight on AI agent CTA
+[100%] CONTACT    — Terminal blinks to life
+
+Each section transition uses a unique motion signature (no two sections
+enter the same way). Background shifts subtly in hue per section.
+
+
+--------------------------------------------------------------------------------
+10. AI AGENT — SYSTEM PROMPT TEMPLATE
+--------------------------------------------------------------------------------
+
+The following is the base system prompt structure to be customized with
+the developer's actual information before deployment:
+
+---
+You are JARVIS — an AI assistant for [Developer Name], a Full Stack Developer
+based in [City, Country]. Your job is to help potential clients, recruiters,
+and visitors learn about [Developer Name]'s skills, projects, availability,
+and experience.
+
+PERSONALITY:
+  - Calm, confident, slightly formal but warm
+  - Concise — never more than 3 paragraphs
+  - Enthusiastic about the developer's work
+  - Never make up information — if unsure, say "I'd recommend reaching out
+    directly via the contact form for that one."
+
+DEVELOPER KNOWLEDGE BASE:
+  [INSERT: Full name, location, years of experience]
+  [INSERT: Tech stack details]
+  [INSERT: Top 5 projects summary]
+  [INSERT: Availability and work types accepted]
+  [INSERT: Rate range or "contact for custom quote"]
+  [INSERT: Contact methods]
+  [INSERT: Personality and work philosophy]
+
+ALWAYS END RESPONSES WITH a subtle CTA when relevant:
+  e.g., "Want to discuss your project? Hit the Contact button below."
+---
+
+
+--------------------------------------------------------------------------------
+11. PHASED DELIVERY PLAN
+--------------------------------------------------------------------------------
+
+PHASE 1 — FOUNDATION (Week 1-2)
+  - Project setup: Next.js, TypeScript, Tailwind, GSAP, Three.js
+  - Design tokens and component library scaffolded
+  - Loading screen + Hero section (3D scene)
+  - Navbar + scroll progress + custom cursor
+  - Responsive shell
+
+PHASE 2 — CORE SECTIONS (Week 3-4)
+  - About / Dossier section
+  - Tech Stack / Superpowers section
+  - Projects / Missions section with modal
+  - Experience / Timeline section
+
+PHASE 3 — AI AGENT (Week 5)
+  - Backend API route (Claude proxy)
+  - Developer knowledge base JSON
+  - Chat UI (JARVIS panel)
+  - ElevenLabs TTS integration
+  - Web Speech API input
+  - Audio waveform visualizer
+
+PHASE 4 — POLISH & LAUNCH (Week 6)
+  - Testimonials section
+  - Contact form (Resend integration)
+  - Performance optimization
+  - SEO meta tags + OG images
+  - Cross-browser QA
+  - Mobile optimization
+  - Deploy to Vercel + custom domain
+
+
+--------------------------------------------------------------------------------
+12. DEPENDENCIES & THIRD-PARTY SERVICES
+--------------------------------------------------------------------------------
+
+  Package / Service        Purpose                   Cost
+  ─────────────────────── ──────────────────────     ──────
+  Next.js 14              Framework                  Free
+  Three.js / R3F          3D rendering               Free
+  GSAP + ScrollTrigger    Animations                 Free (or $99/yr Club)
+  Framer Motion           Component animations       Free
+  Lenis                   Smooth scroll              Free
+  Tailwind CSS            Styling                    Free
+  Claude API (Anthropic)  AI Agent brain             ~$5–15/month
+  ElevenLabs API          Voice TTS                  Free tier / $5/month
+  Resend                  Contact form emails        Free tier (3k/month)
+  Vercel                  Hosting                    Free tier
+  GitHub                  Version control            Free
+
+
+--------------------------------------------------------------------------------
+13. RISKS & MITIGATIONS
+--------------------------------------------------------------------------------
+
+  RISK                          MITIGATION
+  ──────────────────────────    ─────────────────────────────────────
+  Three.js perf on mobile       Detect device → serve CSS-only 3D version
+  AI Agent API costs spike      Rate limit per IP, cache common answers
+  ElevenLabs voice latency      Stream TTS in chunks; show text immediately
+  Long load time for 3D         Loading screen + progressive asset loading
+  JARVIS gives wrong info       Tight system prompt + "I don't know" fallback
+  Browser TTS inconsistency     Test across Chrome, Safari, Firefox; fallback
+
+
+--------------------------------------------------------------------------------
+14. OPEN QUESTIONS (To Resolve Before Build)
+--------------------------------------------------------------------------------
+
+  [ ] Will the developer have a professional photo for the About section?
+  [ ] Is there a preferred voice style for JARVIS (gender, accent, tone)?
+  [ ] Should AI Agent conversation history persist across sessions?
+  [ ] How many projects to feature? (Recommend: 5–8 for v1)
+  [ ] Should rates be shown publicly or gated behind "Talk to JARVIS"?
+  [ ] Preferred contact method: email, Cal.com booking, or WhatsApp?
+  [ ] Is a blog/writing section desired for v2?
+
+
+--------------------------------------------------------------------------------
+15. APPENDIX — RECOMMENDED INSPIRATIONS & REFERENCES
+--------------------------------------------------------------------------------
+
+  DESIGN INSPIRATION:
+  - Marvel.com official site — UI patterns and color language
+  - Bruno Simon's portfolio — Three.js benchmark for developer portfolios
+  - Iron Man HUD references — for JARVIS UI design
+  - Awwwards.com "Site of the Day" 2024–2025 selections
+
+  TECHNICAL REFERENCES:
+  - Three.js Journey (Bruno Simon) — React Three Fiber patterns
+  - GSAP ScrollTrigger docs — cinematic scroll techniques
+  - Anthropic Cookbook — Claude API streaming + system prompts
+  - ElevenLabs Docs — streaming TTS in browser
+
+  SOUND DESIGN:
+  - Use Freesound.org for royalty-free ambient space sounds
+  - Arc reactor hum: synthesize with Tone.js or source royalty-free
+  - All audio: off by default, user opt-in
+
+
+================================================================================
+  END OF DOCUMENT
+  Prepared by Claude | April 2026
+  "With great power comes great full-stack responsibility."
+================================================================================

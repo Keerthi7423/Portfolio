@@ -1,0 +1,940 @@
+================================================================================
+  TECH STACK PRD — MARVEL-STYLE 3D PERSONAL PORTFOLIO
+  DevUniverse | Full Stack Developer Portfolio
+  Version: 1.0  |  April 2026  |  Status: Approved
+================================================================================
+
+  "The right tools build universes. The wrong ones build excuses."
+
+================================================================================
+  TABLE OF CONTENTS
+================================================================================
+
+  1.  Stack Overview & Philosophy
+  2.  Frontend Core
+  3.  3D Engine & Scene Management
+  4.  Animation System
+  5.  Styling System
+  6.  AI Agent — JARVIS
+  7.  Voice System (TTS + STT + Visualizer)
+  8.  Contact & Email
+  9.  Hosting & Deployment
+  10. Project Folder Structure
+  11. Package List (package.json reference)
+  12. Environment Variables
+  13. API Architecture
+  14. Performance Budget
+  15. Upgrade Path (Free → Paid)
+
+
+================================================================================
+  1. STACK OVERVIEW & PHILOSOPHY
+================================================================================
+
+GUIDING RULES:
+  [1] Zero monthly cost on launch day
+  [2] No TypeScript — plain JavaScript (ES2022+) throughout
+  [3] Gemini API for AI brain (free tier, no credit card required)
+  [4] Antigravity integration via Next.js API route
+  [5] One repo, one deploy, everything runs from Vercel
+  [6] No unnecessary dependencies — every package earns its place
+
+LANGUAGE:  JavaScript (ES2022+, JSX)
+RUNTIME:   Node.js 20+
+PACKAGE:   npm (or pnpm for speed)
+
+COST SUMMARY:
+  ┌─────────────────────────────────────┬──────────────┐
+  │  Service                            │  Monthly Cost│
+  ├─────────────────────────────────────┼──────────────┤
+  │  Next.js (framework)                │  $0.00       │
+  │  React Three Fiber (3D)             │  $0.00       │
+  │  GSAP + ScrollTrigger               │  $0.00       │
+  │  Framer Motion                      │  $0.00       │
+  │  Lenis (smooth scroll)              │  $0.00       │
+  │  Tailwind CSS                       │  $0.00       │
+  │  Gemini 1.5 Flash API               │  $0.00       │
+  │  Web Speech API (TTS + STT)         │  $0.00       │
+  │  Web Audio API (visualizer)         │  $0.00       │
+  │  Resend (email)                     │  $0.00       │
+  │  Vercel (hosting)                   │  $0.00       │
+  ├─────────────────────────────────────┼──────────────┤
+  │  TOTAL                              │  $0.00 / mo  │
+  └─────────────────────────────────────┴──────────────┘
+
+
+================================================================================
+  2. FRONTEND CORE
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  NEXT.JS 14 — App Router
+────────────────────────────────────────────────────────────────────────────────
+
+  Version       : 14.x (latest stable)
+  Language      : JavaScript (no TypeScript)
+  Router        : App Router (not Pages Router)
+  Rendering     : SSG for portfolio sections, SSR not needed
+  API Routes    : Used for JARVIS proxy, Antigravity, and email
+
+  WHY NEXT.JS:
+  → API routes eliminate need for a separate backend server
+  → SSG pre-renders all portfolio sections at build time = instant loads
+  → Built-in image optimization (next/image) for project screenshots
+  → Vercel deploys it with zero configuration
+  → App Router enables layouts, loading states, and server components
+
+  KEY NEXT.JS FEATURES USED:
+  → app/layout.js         — root layout, font loading, global providers
+  → app/page.js           — single page portfolio (all sections)
+  → app/api/jarvis/route.js     — JARVIS AI proxy to Gemini
+  → app/api/antigravity/route.js — Antigravity integration
+  → app/api/contact/route.js    — email via Resend
+  → next/image            — all project screenshots and photos
+  → next/font             — self-hosted Google Fonts (Bebas Neue etc.)
+  → next.config.js        — image domains, headers, rewrites
+
+  CONFIGURATION (next.config.js):
+  module.exports = {
+    images: {
+      domains: ['your-image-cdn.com'],
+    },
+    experimental: {
+      scrollRestoration: true,
+    },
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  REACT 18
+────────────────────────────────────────────────────────────────────────────────
+
+  Version       : 18.x
+  Features used : Concurrent rendering, Suspense for 3D scene loading,
+                  useTransition for smooth AI response streaming,
+                  useDeferredValue for performance
+
+  REACT PATTERNS USED:
+  → Context API for: theme, JARVIS panel open/close state, audio mute state
+  → Custom hooks for: scroll position, mouse position, JARVIS API calls,
+                      Web Speech recognition, audio visualizer
+  → Suspense + lazy() for: Three.js scene (code-split, loads async)
+  → forwardRef for: animated components that GSAP needs DOM access to
+
+
+================================================================================
+  3. 3D ENGINE & SCENE MANAGEMENT
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  REACT THREE FIBER (R3F)
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : @react-three/fiber
+  Version       : 8.x
+  Based on      : Three.js r160+
+  Cost          : Free, MIT license
+
+  WHY R3F:
+  → Three.js written as React JSX — no imperative DOM manipulation
+  → Automatic resize handling, render loop management
+  → Integrates with React Suspense for asset loading
+  → Used exclusively in hero section particle scene
+
+  WHAT IT POWERS:
+  → Hero particle system (2000–3000 floating particles)
+  → 3D floating developer name text
+  → Camera drift + mouse parallax effect
+  → Bloom and post-processing effects (if device allows)
+
+  PERFORMANCE GUARD:
+  → Wrapped in React.lazy() + Suspense
+  → Detects mobile via window.innerWidth < 1024
+  → On mobile: component returns null, CSS fallback renders instead
+  → FPS monitor: if < 40fps after 3s, reduces particle count by 50%
+
+────────────────────────────────────────────────────────────────────────────────
+  DREI (@react-three/drei)
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : @react-three/drei
+  Version       : 9.x
+  Cost          : Free, MIT license
+
+  DREI HELPERS USED:
+  → <Stars />           — background star field
+  → <Float />           — floating animation on 3D text
+  → <Text />            — developer name in 3D space
+  → <Environment />     — ambient lighting preset
+  → <PerformanceMonitor> — auto-degrades quality on slow devices
+  → <AdaptiveDpr />     — reduces pixel ratio on low-end devices
+  → useProgress         — loading progress for the intro screen
+
+────────────────────────────────────────────────────────────────────────────────
+  @react-three/postprocessing
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : @react-three/postprocessing
+  Version       : 2.x
+  Cost          : Free
+
+  EFFECTS USED (desktop only):
+  → Bloom          — glow on bright particles and 3D text
+  → ChromaticAberration — subtle lens distortion (0.3px max)
+  → Vignette       — darkens edges of 3D canvas
+
+  RULE: Post-processing disabled on mobile and on devices with < 4GB RAM
+  Detection: navigator.deviceMemory API + screen width check
+
+
+================================================================================
+  4. ANIMATION SYSTEM
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  GSAP + ScrollTrigger
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : gsap
+  Version       : 3.x
+  Cost          : Free (GSAP 3 core + ScrollTrigger = free for all use cases)
+
+  NOTE: GSAP Club plugins (SplitText, MorphSVG) are paid.
+  This project uses ONLY free plugins.
+
+  FREE GSAP PLUGINS USED:
+  → ScrollTrigger   — scroll-driven animations (all section reveals)
+  → ScrollToPlugin  — smooth scroll-to on nav link click
+  → Flip            — layout transition animations (project filter)
+  → Observer        — custom scroll detection for horizontal section
+
+  WHAT GSAP HANDLES:
+  → Loading screen letter-by-letter name assembly
+  → Hero text staggered entrance (each word/line separate timeline)
+  → ALL section scroll-trigger entrances (8 unique entrance signatures)
+  → Horizontal scroll conversion for Projects/Missions section
+       gsap.to(projectsTrack, {
+         xPercent: -100 * (cards - 1),
+         ease: "none",
+         scrollTrigger: {
+           trigger: projectsSection,
+           pin: true,
+           scrub: 1,
+           snap: 1 / (cards - 1),
+         }
+       })
+  → Timeline spine draw (stroke-dashoffset animation, Experience section)
+  → Stat counter animations (0 → final number, 1.5s ease-out)
+  → Page scroll progress bar (top of page, width tracks scroll %)
+  → Background color transitions between sections (onEnter/onLeave)
+
+  GSAP SETUP PATTERN:
+  → All GSAP code lives in useEffect() hooks
+  → Always return cleanup: return () => ctx.revert()
+  → Use gsap.context() for scoped animations
+  → Register plugins once in app/layout.js:
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip, Observer)
+
+────────────────────────────────────────────────────────────────────────────────
+  FRAMER MOTION
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : framer-motion
+  Version       : 11.x
+  Cost          : Free, MIT license
+
+  WHAT FRAMER MOTION HANDLES (complement to GSAP, not replacement):
+  → Component mount/unmount animations (JARVIS panel open/close)
+  → Tech card 3D flip (rotateY on hover)
+  → Project modal entrance/exit (scale + opacity)
+  → Page-level layout animations
+  → Stagger animations on lists (variants + staggerChildren)
+  → Testimonial card scan-line reveal
+
+  RULE: GSAP owns scroll-driven and timeline animations.
+        Framer Motion owns component-level state-driven animations.
+        Never use both on the same element.
+
+────────────────────────────────────────────────────────────────────────────────
+  LENIS (Smooth Scroll)
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : @studio-freight/lenis
+  Version       : 1.x
+  Cost          : Free, MIT license
+
+  WHY LENIS:
+  → Native browser scroll feels choppy compared to inertia-based scroll
+  → Lenis adds momentum/easing to scroll without breaking ScrollTrigger
+  → Required for the cinematic feel of the overall scroll journey
+
+  SETUP:
+  → Initialize in app/layout.js (or a root Provider component)
+  → Connect Lenis RAF (requestAnimationFrame) to GSAP ticker:
+    gsap.ticker.add((time) => lenis.raf(time * 1000))
+    gsap.ticker.lagSmoothing(0)
+  → Disable on mobile (native touch scroll is already smooth)
+
+
+================================================================================
+  5. STYLING SYSTEM
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  TAILWIND CSS
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : tailwindcss, autoprefixer, postcss
+  Version       : 3.x
+  Cost          : Free, MIT license
+
+  CONFIGURATION:
+  → Extend theme with custom design tokens (colors, fonts, spacing)
+  → Custom colors mapped to CSS variables (--color-marvel-red, etc.)
+  → Custom fonts added via fontFamily extension
+  → darkMode: 'class' (but always dark — body always has 'dark' class)
+  → safelist: dynamic class names used in JS (status badge colors)
+
+  tailwind.config.js STRUCTURE:
+  module.exports = {
+    content: ['./app/**/*.{js,jsx}', './components/**/*.{js,jsx}'],
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'void':       '#040408',
+          'space':      '#0a0a12',
+          'marvel-red': '#e23636',
+          'stark-gold': '#c8a951',
+          'arc-blue':   '#4fc3f7',
+          // ... all design tokens
+        },
+        fontFamily: {
+          display: ['Bebas Neue', 'Impact', 'sans-serif'],
+          heading: ['Rajdhani', 'sans-serif'],
+          hud:     ['Orbitron', 'sans-serif'],
+          body:    ['IBM Plex Sans', 'sans-serif'],
+          mono:    ['IBM Plex Mono', 'Courier New', 'monospace'],
+          label:   ['Chakra Petch', 'sans-serif'],
+        },
+        animation: {
+          'pulse-ring': 'pulseRing 2s ease-out infinite',
+          'float':      'float 6s ease-in-out infinite',
+          'scan':       'scan 8s linear infinite',
+        }
+      }
+    }
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  CSS MODULES
+────────────────────────────────────────────────────────────────────────────────
+
+  Built into Next.js, no extra package needed.
+  File convention: ComponentName.module.css
+
+  USED FOR:
+  → Tech card 3D flip (transform-style: preserve-3d — not expressible in Tailwind)
+  → Scan-line overlay (repeating-linear-gradient pattern)
+  → Custom scrollbar styling
+  → Complex @keyframes animations
+  → Noise texture overlay (background-image: url("data:image/svg+xml..."))
+  → Glitch effect on testimonial avatars
+  → Arc reactor SVG pulse rings
+
+────────────────────────────────────────────────────────────────────────────────
+  GLOBAL CSS (app/globals.css)
+────────────────────────────────────────────────────────────────────────────────
+
+  CONTENTS:
+  → CSS custom properties (:root { all design tokens })
+  → Tailwind base/components/utilities directives
+  → cursor: none on html, body (custom cursor override)
+  → Custom scrollbar: thin, dark track, gold thumb
+  → Selection highlight: background --color-marvel-red, text white
+  → prefers-reduced-motion: reduce {} block (disable all animations)
+  → @font-face declarations (self-hosted fonts)
+
+
+================================================================================
+  6. AI AGENT — JARVIS
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  GEMINI API (Google AI)
+────────────────────────────────────────────────────────────────────────────────
+
+  Service       : Google AI Studio — Gemini 1.5 Flash
+  Cost          : FREE TIER
+  Free limits   : 15 RPM (requests/minute), 1M tokens/day, 1500 RPD
+  API key       : Get at aistudio.google.com (no credit card needed)
+  SDK           : @google/generative-ai (official npm package)
+
+  WHY GEMINI 1.5 FLASH:
+  → Fastest Gemini model — low latency for chat responses
+  → 1M token context window — entire knowledge base fits easily
+  → Free tier is genuinely generous for a portfolio
+  → Streaming support (generateContentStream) for live typewriter effect
+
+  GEMINI API ROUTE (app/api/jarvis/route.js):
+
+  import { GoogleGenerativeAI } from '@google/generative-ai'
+
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+
+  export async function POST(request) {
+    const { messages, userMessage } = await request.json()
+
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: JARVIS_SYSTEM_PROMPT,  // developer knowledge base
+    })
+
+    const chat = model.startChat({ history: messages })
+
+    // Streaming response
+    const result = await chat.sendMessageStream(userMessage)
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        for await (const chunk of result.stream) {
+          const text = chunk.text()
+          controller.enqueue(new TextEncoder().encode(text))
+        }
+        controller.close()
+      }
+    })
+
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    })
+  }
+
+  RATE LIMITING (free, no extra package):
+  → Simple in-memory Map: IP → { count, resetTime }
+  → Max 20 requests per IP per hour
+  → Returns 429 with "JARVIS is resting. Try again shortly." message
+
+  SYSTEM PROMPT STRUCTURE:
+  → Lives in lib/jarvis-knowledge.js as a JS template literal
+  → Sections: identity, personality, tech stack, projects, availability,
+              rates, FAQ, contact info, work philosophy
+  → Total tokens: ~2000–4000 (well within limits)
+  → Instructs model to: be concise (max 3 paragraphs), stay in character,
+    end with subtle CTA, say "contact directly" if unsure
+
+────────────────────────────────────────────────────────────────────────────────
+  ANTIGRAVITY INTEGRATION
+────────────────────────────────────────────────────────────────────────────────
+
+  Route         : app/api/antigravity/route.js
+  Purpose       : Proxy calls to Antigravity service from Next.js backend
+  Pattern       : Same as JARVIS route — receive from client, call Antigravity,
+                  stream or return response to client
+  Auth          : API key stored in environment variable ANTIGRAVITY_API_KEY
+  Usage         : Called from frontend via fetch('/api/antigravity', {...})
+
+  NOTES:
+  → Never call Antigravity directly from frontend (exposes API key)
+  → All Antigravity calls go through this server-side proxy
+  → Add specific Antigravity functionality based on your use case here
+
+
+================================================================================
+  7. VOICE SYSTEM
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  TEXT-TO-SPEECH — Web Speech API (SpeechSynthesis)
+────────────────────────────────────────────────────────────────────────────────
+
+  API           : window.speechSynthesis (browser built-in)
+  Package       : None — zero dependencies
+  Cost          : Free forever
+  Support       : Chrome ✓, Edge ✓, Safari ✓, Firefox partial
+
+  IMPLEMENTATION (hooks/useSpeech.js):
+
+  export function useSpeech() {
+    const speak = (text, options = {}) => {
+      window.speechSynthesis.cancel()
+      const utterance = new SpeechSynthesisUtterance(text)
+      utterance.voice = getBestVoice()   // prefer deep male English voice
+      utterance.rate  = options.rate  || 0.92   // slightly slower = JARVIS feel
+      utterance.pitch = options.pitch || 0.85   // slightly lower pitch
+      utterance.volume = options.volume || 1.0
+      window.speechSynthesis.speak(utterance)
+      return utterance
+    }
+
+    const getBestVoice = () => {
+      const voices = window.speechSynthesis.getVoices()
+      // Prefer: Google UK English Male > Microsoft David > any English male
+      return voices.find(v => v.name.includes('Google UK English Male'))
+          || voices.find(v => v.name.includes('David'))
+          || voices.find(v => v.lang === 'en-GB')
+          || voices[0]
+    }
+
+    const stop = () => window.speechSynthesis.cancel()
+
+    return { speak, stop }
+  }
+
+  NOTES:
+  → Always call cancel() before new utterance (prevents queue build-up)
+  → getVoices() is async on first load — use onvoiceschanged event
+  → Mute state stored in React context, checked before every speak() call
+  → On iOS Safari: utterance must be triggered by direct user interaction
+
+────────────────────────────────────────────────────────────────────────────────
+  SPEECH-TO-TEXT — Web Speech API (SpeechRecognition)
+────────────────────────────────────────────────────────────────────────────────
+
+  API           : window.SpeechRecognition (browser built-in)
+  Package       : None — zero dependencies
+  Cost          : Free forever
+  Support       : Chrome ✓, Edge ✓ | Safari/Firefox: fallback to text input
+
+  IMPLEMENTATION (hooks/useSpeechRecognition.js):
+
+  export function useSpeechRecognition({ onResult, onEnd }) {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition
+
+    if (!SpeechRecognition) return { supported: false }
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous    = false
+    recognition.interimResults = true
+    recognition.lang           = 'en-US'
+
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map(r => r[0].transcript)
+        .join('')
+      onResult(transcript, event.results[0].isFinal)
+    }
+
+    recognition.onend = onEnd
+
+    return {
+      supported: true,
+      start: () => recognition.start(),
+      stop:  () => recognition.stop(),
+    }
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  AUDIO VISUALIZER — Web Audio API
+────────────────────────────────────────────────────────────────────────────────
+
+  API           : window.AudioContext (browser built-in)
+  Package       : None — zero dependencies
+  Cost          : Free forever
+
+  HOW IT WORKS:
+  → When SpeechSynthesis starts speaking, connect utterance audio to
+    an AnalyserNode via AudioContext
+  → AnalyserNode.getByteFrequencyData() returns FFT frequency array
+  → requestAnimationFrame loop reads this array and draws bars on Canvas
+
+  NOTE: SpeechSynthesis ↔ AudioContext connection is tricky cross-browser.
+  Fallback: if AudioContext connection fails, animate bars with a simulated
+  sine-wave pattern synced to utterance duration. Visually identical.
+
+  CANVAS VISUALIZER DESIGN:
+  → Full width of JARVIS panel, 40px tall
+  → Bars: arc-blue (#4fc3f7), centered vertically (mirror up + down)
+  → Bar count: 48 bars
+  → Bar gap: 2px
+  → Peak bars: white highlight on tallest bars
+  → Fades in when speaking, fades out on silence
+
+
+================================================================================
+  8. CONTACT & EMAIL
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  RESEND
+────────────────────────────────────────────────────────────────────────────────
+
+  Package       : resend
+  Version       : 3.x
+  Cost          : FREE tier — 3,000 emails/month, 100/day
+  Signup        : resend.com (no credit card for free tier)
+
+  API ROUTE (app/api/contact/route.js):
+
+  import { Resend } from 'resend'
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
+
+  export async function POST(request) {
+    const { name, email, subject, message } = await request.json()
+
+    // Basic validation
+    if (!name || !email || !message) {
+      return Response.json({ error: 'Missing fields' }, { status: 400 })
+    }
+
+    await resend.emails.send({
+      from:    'JARVIS <noreply@yourdomain.com>',
+      to:      'you@youremail.com',
+      subject: `[MISSION BRIEF] ${subject} — from ${name}`,
+      html:    buildEmailTemplate({ name, email, subject, message }),
+    })
+
+    return Response.json({ success: true })
+  }
+
+  EMAIL TEMPLATE:
+  → Styled as a Stark Industries mission briefing
+  → Dark background, gold header, monospaced body
+  → Sections: Sender Intel, Mission Subject, Message Body, Reply CTA
+  → Built as inline HTML string (no React Email dependency needed)
+
+  FORM VALIDATION (client-side):
+  → Simple custom validation with useState (no Zod, no React Hook Form)
+  → Validate: name non-empty, email regex, message min 20 chars
+  → Error states: red border + error message below field
+  → Loading state: button shows "TRANSMITTING..." with CSS spinner
+  → Success state: "MESSAGE RECEIVED" with green flash animation
+
+
+================================================================================
+  9. HOSTING & DEPLOYMENT
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  VERCEL
+────────────────────────────────────────────────────────────────────────────────
+
+  Plan          : Hobby (Free tier)
+  Cost          : $0/month forever for personal projects
+  Free includes :
+    → Unlimited personal projects
+    → 100GB bandwidth/month
+    → Serverless functions (API routes) — 100GB-hours/month
+    → Automatic HTTPS + SSL certificate
+    → Global CDN (Edge Network)
+    → Automatic deployments from GitHub push
+    → Preview deployments for every branch
+    → Custom domain (free, just point DNS)
+    → Vercel Analytics (basic, free)
+    → Environment variables management
+
+  DEPLOYMENT SETUP:
+  → Connect GitHub repo to Vercel (one-click)
+  → Set environment variables in Vercel dashboard
+  → Every push to main = automatic production deploy
+  → Build command: npm run build
+  → Output directory: .next (automatic for Next.js)
+
+  DOMAIN:
+  → Free: yourname.vercel.app (subdomain, instant)
+  → Custom: point your domain's DNS A record to Vercel IPs (free on Vercel)
+  → SSL: auto-provisioned via Let's Encrypt
+
+  VERCEL LIMITS (free tier — all safely within for a portfolio):
+  → Serverless function duration: 10s max (JARVIS API calls: ~2–3s ✓)
+  → Function memory: 1024MB (more than enough ✓)
+  → Build time: 45 minutes max (Next.js build: ~2–5 min ✓)
+  → Deployments: unlimited
+
+
+================================================================================
+  10. PROJECT FOLDER STRUCTURE
+================================================================================
+
+  devuniverse/
+  ├── app/
+  │   ├── layout.js                  Root layout, fonts, providers
+  │   ├── page.js                    Main portfolio page (all sections)
+  │   ├── globals.css                Global styles, CSS variables
+  │   └── api/
+  │       ├── jarvis/
+  │       │   └── route.js           Gemini API proxy (JARVIS brain)
+  │       ├── antigravity/
+  │       │   └── route.js           Antigravity integration proxy
+  │       └── contact/
+  │           └── route.js           Resend email handler
+  │
+  ├── components/
+  │   ├── loading/
+  │   │   └── LoadingScreen.jsx      Marvel-style intro animation
+  │   ├── navigation/
+  │   │   ├── Navbar.jsx             Fixed nav with scroll states
+  │   │   └── MobileMenu.jsx         Full-screen mobile overlay
+  │   ├── cursor/
+  │   │   └── CustomCursor.jsx       Arc-reactor cursor (desktop)
+  │   ├── hero/
+  │   │   ├── HeroSection.jsx        Full viewport hero container
+  │   │   ├── HeroContent.jsx        Name, tagline, CTAs
+  │   │   └── HeroScene.jsx          Three.js canvas (lazy loaded)
+  │   ├── about/
+  │   │   └── AboutSection.jsx       Dossier / classified file section
+  │   ├── skills/
+  │   │   ├── SkillsSection.jsx      Superpowers section container
+  │   │   └── SkillCard.jsx          Individual 3D flip card
+  │   ├── projects/
+  │   │   ├── ProjectsSection.jsx    Horizontal scroll missions
+  │   │   ├── ProjectCard.jsx        Mission card component
+  │   │   └── ProjectModal.jsx       Full-screen mission briefing
+  │   ├── experience/
+  │   │   └── ExperienceSection.jsx  Animated timeline
+  │   ├── testimonials/
+  │   │   └── TestimonialsSection.jsx Transmission cards carousel
+  │   ├── jarvis/
+  │   │   ├── JarvisButton.jsx       Floating arc-reactor trigger
+  │   │   ├── JarvisPanel.jsx        Full chat panel HUD
+  │   │   ├── JarvisChat.jsx         Message history component
+  │   │   ├── JarvisInput.jsx        Text + mic input bar
+  │   │   └── AudioVisualizer.jsx    Waveform canvas
+  │   ├── contact/
+  │   │   └── ContactSection.jsx     Terminal-style contact form
+  │   ├── footer/
+  │   │   └── Footer.jsx             Minimal cinematic footer
+  │   └── ui/
+  │       ├── Button.jsx             Reusable button variants
+  │       ├── Badge.jsx              Status/category badges
+  │       ├── SectionLabel.jsx       "ORIGIN STORY" style labels
+  │       └── ScrollProgress.jsx     Top page scroll bar
+  │
+  ├── hooks/
+  │   ├── useScrollProgress.js       Scroll % for progress bar
+  │   ├── useMousePosition.js        Mouse XY for parallax
+  │   ├── useSpeech.js               Web Speech API TTS
+  │   ├── useSpeechRecognition.js    Web Speech API STT
+  │   ├── useAudioVisualizer.js      Web Audio API canvas draw
+  │   ├── useGSAP.js                 GSAP context + cleanup helper
+  │   └── useJarvis.js               JARVIS API call + streaming state
+  │
+  ├── lib/
+  │   ├── jarvis-knowledge.js        Developer knowledge base (system prompt)
+  │   ├── projects-data.js           All project content
+  │   ├── skills-data.js             Tech stack data
+  │   ├── experience-data.js         Career timeline data
+  │   └── testimonials-data.js       Testimonial quotes data
+  │
+  ├── public/
+  │   ├── fonts/                     Self-hosted font files (.woff2)
+  │   ├── images/
+  │   │   ├── developer-photo.webp
+  │   │   └── projects/              Project screenshots (.webp)
+  │   ├── icons/                     SVG icon files
+  │   ├── og-image.png               Open Graph share image
+  │   └── favicon.svg                Arc reactor SVG favicon
+  │
+  ├── styles/
+  │   ├── LoadingScreen.module.css
+  │   ├── SkillCard.module.css       3D flip styles
+  │   ├── JarvisPanel.module.css     HUD corner brackets etc.
+  │   └── ContactSection.module.css  Terminal/scanline styles
+  │
+  ├── .env.local                     Local environment variables
+  ├── next.config.js
+  ├── tailwind.config.js
+  ├── postcss.config.js
+  └── package.json
+
+
+================================================================================
+  11. PACKAGE LIST (package.json reference)
+================================================================================
+
+  {
+    "name": "devuniverse-portfolio",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "dev":   "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint":  "next lint"
+    },
+    "dependencies": {
+      "next":                        "14.x",
+      "react":                       "18.x",
+      "react-dom":                   "18.x",
+
+      "@react-three/fiber":          "8.x",
+      "@react-three/drei":           "9.x",
+      "@react-three/postprocessing": "2.x",
+      "three":                       "0.160.x",
+
+      "gsap":                        "3.x",
+      "framer-motion":               "11.x",
+      "@studio-freight/lenis":       "1.x",
+
+      "@google/generative-ai":       "0.x",
+
+      "resend":                      "3.x"
+    },
+    "devDependencies": {
+      "tailwindcss":                 "3.x",
+      "autoprefixer":                "10.x",
+      "postcss":                     "8.x",
+      "eslint":                      "8.x",
+      "eslint-config-next":          "14.x"
+    }
+  }
+
+  TOTAL PACKAGES: 14 production dependencies
+  BUNDLE STRATEGY:
+  → Three.js + R3F: lazy loaded (code split) — only loads when hero visible
+  → GSAP: tree-shaken, only import used plugins
+  → Framer Motion: tree-shaken via named imports
+  → Target JS bundle: < 300KB gzipped (excluding Three.js lazy chunk)
+
+
+================================================================================
+  12. ENVIRONMENT VARIABLES
+================================================================================
+
+  File: .env.local (never commit to git — add to .gitignore)
+
+  # Gemini AI (JARVIS brain)
+  # Get free at: aistudio.google.com
+  GEMINI_API_KEY=your_gemini_api_key_here
+
+  # Antigravity integration
+  ANTIGRAVITY_API_KEY=your_antigravity_key_here
+  ANTIGRAVITY_BASE_URL=https://your-antigravity-endpoint.com
+
+  # Resend (contact form email)
+  # Get free at: resend.com
+  RESEND_API_KEY=re_your_resend_key_here
+  CONTACT_EMAIL=you@youremail.com
+
+  # Site config
+  NEXT_PUBLIC_SITE_URL=https://yourname.vercel.app
+  NEXT_PUBLIC_DEVELOPER_NAME=Your Name
+
+  VERCEL SETUP:
+  → Add all variables in Vercel Dashboard → Project → Settings → Env Variables
+  → NEXT_PUBLIC_ prefix = exposed to browser (safe for non-secret values only)
+  → All API keys: no NEXT_PUBLIC_ prefix = server-side only ✓
+
+
+================================================================================
+  13. API ARCHITECTURE
+================================================================================
+
+  CLIENT (Browser)
+      │
+      │  fetch('/api/jarvis', { method: 'POST', body: { message, history } })
+      ▼
+  NEXT.JS API ROUTE (Vercel Serverless Function)
+      │
+      │  Validates request + checks rate limit
+      │  Injects developer knowledge base as system prompt
+      │  Calls Gemini 1.5 Flash API with streaming
+      │
+      │  ReadableStream → piped back to client
+      ▼
+  CLIENT (Browser)
+      │
+      │  Reads stream chunk by chunk
+      │  Updates chat UI with typewriter effect
+      │  When stream ends, triggers Web Speech API TTS
+      ▼
+  WEB SPEECH API
+      │
+      │  Speaks the full response text
+      │  Fires onstart → AudioVisualizer activates
+      │  Fires onend → AudioVisualizer deactivates
+      ▼
+  USER HEARS JARVIS RESPOND
+
+  ─────────────────────────────────────────────────────
+
+  CONTACT FORM FLOW:
+
+  CLIENT
+    → POST /api/contact { name, email, subject, message }
+    → Shows loading state
+
+  API ROUTE
+    → Validates fields
+    → Calls Resend API
+    → Returns { success: true }
+
+  CLIENT
+    → Shows success animation
+    → Resets form
+
+
+================================================================================
+  14. PERFORMANCE BUDGET
+================================================================================
+
+  METRIC                  TARGET          TOOL TO MEASURE
+  ──────────────────────  ──────────────  ─────────────────────────────
+  LCP (desktop)           < 2.5s          Lighthouse, Web Vitals
+  LCP (mobile)            < 3.5s          Lighthouse
+  FID / INP               < 100ms         Chrome DevTools
+  CLS                     < 0.1           Lighthouse
+  JS Bundle (initial)     < 300KB gzip    next build output + Bundle Analyzer
+  Three.js chunk          < 500KB gzip    next build output
+  Lighthouse Desktop      ≥ 90            Lighthouse CI
+  Lighthouse Mobile       ≥ 80            Lighthouse CI
+  Hero scene FPS          ≥ 60fps         Stats.js in dev, PerformanceMonitor
+  JARVIS response time    < 3s first tok  Chrome DevTools Network
+
+  OPTIMIZATION CHECKLIST:
+  [✓] next/image for all photos and screenshots (WebP auto-conversion)
+  [✓] next/font for all Google Fonts (self-hosted, no layout shift)
+  [✓] React.lazy() + Suspense for Three.js scene
+  [✓] GSAP tree-shaking (import only used modules)
+  [✓] CSS Modules (zero runtime, static extraction)
+  [✓] Vercel CDN caches all static assets at edge
+  [✓] Lenis disabled on mobile (native scroll is faster)
+  [✓] Post-processing disabled on mobile + low-end devices
+  [✓] Particle count auto-reduces if FPS drops below 40
+  [✓] Images: priority prop on hero/above-fold images
+  [✓] Font preloading: Bebas Neue + Rajdhani 700 preloaded in <head>
+
+
+================================================================================
+  15. UPGRADE PATH (Free → Paid, when you're ready)
+================================================================================
+
+  When the portfolio starts generating leads and you want to level up:
+
+  VOICE (biggest impact upgrade):
+  Free now  → Web Speech API (browser TTS, decent quality)
+  Upgrade   → ElevenLabs API ($5/month)
+               → JARVIS voice becomes genuinely cinematic
+               → Custom voice clone possible
+               → Swap: replace useSpeech.js with ElevenLabs fetch call
+               → Everything else stays the same
+
+  AI BRAIN (if Gemini free tier limits hit):
+  Free now  → Gemini 1.5 Flash (15 RPM, 1M tokens/day)
+  Upgrade   → Gemini 1.5 Pro (higher quality, ~$3.50/1M tokens)
+           OR → Claude API Sonnet (~$3/1M input tokens)
+               → Single line change in api/jarvis/route.js
+
+  EMAIL (if 3000/month not enough):
+  Free now  → Resend free tier (3000/month)
+  Upgrade   → Resend Pro ($20/month, 50,000 emails)
+
+  ANALYTICS (deeper insights):
+  Free now  → Vercel Analytics (basic)
+  Upgrade   → Vercel Analytics Pro ($14/month)
+           OR → Plausible ($9/month) — privacy-friendly, beautiful dashboard
+
+  HOSTING (if traffic grows):
+  Free now  → Vercel Hobby (100GB bandwidth)
+  Upgrade   → Vercel Pro ($20/month) — 1TB bandwidth, no cold starts,
+               faster builds, team features
+
+
+================================================================================
+  END OF TECH STACK PRD
+  DevUniverse — Marvel-Style 3D Personal Portfolio
+  Stack cost on day one: $0.00
+  "Build the universe first. Monetize the multiverse later."
+  Prepared by Claude | April 2026
+================================================================================
