@@ -3,31 +3,145 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* Core Palette */
+  --color-void: #040408;
+  --color-space: #0a0a12;
+  --color-deep: #0d1020;
+  --color-surface: #111827;
+  --color-surface-raised: #161d2e;
+  --color-border: #1e2540;
+  --color-border-glow: #2a3560;
+
+  --color-marvel-red: #e23636;
+  --color-marvel-red-dim: #8b1a1a;
+  --color-stark-gold: #c8a951;
+  --color-stark-gold-dim: #7a6330;
+  --color-arc-blue: #4fc3f7;
+  --color-arc-blue-dim: #1565a0;
+
+  --color-text-primary: #f0f2ff;
+  --color-text-secondary: #8892b0;
+  --color-text-tertiary: #4a5568;
+  --color-text-code: #64ffda;
+  --color-text-gold: #c8a951;
+
+  /* Spacing Tokens */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 800ms;
+  --duration-cinematic: 1200ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html, body {
+    @apply bg-void text-text-primary selection:bg-marvel-red selection:text-white overflow-x-hidden;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-rajdhani font-bold tracking-tight;
+  }
+
+  p {
+    @apply font-sans leading-relaxed text-text-secondary;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+@layer components {
+  /* Scanline Effect */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      transparent 2px,
+      rgba(0, 0, 0, 0.05) 2px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Noise Overlay */
+  .noise-bg {
+    position: relative;
+  }
+
+  .noise-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Holographic Glow */
+  .hologram-glow {
+    box-shadow: 0 0 15px rgba(79, 195, 247, 0.2), 
+                inset 0 0 15px rgba(79, 195, 247, 0.1);
+  }
+
+  .hologram-glow-red {
+    box-shadow: 0 0 20px rgba(226, 54, 54, 0.3), 
+                inset 0 0 10px rgba(226, 54, 54, 0.2);
+  }
+
+  /* Stark-style glassmorphism */
+  .stark-glass {
+    @apply bg-space/80 backdrop-blur-md border border-border/50;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-hero {
+    @apply font-bebas text-[clamp(72px,10vw,160px)] leading-none tracking-[-0.04em] uppercase;
+  }
+
+  .text-display {
+    @apply font-bebas text-[clamp(48px,6vw,96px)] leading-[1.05] tracking-[-0.03em] uppercase;
+  }
+
+  .gradient-text-marvel {
+    background: linear-gradient(135deg, #ffffff 0%, #c8a951 50%, #e23636 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 }
