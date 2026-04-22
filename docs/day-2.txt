@@ -1,0 +1,54 @@
+================================================================================
+  DAY 2 REPORT & INTERVIEW PREPARATION GUIDE
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Task: Design Tokens Implementation & Global CSS Shell
+================================================================================
+
+1. WHAT WAS DONE TODAY?
+--------------------------------------------------------------------------------
+- Standardized `tailwind.config.js` with specific design tokens:
+    * Custom Colors: Marvel Red (#e23636), Stark Gold (#c8a951), Arc Blue (#4fc3f7), and Void Black (#040408).
+    * Typography Stack: Bebas Neue (Hero), Rajdhani (Headings), Orbitron (HUD), IBM Plex (Body/Mono), and Chakra Petch (UI).
+- Configured Google Fonts in `app/layout.js` using `next/font/google`:
+    * Utilized CSS Variables (`--font-bebas`, etc.) for clean integration with Tailwind.
+- Implemented `app/globals.css` with cinematic utility classes:
+    * Added `.scanlines` for that "classified document" monitor feel.
+    * Integrated `.noise-bg` for organic texture.
+    * Built `.hologram-glow` utilities for interactive JARVIS/AI elements.
+    * Set up base typography and selection styles.
+
+2. TECHNICAL DECISIONS & RATIONALE (Interview Preparation)
+--------------------------------------------------------------------------------
+
+Q: Why use CSS Variables instead of just hardcoding colors in Tailwind?
+A: Using CSS variables in :root (e.g., --color-marvel-red) allows for dynamic theme manipulation. In the future, if we want JARVIS to "change the room color" to a "stealth mode" (blue) or "alert" (flashing red), we only need to update the CSS variable values via JavaScript, and the entire site will respond instantly.
+
+Q: Explain the benefit of loading fonts via 'next/font/google'.
+A: Performance and Privacy. Next.js hosts the fonts locally at build time, so the browser doesn't have to make an external request to Google's servers. This improves LCP (Largest Contentful Paint) and ensures zero layout shift (CLS) because the fonts are pre-loaded.
+
+Q: What is the significance of the 'void' color (#040408) vs absolute black (#000000)?
+A: In high-end digital design, absolute black often feels "flat" and "dead." By adding a tiny hint of blue (#040408), the background feels like "deep space"—it has atmospheric depth. It also makes glows and gradients pop much more effectively than on #000000.
+
+Q: Why did you choose specific font families like Rajdhani and Orbitron?
+A: 
+- Rajdhani: A square-ish sans-serif that looks like it belongs on a data sheet or blueprint.
+- Orbitron: Iconic "sci-fi" geometry. It's used for HUD elements (Heads-Up Display) to immediately signal to the user that this is a technical interface.
+- Bebas Neue: High-impact condensed font for that "Stark Industries" title board look.
+
+Q: Talk about the 'scanlines' utility implementation.
+A: The scanline effect uses a `repeating-linear-gradient` over an absolute pseudo-element. This simulates the look of an old CRT monitor or a high-tech HUD. By keeping the opacity low (0.05), we add texture without sacrificing readability.
+
+3. KEY UTILITIES IMPLEMENTED
+--------------------------------------------------------------------------------
+- .gradient-text-marvel: A 3-stop gradient (White -> Gold -> Red) for the hero name.
+- .stark-glass: A reusable component style that combines backdrop-blur and specific transparency for that Stark-tech glass aesthetic.
+- .hologram-glow-red: Used to highlight specific "Danger" or "High-Power" elements in the interface.
+
+4. NEXT STEPS (DAY 3)
+--------------------------------------------------------------------------------
+- Complete Phase 1: Implementation of the Arc-Reactor Cursor logic.
+- Start Phase 2: Building the Marvel-Style Loading Screen with progression logic.
+
+================================================================================
+    "Design is the silent ambassador of your technical competence."
+================================================================================
