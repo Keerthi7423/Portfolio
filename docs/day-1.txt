@@ -1,0 +1,51 @@
+================================================================================
+  DAY 1 REPORT & INTERVIEW PREPARATION GUIDE
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Task: Project Initialization & Environment Setup
+================================================================================
+
+1. WHAT WAS DONE TODAY?
+--------------------------------------------------------------------------------
+- Initialized a Next.js 14 project with the App Router.
+- Configured the project to use JavaScript (ES2022+), Tailwind CSS, and ESLint.
+- Set up a cinematic folder structure as defined in the Tech Stack PRD.
+- Installed the core animation and 3D engine dependencies (Three.js, GSAP, etc.).
+- Verified the package.json to ensure version compatibility.
+
+2. TECHNICAL DECISIONS & RATIONALE (Interview Preparation)
+--------------------------------------------------------------------------------
+
+Q: Why use Next.js 14 for a portfolio instead of plain React or Vite?
+A: Next.js provides Server-Side Rendering (SSR) and Static Site Generation (SSG) out of the box, which is crucial for SEO (Search Engine Optimization). For a portfolio, you want your content to be indexable by Google. Additionally, the App Router makes specialized layouts (like a cinematic HUD) easier to manage, and built-in API Routes allow us to build a back-end (for JARVIS or Contact forms) without needing a separate server.
+
+Q: Why are we using JavaScript instead of TypeScript?
+A: The project philosophy (as per PRD) prioritizes rapid prototyping and flexibility. For high-end 3D and animation work (Three.js/GSAP), TypeScript can sometimes add significant overhead with complex types. By using ES2022+, we keep the codebase lean while still using modern features like optional chaining and async/await.
+
+Q: What is the purpose of the 'app' directory vs 'components'?
+A: In Next.js App Router, the 'app' directory handles routing and layout logic (the "where"). The 'components' directory handles the "what"—reusable blocks of UI like buttons, cards, and 3D scenes. This separation makes the code easier to maintain and test.
+
+Q: Why did we install both GSAP and Framer Motion?
+A: Each has a specialized role:
+   - GSAP (GreenSock Animation Platform): The "Heavyweight Champion" for scroll-driven animations and complex timelines. It handles the smooth "cinematic" scroll transitions and the 3D text reveals.
+   - Framer Motion: Used for component-level state changes (like a modal popping up or a button hover effect). It’s more "React-way" for simple entrance/exit animations.
+   - Rule: GSAP owns the scroll; Framer Motion owns the components.
+
+Q: What is Lenis?
+A: Lenis is a smooth scroll library. Native browser scrolling can feel "clunky" for a high-end cinematic site. Lenis adds momentum and easing to the scroll wheel, making the user experience feel premium, like a high-end agency website.
+
+3. FOLDER STRUCTURE BREAKDOWN
+--------------------------------------------------------------------------------
+- /app/api: Contains "Proxies". We don't call APIs like Gemini or Resend directly from the browser to protect our API Keys.
+- /components/ui: "Dumb" components (Buttons, Badges) that don't know about business logic.
+- /hooks: Custom React logic, like 'useJarvis' to handle AI chat streaming or 'useScroll' for parallax effects.
+- /lib: Static data files (projects, skills) to keep the components clean.
+
+4. NEXT STEPS (DAY 2)
+--------------------------------------------------------------------------------
+- Implement Design Tokens in tailwind.config.js (Marvel Red, Void Black, etc.).
+- Configure Typography (Bebas Neue, Orbitron).
+- Implement Global CSS utility classes (Scanlines, Glitch, Holographic effects).
+
+================================================================================
+    "The right foundation is the difference between a project and a product."
+================================================================================
