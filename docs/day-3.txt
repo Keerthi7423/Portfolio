@@ -1,0 +1,54 @@
+================================================================================
+  DAY 3 REPORT & INTERVIEW PREPARATION GUIDE
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Task: Global CSS & Utility Classes (Phase 1.4)
+================================================================================
+
+1. WHAT WAS DONE TODAY?
+--------------------------------------------------------------------------------
+- Finalized Phase 1: Environment & Infrastructure by completing Task 1.4.
+- Enhanced `app/globals.css` with a comprehensive design token system:
+    * Spacing System: Added 13 atomic spacing tokens (4px to 128px) for consistent layout.
+    * Radius System: Defined sharp-to-rounded corner tokens (0px to full circle).
+    * Duration Standards: Established 7 cinematic timing constants (80ms to 2s).
+    * Easing Library: Implemented 4 custom cubic-bezier curves for cinematic motion.
+- Implemented Advanced Cinematic Utility Classes:
+    * `scanlines`: Added a vertical scrolling motion to the CRT noise effect.
+    * `arc-pulse`: Created a reusable "holographic ring" animation for JARVIS triggers.
+    * `gradient-gold-sweep`: A premium metallic shimmer for logos and achievements.
+    * `glow-gold`: A soft atmospheric glow for achievement cards.
+    * `hover-glow-red/gold/blue`: Interactive state utilities for buttons and cards.
+- Synchronized `tailwind.config.js`:
+    * Connected Tailwind classes (e.g., `p-space-8`, `rounded-radius-md`) to CSS variables.
+    * Added `out-expo` and `out-quart` easing functions for use in `transition-timing-function`.
+
+2. TECHNICAL DECISIONS & RATIONALE (Interview Preparation)
+--------------------------------------------------------------------------------
+
+Q: Why define spacing and radius as CSS variables rather than just using Tailwind's default theme?
+A: Design consistency and flexibility. By defining our own tokens (e.g., --space-10), we enforce a strict design language. It also makes the system framework-agnostic—if we ever move away from Tailwind or use a component library that doesn't support it, the core design tokens remain accessible via standard CSS.
+
+Q: Explain the choice of 'ease-out-expo' for section reveals.
+A: Cinematic feel. `cubic-bezier(0.16, 1, 0.3, 1)` provides a very fast initial movement that slows down gracefully. This mimics "momentum"—it feels like an heavy object (like a Stark panel) being projected and then settling into place with high precision.
+
+Q: What is the purpose of the 'scanline' animation?
+A: It adds "micro-life" to the UI. Static designs feel dead. By adding a very subtle, slow-moving scanline animation (opacity 0.03), we simulate the behavior of a high-tech monitor. It keeps the user's brain engaged without being a distraction.
+
+Q: How does 'lerp' (Linear Interpolation) relate to your duration standards?
+A: While we haven't implemented the custom cursor yet, our duration standards like `--duration-instant` (80ms) are designed to work alongside lerp factors. 80ms is roughly the "perceived instant" limit; anything slower feels laggy, anything faster feels jarring. Our standards ensure that every interaction feels engineered, not accidental.
+
+3. KEY UTILITIES IMPLEMENTED
+--------------------------------------------------------------------------------
+- .arc-pulse: Uses a ::before pseudo-element with a keyframe animation to create an expanding energy ring. Essential for HUD elements.
+- .stark-glass: Combines `backdrop-blur` with a slightly blue-tinted semi-transparent background to mimic high-tech glass.
+- .hover-glow-red: A composite utility that handles border color, box-shadow, and a small translateY shift for a "magnetic" feel.
+
+4. UPDATED PROJECT ROADMAP STATUS
+--------------------------------------------------------------------------------
+[x] Phase 1: Environment & Infrastructure (COMPLETE)
+[/] Phase 2: Global UI & Cinematic Shell (STARTING TOMORROW)
+    * Next Task: Marvel-Style Loading Screen (Task 2.1)
+
+================================================================================
+    "Precision is the difference between a prototype and a product."
+================================================================================
