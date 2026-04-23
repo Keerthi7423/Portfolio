@@ -30,30 +30,55 @@
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
+  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
+  --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Border Radius */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
 
   /* Animation Durations */
+  --duration-instant: 80ms;
   --duration-fast: 150ms;
   --duration-normal: 300ms;
+  --duration-medium: 500ms;
   --duration-slow: 800ms;
   --duration-cinematic: 1200ms;
+  --duration-epic: 2000ms;
+
+  /* Easing Library */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-in-out-sine: cubic-bezier(0.37, 0, 0.63, 1);
 }
 
 @layer base {
   * {
     @apply border-border;
+    transition-timing-function: var(--ease-out-quart);
   }
   
   html, body {
     @apply bg-void text-text-primary selection:bg-marvel-red selection:text-white overflow-x-hidden;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-rajdhani font-bold tracking-tight;
+    @apply font-rajdhani font-bold tracking-tight uppercase;
   }
 
   p {
@@ -78,11 +103,17 @@
       0deg,
       transparent,
       transparent 2px,
-      rgba(0, 0, 0, 0.05) 2px,
-      rgba(0, 0, 0, 0.05) 4px
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
     );
     pointer-events: none;
     z-index: 10;
+    animation: scanline 10s linear infinite;
+  }
+
+  @keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
   }
 
   /* Noise Overlay */
@@ -102,7 +133,7 @@
     z-index: 1;
   }
 
-  /* Holographic Glow */
+  /* Holographic Glows */
   .hologram-glow {
     box-shadow: 0 0 15px rgba(79, 195, 247, 0.2), 
                 inset 0 0 15px rgba(79, 195, 247, 0.1);
@@ -113,13 +144,40 @@
                 inset 0 0 10px rgba(226, 54, 54, 0.2);
   }
 
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(200, 169, 81, 0.2), 
+                inset 0 0 10px rgba(200, 169, 81, 0.1);
+  }
+
   /* Stark-style glassmorphism */
   .stark-glass {
     @apply bg-space/80 backdrop-blur-md border border-border/50;
   }
+
+  /* Arc Reactor Pulse */
+  .arc-pulse {
+    position: relative;
+  }
+
+  .arc-pulse::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--color-arc-blue);
+    border-radius: 50%;
+    opacity: 0;
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: scale(2); opacity: 0; }
+  }
 }
 
 @layer utilities {
+  /* Typography Scale */
   .text-hero {
     @apply font-bebas text-[clamp(72px,10vw,160px)] leading-none tracking-[-0.04em] uppercase;
   }
@@ -128,20 +186,48 @@
     @apply font-bebas text-[clamp(48px,6vw,96px)] leading-[1.05] tracking-[-0.03em] uppercase;
   }
 
+  /* Gradients */
   .gradient-text-marvel {
     background: linear-gradient(135deg, #ffffff 0%, #c8a951 50%, #e23636 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
+  .gradient-gold-sweep {
+    background: linear-gradient(135deg, #c8a951 0%, #f0d080 50%, #c8a951 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Animations */
   .animate-shimmer {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     background-size: 200% 100%;
-    animation: shimmer 2s infinite;
+    animation: shimmer 2s infinite linear;
   }
 
   @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
   }
+
+  /* Hover States */
+  .hover-glow-red:hover {
+    @apply border-marvel-red;
+    box-shadow: 0 0 20px rgba(226, 54, 54, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .hover-glow-gold:hover {
+    @apply border-stark-gold;
+    box-shadow: 0 0 20px rgba(200, 169, 81, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .hover-glow-blue:hover {
+    @apply border-arc-blue;
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.4);
+    transform: translateY(-2px);
+  }
 }
+
