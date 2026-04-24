@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/loading/LoadingScreen";
+import Navbar from "@/components/navigation/Navbar";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="relative z-10"
           >
+            <Navbar />
             {/* Hero Section Placeholder */}
             <section className="h-screen flex items-center justify-center relative overflow-hidden">
               <div className="text-center z-20">
