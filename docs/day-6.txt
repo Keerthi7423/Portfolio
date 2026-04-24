@@ -1,0 +1,106 @@
+================================================================================
+  DAY 6: CUSTOM ARC-REACTOR CURSOR & INTERACTIVE HUD LERP
+================================================================================
+
+OVERVIEW:
+Today's mission was to replace the generic system cursor with a custom-built, 
+high-fidelity "Arc-Reactor" HUD cursor. This enhances the cinematic immersion 
+by making every mouse movement feel like interacting with a Stark Industries 
+interface.
+
+--------------------------------------------------------------------------------
+1. TECHNICAL ARCHITECTURE: THE CURSOR SYSTEM
+--------------------------------------------------------------------------------
+
+- THE DUAL-LAYER DESIGN:
+  - Dot (The Core): A 2px circle that tracks the mouse position with 1:1 precision.
+  - Ring (The Housing): A larger 40px outer ring that follows the core with a 
+    slight "lag" or smoothing effect.
+
+- LERP (LINEAR INTERPOLATION) & SPRINGS:
+  - Logic: Instead of moving the ring instantly to the mouse position, we use 
+    Framer Motion's `useSpring`.
+  - Spring Config: `{ damping: 20, stiffness: 100 }`. 
+  - Result: This creates a physical, "weighted" feel to the cursor, making it 
+    feel like a piece of hardware floating in the interface rather than a 
+    digital sprite.
+
+- PERFORMANCE OPTIMIZATION:
+  - Strategy: The cursor is absolutely positioned with `pointer-events-none` 
+    to ensure it doesn't block clicks to underlying elements.
+  - Render Logic: Uses `useMotionValue` to bypass React's standard state re-renders 
+    for every pixel of movement, keeping the animation at 60fps+.
+
+--------------------------------------------------------------------------------
+2. COMPONENT DEEP DIVE: CustomCursor.jsx
+--------------------------------------------------------------------------------
+
+A. GLOBAL EVENT TRACKING:
+   - MouseMove: Updates `mouseX` and `mouseY` motion values.
+   - MouseDown/Up: Triggers the `isClicked` state to scale the cursor down (0.8x), 
+     simulating a physical press.
+
+B. INTERACTIVE DELEGATION (HOVER STATES):
+   - Logic: Instead of attaching listeners to every single link on the page 
+     (which is expensive), we use "Event Delegation" on the `document`.
+   - Detection: We check `e.target.tagName` for `BUTTON`, `A`, or any element 
+     with `role="button"`.
+   - Visual Feedback:
+     - The outer ring scales up (2x).
+     - The core changes color from Arc-Blue to Marvel-Red.
+     - A target crosshair appears to "lock onto" the clickable element.
+
+C. THE ARC REACTOR AESTHETIC:
+   - The ring contains a rotating border segment (`animate-rotate`) that spins 
+     infinitely, giving the impression of an active power source.
+   - Shadow/Glow: Uses `shadow-[0_0_10px_var(--color-arc-blue)]` to create a 
+     light-bleed effect on the page content.
+
+--------------------------------------------------------------------------------
+3. INTERVIEW PREPARATION: "HOW WOULD YOU EXPLAIN THIS?"
+--------------------------------------------------------------------------------
+
+Q: Why use `useSpring` instead of standard CSS transitions for the cursor?
+A: CSS transitions are time-based and linear. `useSpring` is physics-based. It 
+   calculates acceleration and momentum. For a cursor, this makes the "lag" 
+   feel natural and organic rather than robotic.
+
+Q: How do you handle custom cursors on mobile/touch devices?
+A: In `CustomCursor.jsx`, we use the Tailwind class `hidden md:block`. Custom 
+   cursors are detrimental to user experience on touch screens because there is 
+   no "hover" state and the finger blocks the view. We fall back to the native 
+   touch behavior.
+
+Q: What is "Event Delegation" and why use it for hover detection?
+A: Event delegation involves adding a single event listener to a parent 
+   (the `document`) instead of many listeners to child elements. This saves 
+   memory and ensures that even links loaded dynamically (via AJAX or state 
+   changes) are automatically tracked by the cursor without needing new 
+   listeners.
+
+Q: How do you prevent the custom cursor from flickering over the default one?
+A: We apply `cursor: none` to the `html` and `body` tags in `globals.css`. We 
+   also apply it to all interactive elements (`a`, `button`, etc.) using 
+   `!important` to ensure no browser default overrides our system.
+
+--------------------------------------------------------------------------------
+4. DESIGN TOKENS UTILIZED
+--------------------------------------------------------------------------------
+
+- COLORS: 
+    - Idle: `stark-gold` (Outer ring) and `arc-blue` (Core).
+    - Active (Hover): `arc-blue` (Ring) and `marvel-red` (Core).
+- ANIMATIONS:
+    - `ease-out-expo`: Used for the scale transitions.
+    - Infinite Rotation: For the mechanical components inside the ring.
+
+--------------------------------------------------------------------------------
+5. NEXT STEPS (DAY 7)
+--------------------------------------------------------------------------------
+- Integrating Lenis Smooth Scroll engine.
+- Connecting GSAP Ticker to Lenis for frame-perfect animations.
+- Implementing the Page Scroll Progress indicator.
+
+================================================================================
+  SYSTEM STATUS: TARGETING SYSTEM ONLINE | ARC REACTOR STABLE
+================================================================================

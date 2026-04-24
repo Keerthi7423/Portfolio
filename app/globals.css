@@ -75,6 +75,11 @@
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+  }
+
+  a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
   }
 
   h1, h2, h3, h4, h5, h6 {

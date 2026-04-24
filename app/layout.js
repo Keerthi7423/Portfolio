@@ -49,10 +49,13 @@ export const metadata = {
   description: "High-end, cinematic portfolio of a Full Stack Developer inspired by Stark Industries.",
 };
 
+import CustomCursor from "@/components/cursor/CustomCursor";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${bebas.variable} ${rajdhani.variable} ${orbitron.variable} ${ibmSans.variable} ${ibmMono.variable} ${chakra.variable} font-sans bg-void text-text-primary antialiased selection:bg-marvel-red selection:text-white`}>
+        <CustomCursor />
         {children}
       </body>
     </html>
