@@ -37,7 +37,7 @@ export default function HeroContent() {
         <div className="flex items-center gap-3">
           <div className="h-[1px] w-8 bg-arc-blue/50" />
           <span className="text-arc-blue font-orbitron text-xs tracking-[0.5em] uppercase opacity-70">
-            System Identification: Alpha-01
+            System Identification: KKV-01
           </span>
           <div className="h-[1px] w-8 bg-arc-blue/50" />
         </div>
@@ -48,9 +48,9 @@ export default function HeroContent() {
         className="text-hero gradient-text-marvel mb-6 relative"
       >
         <span className="relative inline-block">
-          DEVUNIVERSE
+          KEERTHI KUMAR V
           {/* Glitch Overlay Effect */}
-          <span className="absolute inset-0 text-arc-blue opacity-20 blur-[2px] animate-pulse-slow">DEVUNIVERSE</span>
+          <span className="absolute inset-0 text-arc-blue opacity-20 blur-[2px] animate-pulse-slow">KEERTHI KUMAR V</span>
         </span>
         <br />
         <span className="text-stark-gold relative">

@@ -89,7 +89,7 @@ const LoadingScreen = ({ onComplete }) => {
     });
   }, []);
 
-  const name = "STARK INDUSTRIES"; // Or developer name
+  const name = "KEERTHI KUMAR V"; // Personalized for the developer
 
   return (
     <div

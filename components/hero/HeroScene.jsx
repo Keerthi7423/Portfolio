@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useEffect } from "react";
 import { PerspectiveCamera, Stars } from "@react-three/drei";
 import ParticleField from "./ParticleField";
+import CinematicEffects from "./CinematicEffects";
 
 /**
  * HeroScene Component
@@ -65,6 +66,9 @@ const HeroScene = () => {
             {/* 3D Elements */}
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
             <ParticleField count={2500} />
+            
+            {/* Cinematic Post-Processing (Task 3.4) */}
+            <CinematicEffects />
             
             <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
           </Canvas>
