@@ -1,0 +1,96 @@
+================================================================================
+  DAY 7: SMOOTH SCROLL ENGINE & CINEMATIC PROGRESS TRACKING
+================================================================================
+
+OVERVIEW:
+Today's objective was to implement a professional-grade "Smooth Scroll" engine 
+to eliminate the "jumpy" nature of default browser scrolling. This creates a 
+cinematic, fluid movement through the portfolio's "Universe," and provides 
+the foundation for complex scroll-driven animations in future phases.
+
+--------------------------------------------------------------------------------
+1. TECHNICAL ARCHITECTURE: THE SCROLL ENGINE (LENIS)
+--------------------------------------------------------------------------------
+
+- WHY LENIS?
+  - Modern scrolling needs to feel organic. Default browser scrolling is linear 
+    and abrupt. Lenis (from Studio Freight) adds "inertia" and "momentum" to 
+    scrolling.
+  - Unlike older scroll libraries, Lenis is "high-performance" because it doesn't 
+    stop the browser's main thread; it simply hijacks the scroll event to 
+    calculate a smoother delta.
+
+- IMPLEMENTATION: SmoothScroll.jsx
+  - Initialization: Configured with `duration: 1.2` and a custom power-based 
+    easing function for that "weighty" Stark Industries feel.
+  - The GSAP Ticker Connection: This is the "secret sauce." By adding 
+    `lenis.raf()` to the `gsap.ticker`, we ensure that every frame of the 
+    smooth scroll is perfectly synchronized with any GSAP animations 
+    (like fading text or moving 3D objects).
+  - lagSmoothing(0): We disable GSAP's lag smoothing to ensure that the 
+    animation frame and the scroll position never drift apart.
+
+--------------------------------------------------------------------------------
+2. UI COMPONENT: THE MISSION PROGRESS BAR
+--------------------------------------------------------------------------------
+
+- LOGIC: ScrollProgress.jsx
+  - We use Framer Motion's `useScroll` hook to get a normalized value (0 to 1) 
+    representing how far the user has scrolled.
+  - To make the progress bar feel "mechanical" and smooth, we pipe that 
+    raw value through `useSpring`. This adds a slight "bounce" or smoothing 
+    to the bar's expansion.
+  - Visuals: The bar uses a `marvel-red` to `stark-gold` to `arc-blue` gradient, 
+    matching the core color palette of the PRD.
+
+--------------------------------------------------------------------------------
+3. INTERVIEW PREPARATION: "HOW WOULD YOU EXPLAIN THIS?"
+--------------------------------------------------------------------------------
+
+Q: Why sync Lenis with the GSAP Ticker?
+A: If you don't sync them, Lenis might update the scroll position at a different 
+   time than GSAP updates its animation values. This leads to "jitter" or 
+   "stuttering" during scroll-triggered animations. Syncing them ensures 
+   they share the same "heartbeat" (requestAnimationFrame).
+
+Q: What is `requestAnimationFrame` (RAF) and why do we pass time to `lenis.raf(time)`?
+A: RAF is a browser API that tells the browser you want to perform an animation 
+   and requests that the browser calls a specified function to update an 
+   animation before the next repaint. We pass the time from the GSAP ticker 
+   to Lenis so it knows exactly how much time has passed since the last frame 
+   to calculate the correct scroll distance.
+
+Q: How does `useSpring` improve the progress bar?
+A: Without `useSpring`, the progress bar moves exactly as fast as the user 
+   scrolls. If the user scrolls fast and stops, the bar stops instantly. 
+   With `useSpring`, the bar has "mass." It accelerates and decelerates 
+   smoothly, making the UI feel more premium and physically real.
+
+Q: Is smooth scrolling bad for accessibility?
+A: It can be if not handled correctly. We ensure that `scroll-smooth` is only 
+   applied via JS for mouse users. For keyboard navigation (Tab/Arrows), 
+   the browser defaults still work. Additionally, it's important to respect 
+   the `prefers-reduced-motion` media query (which can be added to the Lenis 
+   config in a future polish phase).
+
+--------------------------------------------------------------------------------
+4. DESIGN TOKENS UTILIZED
+--------------------------------------------------------------------------------
+
+- COLORS: 
+    - Progress Bar: `marvel-red`, `stark-gold`, `arc-blue`.
+- TYPOGRAPHY: 
+    - Testing headers use `Bebas Neue` for cinematic impact.
+- Z-INDEX:
+    - Progress Bar is set to `z-[100]` to stay above all holographic UI layers.
+
+--------------------------------------------------------------------------------
+5. NEXT STEPS (DAY 8)
+--------------------------------------------------------------------------------
+- Initializing the Phase 3: Three.js Canvas Foundation.
+- Setting up the HeroScene with responsive viewport detection.
+- Implementing the first 3D particle system.
+
+================================================================================
+  SYSTEM STATUS: GRAVITY STABILIZED | MISSION TRACKING ACTIVE
+================================================================================

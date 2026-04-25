@@ -50,13 +50,18 @@ export const metadata = {
 };
 
 import CustomCursor from "@/components/cursor/CustomCursor";
+import SmoothScroll from "@/components/scroll/SmoothScroll";
+import ScrollProgress from "@/components/scroll/ScrollProgress";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${bebas.variable} ${rajdhani.variable} ${orbitron.variable} ${ibmSans.variable} ${ibmMono.variable} ${chakra.variable} font-sans bg-void text-text-primary antialiased selection:bg-marvel-red selection:text-white`}>
+        <ScrollProgress />
         <CustomCursor />
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
