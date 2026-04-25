@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import Navbar from "@/components/navigation/Navbar";
+import HeroScene from "@/components/hero/HeroScene";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -22,38 +23,74 @@ export default function Home() {
             className="relative z-10"
           >
             <Navbar />
-            {/* Hero Section Placeholder */}
+            
+            {/* Phase 3: Hero Section with 3D Canvas */}
             <section className="h-screen flex items-center justify-center relative overflow-hidden">
-              <div className="text-center z-20">
-                <motion.h2 
+              {/* 3D Background */}
+              <HeroScene />
+
+              {/* Content Overlay */}
+              <div className="text-center z-20 relative px-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="mb-6 inline-block"
+                >
+                  <div className="text-arc-blue font-orbitron text-xs tracking-[0.5em] uppercase mb-4 opacity-70">
+                    System Identification: Alpha-01
+                  </div>
+                </motion.div>
+
+                <motion.h1 
                   initial={{ y: 50, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 1 }}
-                  className="text-display gradient-text-marvel mb-4"
+                  transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-hero gradient-text-marvel mb-6"
                 >
-                  Welcome to the Universe
-                </motion.h2>
+                  STARK INDUSTRIES<br/>
+                  <span className="text-stark-gold">PROTOCOL</span>
+                </motion.h1>
+
                 <motion.p
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 1, duration: 1 }}
-                  className="font-rajdhani text-xl tracking-[0.2em] text-text-secondary uppercase"
+                  className="font-rajdhani text-xl md:text-2xl tracking-[0.2em] text-text-secondary uppercase max-w-2xl mx-auto"
                 >
-                  System Online | JARVIS Protocol v1.0
+                  Redefining the digital frontier with <span className="text-arc-blue">Advanced Neural Architectures</span>
                 </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5, duration: 1 }}
+                  className="mt-12"
+                >
+                  <button className="px-8 py-3 border border-arc-blue/30 bg-arc-blue/5 hover:bg-arc-blue/10 text-arc-blue font-orbitron text-sm tracking-widest uppercase transition-all duration-300 hologram-glow group relative overflow-hidden">
+                    <span className="relative z-10">Initiate Mission</span>
+                    <div className="absolute inset-0 bg-arc-blue/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  </button>
+                </motion.div>
               </div>
 
-              {/* Background ambient elements */}
-              <div className="absolute inset-0 z-0">
-                <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-arc-blue/5 rounded-full blur-[100px]" />
-                <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-marvel-red/5 rounded-full blur-[120px]" />
-              </div>
+              {/* Scroll Indicator */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2, duration: 1 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+              >
+                <span className="text-[10px] font-orbitron text-text-secondary tracking-[0.3em] uppercase">Scroll to Explore</span>
+                <div className="w-[1px] h-12 bg-gradient-to-b from-arc-blue to-transparent" />
+              </motion.div>
             </section>
 
             {/* Test Sections for Scroll */}
-            <section id="origin" className="h-screen flex items-center justify-center border-t border-white/5">
+            <section id="origin" className="h-screen flex items-center justify-center border-t border-white/5 bg-void/50 backdrop-blur-sm relative z-20">
               <h2 className="text-display-sm text-stark-gold">The Origin Story</h2>
             </section>
+
 
             <section id="powers" className="h-screen flex items-center justify-center border-t border-white/5">
               <h2 className="text-display-sm text-arc-blue">Superpowers</h2>
