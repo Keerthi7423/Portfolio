@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import Navbar from "@/components/navigation/Navbar";
 import HeroScene from "@/components/hero/HeroScene";
+import HeroContent from "@/components/hero/HeroContent";
+import AmbientAudio from "@/components/hero/AmbientAudio";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -30,49 +32,10 @@ export default function Home() {
               <HeroScene />
 
               {/* Content Overlay */}
-              <div className="text-center z-20 relative px-4">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                  className="mb-6 inline-block"
-                >
-                  <div className="text-arc-blue font-orbitron text-xs tracking-[0.5em] uppercase mb-4 opacity-70">
-                    System Identification: Alpha-01
-                  </div>
-                </motion.div>
+              <HeroContent />
 
-                <motion.h1 
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-hero gradient-text-marvel mb-6"
-                >
-                  STARK INDUSTRIES<br/>
-                  <span className="text-stark-gold">PROTOCOL</span>
-                </motion.h1>
-
-                <motion.p
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 1, duration: 1 }}
-                  className="font-rajdhani text-xl md:text-2xl tracking-[0.2em] text-text-secondary uppercase max-w-2xl mx-auto"
-                >
-                  Redefining the digital frontier with <span className="text-arc-blue">Advanced Neural Architectures</span>
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5, duration: 1 }}
-                  className="mt-12"
-                >
-                  <button className="px-8 py-3 border border-arc-blue/30 bg-arc-blue/5 hover:bg-arc-blue/10 text-arc-blue font-orbitron text-sm tracking-widest uppercase transition-all duration-300 hologram-glow group relative overflow-hidden">
-                    <span className="relative z-10">Initiate Mission</span>
-                    <div className="absolute inset-0 bg-arc-blue/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                  </button>
-                </motion.div>
-              </div>
+              {/* Ambient Audio Toggle */}
+              <AmbientAudio />
 
               {/* Scroll Indicator */}
               <motion.div 
