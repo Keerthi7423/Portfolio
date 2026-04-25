@@ -40,14 +40,14 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative w-10 h-10 flex items-center justify-center">
               <div className="absolute inset-0 border-2 border-marvel-red rounded-sm rotate-45 group-hover:rotate-180 transition-transform duration-700" />
-              <span className="font-bebas text-2xl text-marvel-red z-10">S</span>
+              <span className="font-bebas text-2xl text-marvel-red z-10">K</span>
             </div>
             <div className="flex flex-col leading-none ml-2">
               <span className="font-bebas text-xl tracking-wider text-text-primary group-hover:text-marvel-red transition-colors">
-                STARK
+                KEERTHI
               </span>
               <span className="font-rajdhani text-[10px] tracking-[0.3em] text-text-secondary uppercase">
-                Industries
+                Kumar V
               </span>
             </div>
           </Link>

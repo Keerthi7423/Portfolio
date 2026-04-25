@@ -45,7 +45,7 @@ const chakra = Chakra_Petch({
 });
 
 export const metadata = {
-  title: "DevUniverse | Marvel-Style Portfolio",
+  title: "Keerthi Kumar V | Full Stack Developer",
   description: "High-end, cinematic portfolio of a Full Stack Developer inspired by Stark Industries.",
 };
 
