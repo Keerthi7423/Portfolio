@@ -49,6 +49,23 @@ export default function Home() {
                 <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-marvel-red/5 rounded-full blur-[120px]" />
               </div>
             </section>
+
+            {/* Test Sections for Scroll */}
+            <section id="origin" className="h-screen flex items-center justify-center border-t border-white/5">
+              <h2 className="text-display-sm text-stark-gold">The Origin Story</h2>
+            </section>
+
+            <section id="powers" className="h-screen flex items-center justify-center border-t border-white/5">
+              <h2 className="text-display-sm text-arc-blue">Superpowers</h2>
+            </section>
+
+            <section id="missions" className="h-screen flex items-center justify-center border-t border-white/5">
+              <h2 className="text-display-sm text-marvel-red">The Missions</h2>
+            </section>
+
+            <section id="history" className="h-screen flex items-center justify-center border-t border-white/5">
+              <h2 className="text-display-sm text-stark-gold">Battle History</h2>
+            </section>
           </motion.div>
         )}
       </AnimatePresence>
