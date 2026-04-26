@@ -7,6 +7,7 @@ import HeroScene from "@/components/hero/HeroScene";
 import HeroContent from "@/components/hero/HeroContent";
 import AmbientAudio from "@/components/hero/AmbientAudio";
 import AboutSection from "@/components/about/AboutSection";
+import SkillsSection from "@/components/skills/SkillsSection";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -53,9 +54,8 @@ export default function Home() {
             {/* Phase 4: About Section (The Hero Dossier) */}
             <AboutSection />
 
-            <section id="powers" className="h-screen flex items-center justify-center border-t border-white/5">
-              <h2 className="text-display-sm text-arc-blue">Superpowers</h2>
-            </section>
+            {/* Phase 4: Skills Section (Superpowers) */}
+            <SkillsSection />
 
             <section id="missions" className="h-screen flex items-center justify-center border-t border-white/5">
               <h2 className="text-display-sm text-marvel-red">The Missions</h2>
