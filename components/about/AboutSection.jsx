@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import ClassifiedStamp from "./ClassifiedStamp";
+import HolographicPhoto from "./HolographicPhoto";
+import StatBlock from "./StatBlock";
 
 const AboutSection = () => {
   return (
@@ -15,7 +17,7 @@ const AboutSection = () => {
       {/* Subtle Grid overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-      {/* Red ambient glow */}
+      {/* Ambient glows */}
       <div className="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] bg-marvel-red/5 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute -top-[20%] -right-[10%] w-[40%] h-[40%] bg-arc-blue/5 blur-[120px] rounded-full pointer-events-none" />
 
@@ -74,83 +76,61 @@ const AboutSection = () => {
               viewport={{ once: true }}
               className="relative aspect-square max-w-md mx-auto"
             >
-              {/* Photo Frame with holographic effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-surface-raised/80 to-void border border-white/5 overflow-hidden group backdrop-blur-sm">
-                {/* Glitch Overlay (visible on hover) */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-marvel-red mix-blend-overlay z-20 transition-opacity duration-300 pointer-events-none" />
-                
-                {/* HUD Corners */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-arc-blue z-20" />
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-arc-blue z-20" />
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-arc-blue z-20" />
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-arc-blue z-20" />
-
-                {/* Animated Scanline for Photo */}
-                <div className="absolute inset-0 w-full h-[2px] bg-arc-blue/30 top-[-2px] animate-[scan_4s_linear_infinite] z-30" />
-
-                {/* Grid Overlay on photo */}
-                <div className="absolute inset-0 bg-[radial-gradient(rgba(79,195,247,0.1)_1px,transparent_1px)] bg-[size:20px_20px] z-10" />
-
-                <div className="w-full h-full flex flex-col items-center justify-center text-text-tertiary font-orbitron gap-4">
-                  <div className="w-16 h-16 border-2 border-dashed border-arc-blue/20 rounded-full flex items-center justify-center animate-spin-slow">
-                    <div className="w-8 h-8 border-2 border-arc-blue/40 rounded-full" />
-                  </div>
-                  <div className="text-[10px] tracking-[0.4em] text-center px-12 leading-loose">
-                    [ BIOMETRIC SCAN IN PROGRESS... ]<br/>
-                    [ ANALYSIS: HIGH-THREAT DEVELOPER ]
-                  </div>
-                </div>
-              </div>
+              <HolographicPhoto />
 
               {/* Stats HUD Blocks */}
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-                viewport={{ once: true }}
-                className="absolute -bottom-8 -left-8 bg-void/90 backdrop-blur-xl border border-arc-blue/30 p-5 min-w-[180px] hologram-glow z-40"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="text-[10px] font-orbitron text-arc-blue tracking-widest uppercase">Experience</div>
-                  <div className="w-2 h-2 bg-arc-blue" />
-                </div>
-                <div className="text-4xl font-bebas text-white tracking-wider">05<span className="text-arc-blue text-2xl">+</span></div>
-                <div className="text-[9px] font-mono text-text-tertiary mt-1 uppercase">Years in Operation</div>
-              </motion.div>
+              <div className="absolute -bottom-10 -left-10 z-40 hidden sm:block">
+                <StatBlock 
+                  label="Experience" 
+                  value={5} 
+                  suffix="+" 
+                  delay={0.4} 
+                  color="arc-blue" 
+                />
+              </div>
 
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-                viewport={{ once: true }}
-                className="absolute -top-8 -right-8 bg-void/90 backdrop-blur-xl border border-marvel-red/30 p-5 min-w-[180px] hologram-glow-red z-40"
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="text-[10px] font-orbitron text-marvel-red tracking-widest uppercase">Missions</div>
-                  <div className="w-2 h-2 bg-marvel-red" />
-                </div>
-                <div className="text-4xl font-bebas text-white tracking-wider">42<span className="text-marvel-red text-2xl">+</span></div>
-                <div className="text-[9px] font-mono text-text-tertiary mt-1 uppercase">Successful Deployments</div>
-              </motion.div>
+              <div className="absolute -top-10 -right-10 z-40 hidden sm:block">
+                <StatBlock 
+                  label="Missions" 
+                  value={42} 
+                  suffix="+" 
+                  delay={0.6} 
+                  color="marvel-red" 
+                />
+              </div>
+
+              <div className="absolute top-1/2 -left-16 transform -translate-y-1/2 z-40 hidden xl:block">
+                <StatBlock 
+                  label="Tech Stack" 
+                  value={18} 
+                  suffix="⚡" 
+                  delay={0.8} 
+                  color="arc-blue" 
+                />
+              </div>
+
+              <div className="absolute bottom-1/2 -right-16 transform translate-y-1/2 z-40 hidden xl:block">
+                <StatBlock 
+                  label="Caffeine" 
+                  value={1250} 
+                  suffix="☕" 
+                  delay={1.0} 
+                  color="marvel-red" 
+                />
+              </div>
+
+              {/* Mobile Stats Grid */}
+              <div className="grid grid-cols-2 gap-4 mt-12 sm:hidden">
+                <StatBlock label="Experience" value={5} suffix="+" color="arc-blue" />
+                <StatBlock label="Missions" value={42} suffix="+" color="marvel-red" />
+                <StatBlock label="Tech Stack" value={18} suffix="⚡" color="arc-blue" />
+                <StatBlock label="Caffeine" value={1250} suffix="☕" color="marvel-red" />
+              </div>
             </motion.div>
           </div>
 
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scan {
-          0% { top: -2px; }
-          100% { top: 100%; }
-        }
-        .animate-spin-slow {
-          animation: spin 10s linear infinite;
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </section>
   );
 };
