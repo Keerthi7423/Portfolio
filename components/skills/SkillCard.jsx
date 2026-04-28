@@ -27,7 +27,7 @@ export default function SkillCard({ skill, color }) {
           />
           
           <div className="relative z-10 flex flex-col items-center gap-4">
-            <div className="w-16 h-16 flex items-center justify-center filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
+            <div className="w-16 h-16 flex items-center justify-center filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
               <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain" />
             </div>
             <span className="font-rajdhani font-bold tracking-widest text-sm uppercase group-hover:text-white transition-colors">
