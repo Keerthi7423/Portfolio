@@ -18,12 +18,21 @@ export default function SkillsSection() {
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { 
+      y: 100, 
+      x: 30,
+      rotateY: 45,
+      rotateZ: 5,
+      opacity: 0 
+    },
     visible: {
       y: 0,
+      x: 0,
+      rotateY: 0,
+      rotateZ: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 1.2,
         ease: [0.16, 1, 0.3, 1], // easeOutExpo
       },
     },

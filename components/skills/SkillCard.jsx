@@ -25,6 +25,11 @@ export default function SkillCard({ skill, color }) {
             className="absolute -inset-1 opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl pointer-events-none"
             style={{ backgroundColor: color }}
           />
+
+          {/* Holographic Glare */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+          </div>
           
           <div className="relative z-10 flex flex-col items-center gap-4">
             <div className="w-16 h-16 flex items-center justify-center filter grayscale-[60%] group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
