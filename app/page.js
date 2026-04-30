@@ -8,6 +8,8 @@ import HeroContent from "@/components/hero/HeroContent";
 import AmbientAudio from "@/components/hero/AmbientAudio";
 import AboutSection from "@/components/about/AboutSection";
 import SkillsSection from "@/components/skills/SkillsSection";
+import ProjectsSection from "@/components/projects/ProjectsSection";
+
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Home() {
@@ -57,9 +59,9 @@ export default function Home() {
             {/* Phase 4: Skills Section (Superpowers) */}
             <SkillsSection />
 
-            <section id="missions" className="h-screen flex items-center justify-center border-t border-white/5">
-              <h2 className="text-display-sm text-marvel-red">The Missions</h2>
-            </section>
+            {/* Phase 5: Projects Section (The Missions) */}
+            <ProjectsSection />
+
 
             <section id="history" className="h-screen flex items-center justify-center border-t border-white/5">
               <h2 className="text-display-sm text-stark-gold">Battle History</h2>
