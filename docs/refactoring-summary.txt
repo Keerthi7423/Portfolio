@@ -279,10 +279,48 @@ REFACTORED CODE:
 (Refer to file for full implementation - uses modular sub-components and centralized config)
 
 ================================================================================
+12. FILE: components/experience/ExperienceCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Error: Contained an invalid comment-like string ("// SECURE_TRANS") inside a JSX text node.
+- Monolithic Structure: Mixing branding, metadata, description, and objectives in one large block.
+- Inconsistent Naming: Props were used directly without clear sub-component isolation.
+
+WHAT WAS IMPROVED:
+- Fixed Build Error: Replaced the problematic string with a clean separator (" | STATUS: SECURE_TRANS").
+- Modularized Components: Extracted CompanyBranding, MetaDetails, and ObjectiveList.
+- Simplified JSX: Reduced nesting and improved the visual hierarchy of the code.
+
+================================================================================
+13. FILE: components/skills/SkillCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Warning: Used native <img> instead of Next.js <Image /> for optimized performance.
+- Complex UI Logic: 3D flip logic and two faces (front/back) were coupled in a single block.
+
+WHAT WAS IMPROVED:
+- Fixed Build Warning: Implemented next/image for optimized skill icons.
+- Modularized Components: Extracted SkillFront and SkillBack.
+- Improved Readability: Made the 3D interaction logic more explicit and easier to follow.
+
+================================================================================
+14. FILE: components/testimonials/TestimonialCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Error: Unescaped double quotes in the content section.
+- Monolithic Structure: Combined transmission metadata, quote content, and author identity.
+
+WHAT WAS IMPROVED:
+- Fixed Build Error: Escaped double quotes using &quot;.
+- Modularized Components: Extracted TransmissionHeader and AuthorIdentity.
+- Clean Orchestration: The main component now reads like a high-level layout description.
+
+================================================================================
 SUMMARY OF CLEAN CODE PRINCIPLES APPLIED:
 1. DRY (Don't Repeat Yourself): Extracted reusable UI bits into sub-components.
 2. Separation of Concerns: Split layout, data, and logic.
 3. Declarative Code: UI now reads like a description of what it IS, not how it works.
 4. Beginner Friendly: Added comments explaining complex animations (GSAP/Motion) and 3D scenes.
+5. Build Optimization: Resolved ESLint errors and swapped <img> for Next.js <Image />.
 ================================================================================
 
