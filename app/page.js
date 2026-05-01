@@ -10,6 +10,7 @@ import AboutSection from "@/components/about/AboutSection";
 import SkillsSection from "@/components/skills/SkillsSection";
 import ProjectsSection from "@/components/projects/ProjectsSection";
 import ExperienceSection from "@/components/experience/ExperienceSection";
+import TestimonialsSection from "@/components/testimonials/TestimonialsSection";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -66,6 +67,9 @@ export default function Home() {
 
             {/* Phase 6: Experience Section (Battle History) */}
             <ExperienceSection />
+
+            {/* Phase 6: Testimonials Section (Allies Speak) */}
+            <TestimonialsSection />
 
           </motion.div>
         )}
