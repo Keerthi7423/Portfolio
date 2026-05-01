@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { Vector2 } from "three";
 import { 
   EffectComposer, 
   Bloom, 
@@ -9,65 +10,86 @@ import {
   Noise 
 } from "@react-three/postprocessing";
 import { PerformanceMonitor } from "@react-three/drei";
-import { Vector2 } from "three";
 
 /**
- * CinematicEffects Component
- * Implements Task 3.4: Post-Processing & Bloom.
- * Handles visual polish and performance-based auto-degradation.
+ * EFFECT_CONFIG: Centralized visual settings for the cinematic post-processing stack.
+ * Having these as constants makes it easier for developers to tweak the "vibe" 
+ * without diving into the component logic.
+ */
+const EFFECT_CONFIG = {
+  bloom: {
+    luminanceThreshold: 0.2,
+    luminanceSmoothing: 0.9,
+    height: 300,
+    intensity: {
+      high: 1.5,
+      performance: 0.5,
+    },
+  },
+  vignette: {
+    offset: 0.1,
+    darkness: 1.1,
+    eskil: false,
+  },
+  noise: {
+    opacity: 0.05,
+  },
+  chromaticAberration: {
+    offset: new Vector2(0.002, 0.002), // Static offset for edge fringing
+    modulationOffset: 0.5,
+  }
+};
+
+/**
+ * CinematicEffects: Handles the visual polish and performance auto-scaling.
+ * It uses a PerformanceMonitor to detect hardware struggle and simplify effects.
  */
 const CinematicEffects = () => {
-  const [degraded, setDegraded] = useState(false);
+  const [isPerformanceMode, setIsPerformanceMode] = useState(false);
+
+  // Helper functions to handle performance scaling
+  const enablePerformanceMode = () => setIsPerformanceMode(true);
+  const disablePerformanceMode = () => setIsPerformanceMode(false);
+
+  const bloomIntensity = isPerformanceMode 
+    ? EFFECT_CONFIG.bloom.intensity.performance 
+    : EFFECT_CONFIG.bloom.intensity.high;
 
   return (
     <>
-      {/* 
-        Performance Monitor
-        Automatically detects if the user's hardware is struggling (low FPS).
-        If FPS drops below threshold, we set 'degraded' to true to simplify effects.
-      */}
+      {/* Automatically scales visual quality based on frame rate */}
       <PerformanceMonitor 
-        onDecline={() => setDegraded(true)} 
-        onIncline={() => setDegraded(false)}
+        onDecline={enablePerformanceMode} 
+        onIncline={disablePerformanceMode}
       />
 
       <EffectComposer disableNormalPass>
-        {/* 
-          Bloom Effect: Creates the "glow" on emissive materials.
-          Essential for the Stark/Iron Man HUD aesthetic.
-        */}
+        {/* Adds "glow" to emissive materials for the Stark-tech look */}
         <Bloom 
-          intensity={degraded ? 0.5 : 1.5} 
-          luminanceThreshold={0.2} 
-          luminanceSmoothing={0.9} 
-          height={300} 
+          intensity={bloomIntensity} 
+          luminanceThreshold={EFFECT_CONFIG.bloom.luminanceThreshold} 
+          luminanceSmoothing={EFFECT_CONFIG.bloom.luminanceSmoothing} 
+          height={EFFECT_CONFIG.bloom.height} 
         />
 
-        {/* 
-          Chromatic Aberration: Simulates lens distortion (color fringing at edges).
-          Adds a cinematic, slightly technological glitch feel.
-        */}
-        {!degraded && (
+        {/* Adds color fringing at screen edges - disabled in performance mode */}
+        {!isPerformanceMode && (
           <ChromaticAberration
-            offset={new Vector2(0.002, 0.002)}
+            offset={EFFECT_CONFIG.chromaticAberration.offset}
             radialModulation={true}
-            modulationOffset={0.5}
+            modulationOffset={EFFECT_CONFIG.chromaticAberration.modulationOffset}
           />
         )}
 
-        {/* 
-          Vignette: Darkens the edges of the screen to focus attention on the center.
-        */}
+        {/* Darkens edges to focus attention on the center */}
         <Vignette 
-          eskil={false} 
-          offset={0.1} 
-          darkness={1.1} 
+          eskil={EFFECT_CONFIG.vignette.eskil} 
+          offset={EFFECT_CONFIG.vignette.offset} 
+          darkness={EFFECT_CONFIG.vignette.darkness} 
         />
 
-        {/* 
-          Noise: Adds subtle film grain to prevent color banding and add texture.
-        */}
-        <Noise opacity={0.05} />
+        {/* Subtle film grain to prevent color banding */}
+        <Noise opacity={EFFECT_CONFIG.noise.opacity} />
       </EffectComposer>
     </>
   );

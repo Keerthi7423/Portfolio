@@ -170,9 +170,157 @@ const ClassifiedStamp = () => {
 export default ClassifiedStamp;
 
 ================================================================================
+6. FILE: components/hero/AmbientAudio.jsx
+================================================================================
+WHAT WAS WRONG:
+- Hardcoded configuration URL inside the component logic.
+- Imperative side effects (manual play/pause) mixed with UI state.
+- Cluttered JSX with inline mapping for visualizer bars.
+- Generic naming for variables and functions.
+
+WHAT WAS IMPROVED:
+- Extracted AMBIENT_SOUND_URL to a top-level constant.
+- Used useEffect for declarative synchronization between state and audio playback.
+- Modularized the AudioVisualizer into a clean, focused sub-component.
+- Improved naming (statusText, buttonStyles, handleToggleAudio).
+- Added accessibility support with aria-labels.
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses declarative useEffect for sync)
+
+================================================================================
+7. FILE: components/hero/CinematicEffects.jsx
+================================================================================
+WHAT WAS WRONG:
+- Performance Bottleneck: Created a new Vector2 object in the render loop for Chromatic Aberration.
+- Scattered Configuration: Effect parameters were hardcoded directly in the JSX, making tweaks difficult.
+- Vague State Naming: 'degraded' state was a bit negative; 'isPerformanceMode' is more descriptive of the intent.
+
+WHAT WAS IMPROVED:
+- Optimized Memory: Moved the Vector2 offset to a static config object outside the component.
+- Centralized Configuration: Created an EFFECT_CONFIG object to manage all post-processing parameters in one place.
+- Improved State Clarity: Renamed 'degraded' to 'isPerformanceMode' and used descriptive handler functions.
+- Cleaner JSX: The return statement now focus on the "what" (layers) rather than the "how" (individual numbers).
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses EFFECT_CONFIG for cleaner management)
+
+================================================================================
+8. FILE: components/hero/HeroContent.jsx
+================================================================================
+WHAT WAS WRONG:
+- "Chunky" monolithic component with deeply nested JSX.
+- Code duplication in CTA buttons (nearly identical logic for styles and hover effects).
+- Complex decorative elements (HUD) cluttering the main layout logic.
+- Inline animation variants making the component body harder to read.
+
+WHAT WAS IMPROVED:
+- Extracted Sub-Components: Created SystemBadge, HeroTitle, HeroButton, and HudDecorations.
+- Applied DRY Principle: Unified the button logic into a single HeroButton component with dynamic themes.
+- Clean Orchestration: The main HeroContent component is now a clear, high-level map of the section.
+- Organized Animations: Moved CONTAINER_VARIANTS and ITEM_VARIANTS outside the component for better readability.
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses extracted components for a clean structure)
+
+================================================================================
+9. FILE: components/hero/HeroScene.jsx
+================================================================================
+WHAT WAS WRONG:
+- Monolithic Structure: Mixing 3D Canvas setup, lighting, and a separate CSS-based mobile fallback in one large block.
+- Deep Nesting: The return statement had several levels of nesting, making it harder to scan.
+- Task Comments: Contained outdated development markers like (Task 3.1) and (Task 3.4).
+- Scattered Configuration: Lighting values and fallback styles were hardcoded directly in the main component.
+
+WHAT WAS IMPROVED:
+- Extracted Sub-Components: Created MobileFallback, SceneLighting, and StaticOverlays to modularize the UI.
+- Simplified Logic: The main component now acts as a high-level orchestrator between the 3D scene and the mobile view.
+- Clean Code: Removed technical debt comments and replaced them with meaningful context for beginners.
+- Improved Readability: Reduced indentation levels and grouped related 3D elements together.
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses modular sub-components for a cleaner scene)
+
+================================================================================
+10. FILE: components/hero/ParticleField.jsx
+================================================================================
+WHAT WAS WRONG:
+- Hardcoded Magic Numbers: Values for spread, rotation, and parallax were buried in the logic.
+- Mixed Concerns: The mathematical logic for generating particle positions was inside the main component body.
+- Vague Naming: Variable names like 'temp' and 'i3' were not very descriptive for beginners.
+- Lacked Explanatory Comments: No context for why useMemo or lerp were being used.
+
+WHAT WAS IMPROVED:
+- Centralized Configuration: Created a FIELD_CONFIG object to make tweaking the visual effect trivial.
+- Extracted Logic: Moved particle generation to a standalone generateParticleData helper function.
+- Improved Readability: Renamed variables (e.g., 'pointsRef') and used descriptive names for animation targets.
+- Educational Comments: Added clear explanations for Three.js concepts like BufferAttributes, Lerp, and Parallax.
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses FIELD_CONFIG and helper functions)
+
+================================================================================
+11. FILE: components/loading/LoadingScreen.jsx
+================================================================================
+WHAT WAS WRONG:
+- Monolithic Structure: The loading screen logic (progress, skip, animations) and UI (name, bar, stats, brackets) were all in one large block.
+- Hardcoded Magic Numbers: Timing and animation values were scattered throughout the code.
+- Repetitive Aesthetic Elements: Corner brackets were implemented as four separate manual divs.
+- Deep Nesting: The return statement had several levels of nesting.
+
+WHAT WAS IMPROVED:
+- Modularized Components: Extracted NameDisplay, ProgressBar, StatusGrid, and CornerBrackets into focused sub-components.
+- Centralized Configuration: Created LOADING_CONFIG to manage all timing and visual parameters in one place.
+- Applied DRY Principle: Unified the corner bracket logic into a single component using a loop.
+- Enhanced Readability: Improved variable naming and added descriptive comments for complex GSAP sequences.
+- Simplified Logic: Streamlined the progress increment and skip button logic.
+
+REFACTORED CODE:
+(Refer to file for full implementation - uses modular sub-components and centralized config)
+
+================================================================================
+12. FILE: components/experience/ExperienceCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Error: Contained an invalid comment-like string ("// SECURE_TRANS") inside a JSX text node.
+- Monolithic Structure: Mixing branding, metadata, description, and objectives in one large block.
+- Inconsistent Naming: Props were used directly without clear sub-component isolation.
+
+WHAT WAS IMPROVED:
+- Fixed Build Error: Replaced the problematic string with a clean separator (" | STATUS: SECURE_TRANS").
+- Modularized Components: Extracted CompanyBranding, MetaDetails, and ObjectiveList.
+- Simplified JSX: Reduced nesting and improved the visual hierarchy of the code.
+
+================================================================================
+13. FILE: components/skills/SkillCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Warning: Used native <img> instead of Next.js <Image /> for optimized performance.
+- Complex UI Logic: 3D flip logic and two faces (front/back) were coupled in a single block.
+
+WHAT WAS IMPROVED:
+- Fixed Build Warning: Implemented next/image for optimized skill icons.
+- Modularized Components: Extracted SkillFront and SkillBack.
+- Improved Readability: Made the 3D interaction logic more explicit and easier to follow.
+
+================================================================================
+14. FILE: components/testimonials/TestimonialCard.jsx
+================================================================================
+WHAT WAS WRONG:
+- Build Error: Unescaped double quotes in the content section.
+- Monolithic Structure: Combined transmission metadata, quote content, and author identity.
+
+WHAT WAS IMPROVED:
+- Fixed Build Error: Escaped double quotes using &quot;.
+- Modularized Components: Extracted TransmissionHeader and AuthorIdentity.
+- Clean Orchestration: The main component now reads like a high-level layout description.
+
+================================================================================
 SUMMARY OF CLEAN CODE PRINCIPLES APPLIED:
 1. DRY (Don't Repeat Yourself): Extracted reusable UI bits into sub-components.
 2. Separation of Concerns: Split layout, data, and logic.
 3. Declarative Code: UI now reads like a description of what it IS, not how it works.
-4. Beginner Friendly: Added comments explaining complex animations (GSAP/Motion).
+4. Beginner Friendly: Added comments explaining complex animations (GSAP/Motion) and 3D scenes.
+5. Build Optimization: Resolved ESLint errors and swapped <img> for Next.js <Image />.
 ================================================================================
+
