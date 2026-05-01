@@ -9,6 +9,8 @@ import AmbientAudio from "@/components/hero/AmbientAudio";
 import AboutSection from "@/components/about/AboutSection";
 import SkillsSection from "@/components/skills/SkillsSection";
 import ProjectsSection from "@/components/projects/ProjectsSection";
+import ExperienceSection from "@/components/experience/ExperienceSection";
+import TestimonialsSection from "@/components/testimonials/TestimonialsSection";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -63,9 +65,12 @@ export default function Home() {
             <ProjectsSection />
 
 
-            <section id="history" className="h-screen flex items-center justify-center border-t border-white/5">
-              <h2 className="text-display-sm text-stark-gold">Battle History</h2>
-            </section>
+            {/* Phase 6: Experience Section (Battle History) */}
+            <ExperienceSection />
+
+            {/* Phase 6: Testimonials Section (Allies Speak) */}
+            <TestimonialsSection />
+
           </motion.div>
         )}
       </AnimatePresence>
