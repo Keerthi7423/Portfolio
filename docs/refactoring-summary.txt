@@ -316,11 +316,52 @@ WHAT WAS IMPROVED:
 - Clean Orchestration: The main component now reads like a high-level layout description.
 
 ================================================================================
+15. FILE: components/projects/ProjectsSection.jsx
+================================================================================
+WHAT WAS WRONG:
+- Complex GSAP logic inside useEffect was hard to follow for beginners.
+- Redundant window.resize listeners that were not properly cleaned up.
+- Monolithic JSX structure combining header, filters, and the horizontal list.
+- Redundant logic for calculating scroll amounts and pin settings.
+
+WHAT WAS IMPROVED:
+- Modularized Components: Extracted SectionHeader and BackgroundDecorations.
+- Simplified GSAP Logic: consolidated the horizontal scroll setup into a clean setupScrollTrigger function.
+- Improved Data Derivation: Used useMemo for categories and filtered projects to prevent unnecessary recalculations.
+- Robust Cleanup: Added proper cleanup for GSAP instances and window resize listeners to prevent memory leaks.
+
+================================================================================
+16. FILE: components/projects/ProjectModal.jsx
+================================================================================
+WHAT WAS WRONG:
+- Monolithic structure with over 150 lines of JSX.
+- Hardcoded sections for Problem, Solution, and Impact made the code verbose.
+- Lack of clear separation between the visual hero area and the technical details.
+
+WHAT WAS IMPROVED:
+- Extracted Sub-Components: Created ProjectHero and InfoSection for better modularity.
+- Applied DRY Principle: Used a reusable InfoSection component for project details.
+- Improved Visual Hierarchy: Cleaned up the layout logic and reduced indentation levels.
+
+================================================================================
+17. FILE: components/experience/ExperienceSection.jsx
+================================================================================
+WHAT WAS WRONG:
+- Mix of GSAP and Framer Motion for scroll-linked animations increased complexity.
+- Background HUD elements and section headers cluttered the main component's JSX.
+- Redundant window check for GSAP plugin registration.
+
+WHAT WAS IMPROVED:
+- Modularized Components: Extracted BackgroundDecorations and SectionHeader.
+- Simplified Animation Logic: Cleaned up the animation logic by clearly separating GSAP (for continuous effects) and Framer Motion (for scroll-linked progress).
+- Improved Readability: Reduced the main component's footprint by over 40%, focusing it on orchestrating the timeline.
+
+================================================================================
 SUMMARY OF CLEAN CODE PRINCIPLES APPLIED:
 1. DRY (Don't Repeat Yourself): Extracted reusable UI bits into sub-components.
 2. Separation of Concerns: Split layout, data, and logic.
 3. Declarative Code: UI now reads like a description of what it IS, not how it works.
 4. Beginner Friendly: Added comments explaining complex animations (GSAP/Motion) and 3D scenes.
-5. Build Optimization: Resolved ESLint errors and swapped <img> for Next.js <Image />.
+5. Build Optimization: Resolved ESLint errors and standardized component structures.
 ================================================================================
 
