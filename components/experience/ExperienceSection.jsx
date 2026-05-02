@@ -134,4 +134,49 @@ const ExperienceSection = () => {
   );
 };
 
+/**
+ * SUB-COMPONENT: TimelineNode
+ * A glowing node that activates when the timeline scroll reaches it.
+ */
+const TimelineNode = ({ index, total, progress }) => {
+  const position = (index / (total - 1)) * 100;
+  
+  // Activate when progress is near the node's position
+  const isActive = useTransform(
+    progress,
+    [index / total, (index + 0.5) / total],
+    [0, 1]
+  );
+
+  const scale = useSpring(useTransform(isActive, [0, 1], [0.8, 1.2]), {
+    stiffness: 200,
+    damping: 20
+  });
+
+  const opacity = useTransform(isActive, [0, 1], [0.3, 1]);
+
+  return (
+    <motion.div
+      className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 z-10"
+      style={{ 
+        top: `${position}%`,
+        scale,
+        opacity
+      }}
+    >
+      <div className="w-full h-full rounded-full bg-void border-2 border-arc-blue shadow-[0_0_10px_rgba(79,195,247,0.3)]" />
+      <motion.div 
+        className="absolute inset-0 rounded-full bg-arc-blue"
+        style={{ opacity: isActive }}
+      />
+      {/* Pulse effect when active */}
+      <motion.div 
+        className="absolute -inset-2 rounded-full border border-arc-blue/30"
+        animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0, 0.3] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+    </motion.div>
+  );
+};
+
 export default ExperienceSection;

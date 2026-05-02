@@ -1,0 +1,104 @@
+================================================================================
+  TECHNICAL LOG: DAY 20 — EXPERIENCE TIMELINE (CINEMATIC BATTLE HISTORY)
+  DevUniverse Portfolio (Marvel/Stark Industries Theme)
+================================================================================
+
+OVERVIEW:
+Today's mission focused on implementing Phase 6: "Battle History & Allies", 
+specifically Task 6.1: The Experience Timeline. We transitioned from a static 
+list of roles to a dynamic, scroll-driven "Cinematic Spine" that visualizes 
+professional growth as a sequential mission log.
+
+--------------------------------------------------------------------------------
+1. KEY FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+
+A. SVG SPINE ARCHITECTURE (Scroll-Driven Drawing)
+   - Replaced standard div-based borders with a high-performance SVG path.
+   - Implemented `stroke-dashoffset` (via Framer Motion's `pathLength`) to "draw" 
+     the timeline as the user scrolls.
+   - Added a multi-color linear gradient (Arc Blue to Marvel Red) to the path 
+     to signify evolution through different career phases.
+
+B. REACTIVE TIMELINE NODES
+   - Created `TimelineNode` components that serve as tactical checkpoints.
+   - These nodes use `useTransform` to detect when the drawing line reaches 
+     their vertical position, triggering a "Power Up" animation (scale + glow).
+   - Each node features a persistent pulse effect to maintain the HUD aesthetic.
+
+C. THE "GLOWING HEAD" NAVIGATOR
+   - Added a glowing cursor at the tip of the drawing line.
+   - This element acts as a visual guide, focusing the user's eye on the current 
+     point in the battle history.
+   - Includes a "Ping" animation to simulate active data transmission.
+
+D. RESPONSIVE ADAPTIVE LAYOUT
+   - Maintained a dual-column layout on desktop (alternating cards) while 
+     gracefully collapsing to a single-column "Mobile Mission Log" for smaller 
+     screens.
+   - The SVG spine automatically adjusts its height based on the container's 
+     content, ensuring the animation never breaks regardless of role descriptions.
+
+--------------------------------------------------------------------------------
+2. TECHNICAL CHALLENGES & SOLUTIONS
+--------------------------------------------------------------------------------
+
+CHALLENGE: Synchronizing SVG Drawing with DOM Elements
+With dynamic content, the exact pixel position of an Experience Card might 
+change. A hard-coded SVG wouldn't work.
+SOLUTION: We used a percentage-based viewBox (`0 0 32 100`) with 
+`preserveAspectRatio="none"`. This allows the SVG to stretch to the exact height 
+of the parent container while keeping the path logic relative to the percentage 
+of the scroll.
+
+CHALLENGE: Performance Jitter during Scroll
+Animating large SVG paths can sometimes cause "jank" if not handled correctly.
+SOLUTION: Leveraged `framer-motion`'s optimized transform engine. By animating 
+`pathLength` instead of `height`, we stay within the browser's GPU-accelerated 
+rendering path, ensuring 60FPS even on complex mobile devices.
+
+CHALLENGE: Node Activation Timing
+Ensuring a node lights up exactly when the line hits it requires precise math.
+SOLUTION: Implemented a normalization formula: `(index / (total - 1)) * 100`. 
+This maps each experience to a 0-1 range that perfectly matches the 
+`scrollYProgress` (0-1) used for the path drawing.
+
+--------------------------------------------------------------------------------
+3. INTERVIEW PREPARATION (Q&A)
+--------------------------------------------------------------------------------
+
+Q: Why use SVG for a timeline instead of just CSS borders?
+A: SVG provides significantly more control. With SVG, I can use `stroke-dasharray` 
+for complex drawing effects, apply multi-stop gradients along a path, and add 
+filters like `drop-shadow` that are more performant than CSS `box-shadow` on 
+animating elements. It also ensures the "line" is resolution-independent.
+
+Q: How do you handle scroll-triggered animations for performance?
+A: I use a combination of `useScroll` for tracking and `useSpring` for smoothing. 
+Directly mapping scroll position to UI can feel "choppy" because scroll events 
+fire at different rates. `useSpring` adds a layer of physics-based interpolation 
+(stiffness/damping) that makes the animation feel organic and smooth.
+
+Q: What is the benefit of componentizing the TimelineNode?
+A: Separation of concerns. The `TimelineNode` manages its own internal state 
+(whether it's "active" or "idle") and its own animations. This keeps the 
+`ExperienceSection` clean and allows us to easily add more nodes or change 
+their visual behavior without touching the layout logic.
+
+Q: How do you ensure the timeline remains accessible?
+A: While the animation is visual, the content (ExperienceCards) is built using 
+semantic HTML. Screen readers can still traverse the list of roles logically. 
+The "Battle History" is wrapped in a `<section>` with an `aria-label`, ensuring 
+users with assistive technology understand the context of the data.
+
+--------------------------------------------------------------------------------
+4. DESIGN TOKENS & STYLING
+--------------------------------------------------------------------------------
+- Spine Gradient: `#4FC3F7` (Arc Blue) -> `#E23636` (Marvel Red).
+- Node Effects: `animate-ping` for active status, `backdrop-blur-md` for depth.
+- Typography: Bebas Neue for "BATTLE HISTORY", IBM Plex Mono for log IDs.
+- HUD Elements: 360-degree rotating circles (`experience-hud`) in background.
+
+================================================================================
+MISSION STATUS: COMPLETED | DAY 20 PHASE 6 READY FOR REVIEW
+================================================================================
