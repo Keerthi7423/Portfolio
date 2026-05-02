@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Globe, ExternalLink, Shield, Zap, Target } from "lucide-react";
+import { X, Globe, ExternalLink, Shield, Zap, Target, Camera } from "lucide-react";
 import Image from "next/image";
 
 const GithubIcon = ({ size = 16, className = "" }) => (
@@ -115,6 +115,80 @@ export default function ProjectModal({ project, isOpen, onClose }) {
                     {project.solution}
                   </p>
                 </section>
+
+                {/* Features Section */}
+                {project.features && (
+                  <section>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-2 bg-stark-gold/10 text-stark-gold">
+                        <Shield size={18} />
+                      </div>
+                      <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
+                        Key Features
+                      </h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-6">
+                      {project.features.map((feature, i) => (
+                        <div key={i} className="flex items-center gap-3 text-sm text-text-secondary">
+                          <div className="w-1 h-1 bg-marvel-red" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Technical Blueprint (Tech Deep-dive) */}
+                {project.techDeepDive && (
+                  <section>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-2 bg-arc-blue/10 text-arc-blue">
+                        <Globe size={18} />
+                      </div>
+                      <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
+                        Technical Blueprint
+                      </h4>
+                    </div>
+                    <div className="space-y-4 pl-6">
+                      {project.techDeepDive.map((item, i) => (
+                        <div key={i} className="border border-white/5 p-4 bg-white/5 backdrop-blur-sm">
+                          <span className="text-[10px] font-orbitron text-stark-gold uppercase tracking-tighter mb-1 block">
+                            {item.area}
+                          </span>
+                          <p className="text-sm text-text-secondary">
+                            {item.details}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {/* Media Briefing (Gallery) */}
+                {project.gallery && (
+                  <section>
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-2 bg-marvel-red/10 text-marvel-red">
+                        <Camera size={18} />
+                      </div>
+                      <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
+                        Media Briefing
+                      </h4>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 pl-6">
+                      {project.gallery.map((img, i) => (
+                        <div key={i} className="relative aspect-video border border-white/10 overflow-hidden group">
+                          <Image
+                            src={img}
+                            alt={`Gallery ${i}`}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
 
                 <section>
                   <div className="flex items-center gap-3 mb-4">
