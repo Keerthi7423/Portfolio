@@ -1,9 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Globe, ExternalLink, Shield, Zap, Target } from "lucide-react";
+import { X, ExternalLink, Shield, Zap, Target } from "lucide-react";
 import Image from "next/image";
 
+/**
+ * SUB-COMPONENT: GithubIcon
+ */
 const GithubIcon = ({ size = 16, className = "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +23,60 @@ const GithubIcon = ({ size = 16, className = "" }) => (
     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
+);
+
+/**
+ * SUB-COMPONENT: ProjectHero
+ * Renders the left column with project image and tags.
+ */
+const ProjectHero = ({ project }) => (
+  <div className="w-full md:w-1/2 relative h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/10">
+    <Image
+      src={project.image}
+      alt={project.title}
+      fill
+      className="object-cover opacity-60"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+    
+    <div className="absolute bottom-8 left-8 right-8">
+      <span className="text-[12px] font-orbitron text-stark-gold tracking-[0.3em] uppercase mb-2 block">
+        Mission Briefing
+      </span>
+      <h2 className="text-display-md text-text-primary leading-none mb-4">
+        {project.title}
+      </h2>
+      <div className="flex flex-wrap gap-2">
+        {project.tags.map(tag => (
+          <span key={tag} className="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono text-arc-blue">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <div className="absolute inset-0 pointer-events-none opacity-20 scanlines" />
+  </div>
+);
+
+/**
+ * SUB-COMPONENT: InfoSection
+ * Renders a single section of project details (Problem, Solution, Impact).
+ */
+const InfoSection = ({ icon: Icon, title, content, iconBgClass, iconTextClass }) => (
+  <section>
+    <div className="flex items-center gap-3 mb-4">
+      <div className={`p-2 ${iconBgClass} ${iconTextClass}`}>
+        <Icon size={18} />
+      </div>
+      <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
+        {title}
+      </h4>
+    </div>
+    <p className="text-text-secondary text-sm leading-relaxed border-l-2 border-white/5 pl-6">
+      {content}
+    </p>
+  </section>
 );
 
 export default function ProjectModal({ project, isOpen, onClose }) {
@@ -53,82 +110,34 @@ export default function ProjectModal({ project, isOpen, onClose }) {
               <X size={24} />
             </button>
 
-            {/* Left Column: Image & Media */}
-            <div className="w-full md:w-1/2 relative h-64 md:h-auto border-b md:border-b-0 md:border-r border-white/10">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover opacity-60"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
-              
-              {/* Mission Header Overlay */}
-              <div className="absolute bottom-8 left-8 right-8">
-                <span className="text-[12px] font-orbitron text-stark-gold tracking-[0.3em] uppercase mb-2 block">
-                  Mission Briefing
-                </span>
-                <h2 className="text-display-md text-text-primary leading-none mb-4">
-                  {project.title}
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-2 py-1 bg-white/5 border border-white/10 text-[10px] font-mono text-arc-blue">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Decorative Scanlines */}
-              <div className="absolute inset-0 pointer-events-none opacity-20 scanlines" />
-            </div>
+            <ProjectHero project={project} />
 
             {/* Right Column: Details */}
             <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto custom-scrollbar bg-surface/50 backdrop-blur-md">
               <div className="space-y-12">
-                {/* Briefing Section */}
-                <section>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-arc-blue/10 text-arc-blue">
-                      <Target size={18} />
-                    </div>
-                    <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
-                      Problem Statement
-                    </h4>
-                  </div>
-                  <p className="text-text-secondary text-sm leading-relaxed border-l-2 border-white/5 pl-6">
-                    {project.problem}
-                  </p>
-                </section>
+                <InfoSection 
+                  icon={Target}
+                  title="Problem Statement"
+                  content={project.problem}
+                  iconBgClass="bg-arc-blue/10"
+                  iconTextClass="text-arc-blue"
+                />
 
-                <section>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-marvel-red/10 text-marvel-red">
-                      <Zap size={18} />
-                    </div>
-                    <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
-                      The Solution
-                    </h4>
-                  </div>
-                  <p className="text-text-secondary text-sm leading-relaxed border-l-2 border-white/5 pl-6">
-                    {project.solution}
-                  </p>
-                </section>
+                <InfoSection 
+                  icon={Zap}
+                  title="The Solution"
+                  content={project.solution}
+                  iconBgClass="bg-marvel-red/10"
+                  iconTextClass="text-marvel-red"
+                />
 
-                <section>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-stark-gold/10 text-stark-gold">
-                      <Shield size={18} />
-                    </div>
-                    <h4 className="text-[14px] font-orbitron tracking-widest text-text-primary uppercase">
-                      Operational Impact
-                    </h4>
-                  </div>
-                  <p className="text-text-secondary text-sm leading-relaxed border-l-2 border-white/5 pl-6">
-                    {project.impact}
-                  </p>
-                </section>
+                <InfoSection 
+                  icon={Shield}
+                  title="Operational Impact"
+                  content={project.impact}
+                  iconBgClass="bg-stark-gold/10"
+                  iconTextClass="text-stark-gold"
+                />
 
                 {/* Footer Actions */}
                 <div className="pt-8 border-t border-white/5 flex flex-wrap gap-4">
