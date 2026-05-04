@@ -21,7 +21,7 @@ const BackgroundDecorations = () => (
 
 /**
  * SUB-COMPONENT: SectionHeader
- * Renders the mission log title.
+ * Renders the mission log title with active transmission status.
  */
 const SectionHeader = () => (
   <div className="mb-20 md:mb-32">
@@ -31,9 +31,18 @@ const SectionHeader = () => (
       transition={{ duration: 0.8 }}
       className="flex flex-col items-start"
     >
-      <span className="text-arc-blue font-orbitron text-xs md:text-sm tracking-[0.5em] uppercase mb-4">
-        Mission Log: Alpha-7
-      </span>
+      <div className="flex items-center gap-4 mb-4">
+        <span className="text-arc-blue font-orbitron text-xs md:text-sm tracking-[0.5em] uppercase">
+          Mission Log: Alpha-7
+        </span>
+        <div className="flex items-center gap-2 px-2 py-1 bg-arc-blue/10 border border-arc-blue/30 rounded">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-arc-blue opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-arc-blue"></span>
+          </span>
+          <span className="text-[10px] font-orbitron text-arc-blue tracking-tighter uppercase animate-pulse">Transmission Active</span>
+        </div>
+      </div>
       <h2 className="experience-title text-display-sm md:text-display-md font-bebas text-white tracking-tighter mb-6">
         BATTLE <span className="text-marvel-red italic">HISTORY</span>
       </h2>
