@@ -94,19 +94,58 @@ export default function TestimonialsSection() {
           </div>
 
           {/* Testimonial Cards Wrapper */}
-          <div className="w-full max-w-4xl px-12 md:px-24">
+          <div className="w-full max-w-4xl px-12 md:px-24 relative overflow-hidden py-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, x: 50, filter: "blur(10px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, x: -50, filter: "blur(10px)" }}
-                transition={{ duration: 0.5, ease: "circOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="relative"
               >
-                <TestimonialCard 
-                  testimonial={testimonialsData[activeIndex]} 
-                  isActive={true} 
+                {/* Incoming Transmission Reveal Text */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: [0, 1, 1, 0], x: 0 }}
+                  transition={{ duration: 2, times: [0, 0.1, 0.9, 1] }}
+                  className="absolute -top-12 left-0 z-30 pointer-events-none"
+                >
+                  <div className="flex items-center gap-3 bg-arc-blue/10 backdrop-blur-sm px-4 py-1 border-l-2 border-arc-blue">
+                    <span className="text-[10px] font-ibm-plex text-arc-blue uppercase tracking-[0.3em] animate-pulse">
+                      Transmission Received From: {testimonialsData[activeIndex].name}
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Scan-Wipe Animation */}
+                <motion.div
+                  initial={{ translateY: "-100%" }}
+                  animate={{ translateY: "400%" }}
+                  transition={{ duration: 1.5, ease: "linear" }}
+                  className="scan-wipe-overlay"
                 />
+
+                <motion.div
+                  initial={{ 
+                    opacity: 0, 
+                    scale: 0.95, 
+                    filter: "brightness(2) contrast(1.2) hue-rotate(90deg)",
+                    x: 10
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1, 
+                    filter: "brightness(1) contrast(1) hue-rotate(0deg)",
+                    x: 0
+                  }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  <TestimonialCard 
+                    testimonial={testimonialsData[activeIndex]} 
+                    isActive={true} 
+                  />
+                </motion.div>
               </motion.div>
             </AnimatePresence>
           </div>

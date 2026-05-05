@@ -1,0 +1,96 @@
+================================================================================
+  DAY 22: ALLIES & TRANSMISSIONS (TESTIMONIALS CAROUSEL)
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Focus: Framer Motion, Cinematic Transitions, HUD Aesthetic
+================================================================================
+
+OVERVIEW
+--------------------------------------------------------------------------------
+Day 22 focused on implementing the "Allies Speak" (Testimonials) section. 
+Following the Marvel theme, testimonials are treated as "Incoming Transmissions" 
+from key allies (Stark, Fury, Shuri, etc.). The goal was to create a carousel 
+that doesn't just slide, but "materializes" using cinematic FX like scan-line 
+wipes, glitches, and holographic glows.
+
+KEY FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+1.  CINEMATIC CAROUSEL LOGIC:
+    - Integrated auto-playing carousel with manual override (Chevron controls).
+    - Used Framer Motion's `AnimatePresence` to handle exit/enter transitions 
+      of cards.
+    - Added "Signal Status" indicators to show if the system is in Auto-Receive 
+      or Manual Override mode.
+
+2.  SCAN-WIPE REVEAL:
+    - Built a custom CSS/Framer Motion "Scan-Wipe" effect.
+    - When a card changes, a horizontal light bar (scanline) wipes down the 
+      container, "decoding" the new message.
+    - Initial state of the card includes high brightness and hue-rotation to 
+      simulate a digital signal stabilizing.
+
+3.  GLITCH EFFECTS:
+    - Implemented a "Glitch" animation triggered on avatar hover.
+    - Added a subtle "Transmission Glitch" to the card itself during the 
+      reveal phase (scale + brightness shifts).
+
+4.  HUD AESTHETIC:
+    - Used scanlines, radial gradients, and animated SVG HUD elements to 
+      maintain the Stark Industries interface feel.
+    - Card headers include technical metadata like Transmission ID and 
+      Clearance Level.
+
+TECHNICAL DEEP-DIVE (INTERVIEW PREP)
+--------------------------------------------------------------------------------
+
+Q1: Why use Framer Motion for this carousel instead of a library like Swiper.js?
+A: For this project, the requirement was "cinematic transitions," not just 
+standard sliding. Framer Motion allows us to orchestrate multiple properties 
+(opacity, scale, filters like brightness/hue-rotate) simultaneously. 
+`AnimatePresence` is particularly powerful here because it allows us to 
+animate components as they leave the DOM, which is essential for the 
+"signal fade" effect.
+
+Q2: How is the "Scan-Line Wipe" implemented technically?
+A: It's a two-part system:
+   1. A CSS `scan-wipe-overlay` div with a gradient background that spans 
+      the height of the container.
+   2. A Framer Motion animation that moves this div from `translateY(-100%)` 
+      to `translateY(400%)`.
+   This is synchronized with the card's `initial` and `animate` states to 
+   make it look like the wipe is "drawing" the card.
+
+Q3: How do you handle performance with so many concurrent animations?
+A: 
+   - We use `motion.div` which is optimized for GPU-accelerated transforms 
+     (translate, scale, rotate).
+   - We avoid animating layout-triggering properties like `top`, `left`, 
+     or `height` whenever possible.
+   - The scanline effects use CSS `repeating-linear-gradient` and simple 
+     transforms, which are very cheap for the browser to render.
+
+Q4: What is the purpose of the `isAutoPlay` state logic?
+A: It's for UX/UI balance. While we want a cinematic auto-rotating experience 
+for passive viewers, we must respect user intent. If a user clicks a 
+navigation arrow or a progress dot, we set `isAutoPlay` to `false`. This 
+stops the interval and prevents the card from "escaping" while the user 
+is trying to read it.
+
+CODE STRUCTURE
+--------------------------------------------------------------------------------
+- TestimonialsSection.jsx: Main container, manages state (activeIndex), 
+  auto-play intervals, and the high-level reveal animations.
+- TestimonialCard.jsx: Presentational component, handles the HUD layout, 
+  individual card glitch logic, and "TransmissionHeader" metadata.
+- testimonials-data.js: Centralized data store for all testimonials, 
+  making it easy to add/remove "allies" without touching the UI logic.
+
+DESIGN TOKENS USED
+--------------------------------------------------------------------------------
+- --color-arc-blue: The primary "tech" color for HUD elements.
+- --color-marvel-red: Used for "Clearance" levels and "Live" indicators.
+- --color-void: Deep black background to make the glows pop.
+- Font: Orbitron (Headings) and IBM Plex Mono (Technical Data).
+
+================================================================================
+  "SYSTEM STABLE. TRANSMISSIONS SECURED."
+================================================================================
