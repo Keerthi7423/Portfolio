@@ -1,0 +1,89 @@
+================================================================================
+  DAY 23: JARVIS AI INTEGRATION (BACKEND API PROXY)
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Focus: AI Integration, Next.js API Routes, System Prompt Engineering
+================================================================================
+
+OVERVIEW
+--------------------------------------------------------------------------------
+Day 23 marked the transition into Phase 7: JARVIS AI Integration. The goal was to 
+establish the "Brain" of the application — a backend proxy route that connects 
+the frontend to the Gemini 1.5 Flash API. This allows the portfolio to have a 
+conversational interface where JARVIS can answer questions about the developer's 
+skills, experience, and projects in real-time.
+
+KEY FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+1.  SERVER-SIDE PROXY (Next.js App Router):
+    - Created `app/api/jarvis/route.js` to handle all AI-related communication.
+    - Why a proxy? To keep the `GEMINI_API_KEY` secure on the server. Never 
+      expose API keys on the frontend.
+
+2.  SYSTEM PROMPT ENGINEERING:
+    - Designed a comprehensive "System Instruction" that defines JARVIS's 
+      personality (calm, formal, helpful) and provides the "Knowledge Base" 
+      about the developer (Keerthi).
+    - This ensures the AI doesn't hallucinate or act like a generic chatbot, 
+      but specifically as Keerthi's digital assistant.
+
+3.  CHAT STATE MANAGEMENT:
+    - Implemented support for `history`, allowing JARVIS to remember the 
+      context of the current conversation (multi-turn chat).
+    - Used Gemini's `startChat` method to manage this session state easily.
+
+4.  ROBUST ERROR HANDLING:
+    - Added checks for missing API keys and malformed requests.
+    - Implemented a "Stark Industries" themed error fallback: 
+      "Mission Failure. JARVIS is offline."
+
+TECHNICAL DEEP-DIVE (INTERVIEW PREP)
+--------------------------------------------------------------------------------
+
+Q1: Why did you choose Gemini 1.5 Flash for this project?
+A: Gemini 1.5 Flash was chosen for its balance of speed and intelligence. 
+   For a portfolio "JARVIS" assistant, low latency is critical to maintain 
+   the "real-time" feeling of a futuristic HUD. Flash provides near-instant 
+   responses compared to larger models while still having a large enough 
+   context window to hold all the developer's background information.
+
+Q2: What is "System Prompting" and why is it important here?
+A: System Prompting (or System Instructions) is the process of providing 
+   high-level constraints and knowledge to the LLM before the user starts 
+   typing. In this project, it's used to:
+   - Enforce a specific persona (JARVIS).
+   - Provide a "ground truth" (Keerthi's skills and bio).
+   - Set output boundaries (e.g., "don't make up info," "keep it concise").
+   This is the difference between a generic AI and a customized agent.
+
+Q3: How do you handle security when integrating external AI APIs?
+A: 
+   1. Environment Variables: Storing keys in `.env.local` and never 
+      committing them to version control.
+   2. Backend Proxying: All API calls go through our own Next.js server. 
+      The client-side never sees the API key or the direct Anthropic/Google 
+      endpoints.
+   3. Rate Limiting: (Planned for future) Implementing server-side limits 
+      to prevent API abuse and unexpected costs.
+
+Q4: How does the "history" parameter work in your API route?
+A: The `history` array contains previous messages in the format 
+   `{ role: "user" | "model", parts: [{ text: "..." }] }`. By passing this 
+   back to the AI on every new message, the model can understand references 
+   like "Tell me more about THAT project," where "that" refers to a previous 
+   message in the thread.
+
+CODE STRUCTURE
+--------------------------------------------------------------------------------
+- app/api/jarvis/route.js: The main entry point for the AI brain. 
+  Uses `@google/generative-ai` SDK.
+- .env.local: (Local only) Stores the `GEMINI_API_KEY`.
+
+DESIGN TOKENS & PERSONA
+--------------------------------------------------------------------------------
+- Tone: "Stark-esque" — formal, intelligent, and efficient.
+- Call to Action: Every response ends with a prompt to explore more, 
+  bridging the gap between a chat and the rest of the portfolio sections.
+
+================================================================================
+  "SYSTEM INITIALIZED. JARVIS IS ONLINE."
+================================================================================
