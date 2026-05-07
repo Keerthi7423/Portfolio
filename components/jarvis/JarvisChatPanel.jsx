@@ -67,7 +67,7 @@ const JarvisChatPanel = ({ isOpen, onClose }) => {
                   <div className="w-8 h-8 border border-arc-blue/40 rounded-full" />
                 </div>
                 <p className="font-rajdhani text-text-secondary text-sm">
-                  "Welcome back, sir. How can I assist you with Keerthi's portfolio today?"
+                  &quot;Welcome back, sir. How can I assist you with Keerthi&apos;s portfolio today?&quot;
                 </p>
               </div>
             )}
