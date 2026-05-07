@@ -53,12 +53,15 @@ import CustomCursor from "@/components/cursor/CustomCursor";
 import SmoothScroll from "@/components/scroll/SmoothScroll";
 import ScrollProgress from "@/components/scroll/ScrollProgress";
 
+import JarvisManager from "@/components/jarvis/JarvisManager";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${bebas.variable} ${rajdhani.variable} ${orbitron.variable} ${ibmSans.variable} ${ibmMono.variable} ${chakra.variable} font-sans bg-void text-text-primary antialiased selection:bg-marvel-red selection:text-white`}>
         <ScrollProgress />
         <CustomCursor />
+        <JarvisManager />
         <SmoothScroll>
           {children}
         </SmoothScroll>
