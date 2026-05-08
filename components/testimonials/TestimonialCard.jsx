@@ -118,7 +118,7 @@ export default function TestimonialCard({ testimonial, isActive }) {
       <div className="absolute top-0 right-0 w-32 h-32 opacity-5 pointer-events-none">
         <svg viewBox="0 0 100 100" className="w-full h-full animate-spin-slow">
           <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="5 5" />
-          <path d="M50 5 L50 15 M95 50 L85 50 M50 95 L50 85 M5 L50 L15 50" stroke="currentColor" strokeWidth="1" />
+          <path d="M50 5 L50 15 M95 50 L85 50 M50 95 L50 85 M5 50 L15 50" stroke="currentColor" strokeWidth="1" />
         </svg>
       </div>
     </motion.div>

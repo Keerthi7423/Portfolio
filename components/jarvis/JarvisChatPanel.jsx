@@ -5,7 +5,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useJarvis } from '@/hooks/useJarvis';
 
 const JarvisChatPanel = ({ isOpen, onClose }) => {
-  const { messages, isLoading, sendMessage } = useJarvis();
+  const { 
+    messages, 
+    isLoading, 
+    isListening, 
+    isSpeaking, 
+    sendMessage, 
+    startListening, 
+    stopSpeaking 
+  } = useJarvis();
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -27,8 +35,17 @@ const JarvisChatPanel = ({ isOpen, onClose }) => {
     e.preventDefault();
     const text = inputRef.current?.value;
     if (text) {
+      stopSpeaking();
       sendMessage(text);
       inputRef.current.value = '';
+    }
+  };
+
+  const handleVoiceClick = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      startListening();
     }
   };
 
@@ -46,9 +63,9 @@ const JarvisChatPanel = ({ isOpen, onClose }) => {
           {/* HUD Header */}
           <div className="p-4 border-b border-arc-blue/20 flex items-center justify-between bg-arc-blue/5">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-arc-blue rounded-full animate-pulse" />
+              <div className={`w-2 h-2 rounded-full ${isListening ? 'bg-marvel-red animate-pulse' : 'bg-arc-blue animate-pulse'}`} />
               <h3 className="font-orbitron text-xs text-arc-blue tracking-[0.2em] uppercase">
-                Systems Online / J.A.R.V.I.S.
+                {isListening ? 'Listening...' : isSpeaking ? 'Transmitting Audio...' : 'Systems Online / J.A.R.V.I.S.'}
               </h3>
             </div>
             <button 
@@ -63,11 +80,18 @@ const JarvisChatPanel = ({ isOpen, onClose }) => {
           <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
             {messages.length === 0 && (
               <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-                <div className="w-16 h-16 border-2 border-arc-blue/20 rounded-full flex items-center justify-center animate-spin-slow">
-                  <div className="w-8 h-8 border border-arc-blue/40 rounded-full" />
+                <div className="relative">
+                  <div className={`w-16 h-16 border-2 border-arc-blue/20 rounded-full flex items-center justify-center ${isSpeaking ? 'animate-pulse scale-110 border-arc-blue' : 'animate-spin-slow'}`}>
+                    <div className={`w-8 h-8 border border-arc-blue/40 rounded-full ${isSpeaking ? 'bg-arc-blue/20' : ''}`} />
+                  </div>
+                  {isSpeaking && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 border border-arc-blue/30 rounded-full animate-ping" />
+                    </div>
+                  )}
                 </div>
                 <p className="font-rajdhani text-text-secondary text-sm">
-                  &quot;Welcome back, sir. How can I assist you with Keerthi&apos;s portfolio today?&quot;
+                  &quot;Welcome back, sir. How can I assist you today?&quot;
                 </p>
               </div>
             )}
@@ -111,27 +135,54 @@ const JarvisChatPanel = ({ isOpen, onClose }) => {
           </div>
 
           {/* HUD Footer / Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-arc-blue/20 bg-arc-blue/5">
-            <div className="relative flex items-center">
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Type a command..."
-                className="w-full bg-deep/50 border border-arc-blue/30 rounded-sm py-2 px-4 font-rajdhani text-sm text-arc-blue focus:outline-none focus:border-arc-blue focus:ring-1 focus:ring-arc-blue/50 placeholder:text-arc-blue/30"
-              />
-              <button 
-                type="submit"
-                disabled={isLoading}
-                className="absolute right-2 text-arc-blue hover:text-white disabled:opacity-50"
+          <div className="p-4 border-t border-arc-blue/20 bg-arc-blue/5">
+            <form onSubmit={handleSubmit} className="relative flex items-center gap-2">
+              <div className="relative flex-1">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder={isListening ? "Listening..." : "Type a command..."}
+                  className={`w-full bg-deep/50 border rounded-sm py-2 px-4 font-rajdhani text-sm text-arc-blue focus:outline-none focus:ring-1 focus:ring-arc-blue/50 placeholder:text-arc-blue/30 transition-all ${
+                    isListening ? 'border-marvel-red/50 shadow-[0_0_10px_rgba(226,54,54,0.2)]' : 'border-arc-blue/30 focus:border-arc-blue'
+                  }`}
+                />
+                <button 
+                  type="submit"
+                  disabled={isLoading}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-arc-blue hover:text-white disabled:opacity-50"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleVoiceClick}
+                className={`p-2 rounded-full border transition-all ${
+                  isListening 
+                    ? 'bg-marvel-red/20 border-marvel-red text-marvel-red animate-pulse' 
+                    : isSpeaking
+                    ? 'bg-arc-blue/20 border-arc-blue text-arc-blue animate-pulse'
+                    : 'bg-arc-blue/5 border-arc-blue/30 text-arc-blue hover:bg-arc-blue/10'
+                }`}
+                title={isSpeaking ? "Stop JARVIS" : "Voice Input"}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                {isSpeaking ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="12" height="12"></rect></svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                )}
               </button>
-            </div>
+            </form>
             <div className="mt-2 flex justify-between items-center text-[8px] font-orbitron text-arc-blue/40 tracking-tighter">
-              <span>ENCRYPTION: AES-256</span>
+              <div className="flex gap-2">
+                <span>ENCRYPTION: AES-256</span>
+                {isSpeaking && <span className="text-arc-blue animate-pulse">AUDIO_OUT: ACTIVE</span>}
+                {isListening && <span className="text-marvel-red animate-pulse">AUDIO_IN: RECORDING</span>}
+              </div>
               <span>STARK_OS_v4.2</span>
             </div>
-          </form>
+          </div>
 
           {/* Corner Brackets Decorations */}
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-arc-blue/20 pointer-events-none" />

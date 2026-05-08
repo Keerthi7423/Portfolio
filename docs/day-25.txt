@@ -1,0 +1,95 @@
+================================================================================
+  DAY 25: VOICE & AUDIO SYSTEM (STT & TTS)
+  Project: DevUniverse Portfolio (Marvel-Style)
+  Focus: Web Speech API, Speech Recognition, Speech Synthesis, UX/UI for Voice
+================================================================================
+
+OVERVIEW
+--------------------------------------------------------------------------------
+Day 25 focused on giving JARVIS a "Voice." By integrating the Web Speech API, 
+we transformed the text-based chat interface into a fully interactive AI 
+assistant. This phase involved implementing both Speech-to-Text (STT) for 
+hands-free user input and Text-to-Speech (TTS) for JARVIS's verbal responses, 
+complete with a "Stark-style" persona.
+
+KEY FEATURES IMPLEMENTED
+--------------------------------------------------------------------------------
+1.  SPEECH RECOGNITION (STT):
+    - Integrated `window.SpeechRecognition` (and `webkitSpeechRecognition`).
+    - Implemented a "One-Shot" listening mode triggered by the HUD microphone button.
+    - Added visual feedback (red pulsing indicator) when the system is recording.
+    - Automatic text submission: Once the user stops speaking, the transcript is 
+      automatically sent to the JARVIS backend.
+
+2.  SPEECH SYNTHESIS (TTS):
+    - Integrated `window.speechSynthesis`.
+    - Custom "JARVIS" Persona: Configured voices to prefer British Male profiles 
+      (e.g., Google UK English Male) with adjusted pitch (0.9) and rate (1.0) 
+      to mimic Paul Bettany's iconic voice.
+    - "Stop Command": Users can interrupt JARVIS's speech by clicking the 
+      microphone button again or starting to type.
+
+3.  HUD UI ENHANCEMENTS:
+    - Microphone Button: A new interactive control with multi-state animations 
+      (Normal, Listening, Speaking).
+    - Status Indicators: Added "AUDIO_IN: RECORDING" and "AUDIO_OUT: ACTIVE" 
+      micro-text to the HUD console.
+    - Speaking Pulse: The central Arc Reactor in the empty state now pulses and 
+      radiates a "ping" animation when JARVIS is talking.
+
+4.  SYNCED STATE MANAGEMENT:
+    - Updated `useJarvis` hook to track `isListening` and `isSpeaking` states.
+    - Ensured that text-to-speech only triggers for JARVIS's responses and not 
+      the user's own typed messages.
+
+TECHNICAL DEEP-DIVE (INTERVIEW PREP)
+--------------------------------------------------------------------------------
+
+Q1: Why use the native Web Speech API instead of a cloud-based TTS/STT (like Google Cloud or AWS)?
+A: 
+   - Latency: Native APIs happen client-side, meaning there's zero network delay 
+     for the voice processing itself.
+   - Cost: It's completely free and built into modern browsers.
+   - Privacy: Audio is processed on the device, reducing the need to transmit 
+     raw audio data to a server.
+   - Persona: For a portfolio, it demonstrates deep knowledge of browser APIs 
+     without the overhead of managing API keys for every service.
+
+Q2: How did you manage the "Voice Collision" issue (JARVIS speaking while user is trying to talk)?
+A: I implemented an interrupt pattern. 
+   - When the user clicks the microphone button to start listening, `stopSpeaking()` 
+     is called first to cancel any ongoing speech synthesis.
+   - Similarly, if the user submits a text message while JARVIS is talking, 
+     the speech is cancelled to prioritize the new interaction.
+
+Q3: Explain the JARVIS persona configuration in SpeechSynthesis.
+A: I used the `getVoices()` method to filter for specific locales ('en-GB') 
+   and keywords ('Male'). Since voices are loaded asynchronously, I ensured 
+   the logic handles the first available matching voice. By setting `pitch` 
+   to 0.9, I created a slightly deeper, more authoritative tone suitable 
+   for an AI butler.
+
+Q4: How do you handle browsers that don't support SpeechRecognition?
+A: I used feature detection (`window.SpeechRecognition || window.webkitSpeechRecognition`). 
+   If it's not supported, the `isListening` state remains false and the 
+   microphone button degrades gracefully or stays hidden, ensuring the core 
+   text-chat functionality is never broken.
+
+CODE STRUCTURE
+--------------------------------------------------------------------------------
+- hooks/useJarvis.js: Now contains the core SpeechRecognition and 
+  SpeechSynthesis logic, exposing `startListening` and `stopSpeaking`.
+- components/jarvis/JarvisChatPanel.jsx: UI updates including the 
+  microphone button and visual HUD status text.
+- app/globals.css: Utilizes existing `animate-pulse` and `animate-ping` 
+  for voice-active states.
+
+DESIGN TOKENS USED
+--------------------------------------------------------------------------------
+- Colors: `marvel-red` (Recording), `arc-blue` (Speaking/Default).
+- Animations: `animate-pulse` (Listening), `animate-ping` (Audio Waves).
+- Micro-copy: "TRANSMITTING AUDIO...", "ENCRYPTION: AES-256".
+
+================================================================================
+  "VOICE RECOGNITION ACTIVE. LOUD AND CLEAR, SIR."
+================================================================================
