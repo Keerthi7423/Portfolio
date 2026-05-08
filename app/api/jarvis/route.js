@@ -1,8 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize the Gemini API client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 const SYSTEM_PROMPT = `
 You are JARVIS — an AI assistant for Keerthi, a Full Stack Developer. 
 Your job is to help potential clients, recruiters, and visitors learn about Keerthi's skills, projects, availability, and experience.
@@ -37,51 +34,59 @@ ALWAYS END RESPONSES WITH a subtle call to action when appropriate:
 
 export async function POST(req) {
   try {
-    // 1. Check if API Key is configured
-    if (!process.env.GEMINI_API_KEY) {
-      console.error("GEMINI_API_KEY is not defined in environment variables.");
-      return new Response(JSON.stringify({ 
-        error: "Internal System Error", 
-        message: "JARVIS core logic is offline. Please configure the API key." 
-      }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "API Key missing" }), { status: 500 });
     }
 
-    // 2. Parse the request body
     const { message, history } = await req.json();
 
-    if (!message) {
-      return new Response(JSON.stringify({ error: "No message provided." }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+    // Prepare the payload for the REST API
+    // The history needs to be mapped to the REST format
+    const contents = [
+      {
+        role: "user",
+        parts: [{ text: `SYSTEM_INSTRUCTIONS: ${SYSTEM_PROMPT}\n\nUnderstood. I will act as JARVIS.` }]
+      },
+      {
+        role: "model",
+        parts: [{ text: "Systems online. I am ready to assist, sir." }]
+      },
+      ...(history || []).map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: msg.parts
+      })),
+      {
+        role: "user",
+        parts: [{ text: message }]
+      }
+    ];
+
+    const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`;
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents,
+        generationConfig: {
+          maxOutputTokens: 500,
+          temperature: 0.7,
+        }
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Gemini API Error:", data);
+      throw new Error(data.error?.message || "API Transmission Failed");
     }
 
-    // 3. Initialize the model with system instructions
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      systemInstruction: SYSTEM_PROMPT 
-    });
+    const responseText = data.candidates[0].content.parts[0].text;
 
-    // 4. Start/Resume chat session
-    const chat = model.startChat({
-      history: history || [],
-      generationConfig: {
-        maxOutputTokens: 500,
-        temperature: 0.7,
-      },
-    });
-
-    // 5. Send the message and get response
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-    const text = response.text();
-
-    // 6. Return the response
     return new Response(JSON.stringify({ 
-      text,
+      text: responseText,
       status: "success",
       timestamp: new Date().toISOString()
     }), {
@@ -90,14 +95,16 @@ export async function POST(req) {
     });
 
   } catch (error) {
-    console.error("JARVIS API ERROR:", error);
-    
+    console.error("JARVIS REST ERROR:", error);
     return new Response(JSON.stringify({ 
       error: "Transmission Failure", 
-      message: "I'm sorry, I'm having trouble connecting to my core processing unit. Please try again later." 
+      message: error.message,
+      details: error.stack
     }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
   }
 }
+
+
